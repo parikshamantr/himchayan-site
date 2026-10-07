@@ -1,0 +1,7 @@
+name = "himchayan-site"
+main = "himchayan-site-worker.js"
+compatibility_date = "2026-10-07"
+
+# IMPORTANT:
+# This repository is ONLY for the production website Worker.
+# Do NOT add the Learning API wrangler configuration here.
