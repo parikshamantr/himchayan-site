@@ -2,6 +2,8 @@ name = "himchayan-site"
 main = "himchayan-site-worker.js"
 compatibility_date = "2026-10-07"
 
-# IMPORTANT:
-# This repository is ONLY for the production website Worker.
-# Do NOT add the Learning API wrangler configuration here.
+# All files committed to GitHub/main are deployed as Worker static assets.
+# The Worker keeps existing API/proxy fallback and special runtime routes.
+[assets]
+directory = "./"
+binding = "ASSETS"

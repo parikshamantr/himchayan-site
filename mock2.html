@@ -1,0 +1,4099 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Test 2 - HimChayan</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f3f7fc;color:#172033;font-family:Arial,"Noto Sans Devanagari",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+.top{background:#fff;border-bottom:1px solid #e5eaf1}
+.nav{max-width:1200px;margin:auto;min-height:55px;padding:10px 15px;display:flex;align-items:center;justify-content:space-between}
+.brand{color:#14539b;font-size:20px;font-weight:800}
+.home{text-decoration:none;background:#1787e8;color:#fff;padding:8px 14px;border-radius:7px;font-size:13px;font-weight:700}
+.wrap{max-width:1200px;margin:auto;padding:18px 12px 35px}
+
+.hero{
+background:linear-gradient(135deg,#1169bd,#168ee8);
+color:#fff;
+border-radius:16px;
+padding:22px 20px;
+margin-bottom:18px;
+box-shadow:0 6px 18px rgba(20,100,180,.16)
+}
+
+.hero h1{font-size:25px;margin-bottom:7px}
+.hero p{font-size:14px;opacity:.95}
+
+.back{
+display:inline-block;
+text-decoration:none;
+color:#174b8f;
+background:#e9f0f8;
+padding:8px 13px;
+border-radius:8px;
+font-size:13px;
+font-weight:700;
+margin-bottom:15px;
+border:0
+}
+
+.section-head{margin:20px 0 10px}
+.section-head h2{font-size:20px;margin-bottom:4px}
+.section-head p{color:#687385;font-size:13px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.choice-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+margin-top:22px
+}
+
+.choice-card{
+background:#fff;
+border:1px solid #e1e7ef;
+border-radius:16px;
+padding:24px;
+text-align:center;
+box-shadow:0 5px 18px rgba(30,60,100,.08)
+}
+
+.choice-card.free{border-top:5px solid #25a866}
+.choice-card.premium{border-top:5px solid #174f91}
+
+.choice-icon{font-size:42px;margin-bottom:10px}
+.choice-card h2{font-size:22px;margin-bottom:8px}
+.choice-card p{color:#687385;font-size:13px;line-height:1.5;min-height:40px;margin-bottom:14px}
+.choice-card .btn{max-width:260px;margin:0 auto}
+
+@media(max-width:520px){
+.choice-grid{grid-template-columns:1fr;gap:12px}
+.choice-card{padding:20px}
+.choice-card h2{font-size:20px}
+}
+
+.card{
+background:#fff;
+border:1px solid #e3e9f1;
+border-radius:13px;
+padding:15px;
+box-shadow:0 3px 12px rgba(30,60,100,.06)
+}
+
+.card-title{font-size:15px;font-weight:800;margin-bottom:5px}
+.card-desc{color:#707988;font-size:12px;min-height:30px;line-height:1.45;margin-bottom:10px}
+
+.free-tag,.paid-tag,.mock-tag{
+display:inline-block;
+padding:4px 8px;
+border-radius:6px;
+font-size:10px;
+font-weight:800;
+margin-bottom:9px
+}
+
+.free-tag{background:#e7f8ef;color:#14864b}
+.paid-tag,.mock-tag{background:#fff3d8;color:#a66b00}
+
+.btn{
+display:block;
+width:100%;
+text-align:center;
+text-decoration:none;
+border-radius:7px;
+padding:9px 10px;
+font-size:12px;
+font-weight:800;
+color:#fff;
+border:0
+}
+
+.free-btn{background:#1787e8}
+.paid-btn{background:#174f91}
+
+.paid-section{
+margin-top:25px;
+background:#fffaf0;
+border:1px solid #f0dfb1;
+border-radius:14px;
+padding:15px
+}
+
+.mock-list-card{min-height:145px}
+.mock-number{font-size:17px;font-weight:800;margin-bottom:6px}
+.mock-info{color:#707988;font-size:12px;line-height:1.5;min-height:38px;margin-bottom:10px}
+
+.access-note{
+background:#e9f9ef;
+border:1px solid #bce8ce;
+color:#176b3c;
+border-radius:8px;
+padding:9px;
+margin:10px 0;
+font-size:12px;
+font-weight:700
+}
+
+.setup-card{
+background:#fff;
+border:1px solid #e1e7ef;
+border-radius:12px;
+padding:14px;
+margin-bottom:12px
+}
+
+.setup-card h2{margin:0 0 12px;font-size:20px}
+
+.settings-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+
+.field label{
+display:block;
+font-size:12px;
+font-weight:700;
+margin-bottom:5px
+}
+
+.field input,.field select{
+width:100%;
+height:39px;
+border:1px solid #cfd8e4;
+border-radius:7px;
+padding:7px 9px;
+background:#fff
+}
+
+.subhead{font-size:13px;font-weight:800;margin:12px 0 7px}
+
+.notice{
+background:#effbf4;
+border-left:4px solid #20a35d;
+color:#146b3c;
+border-radius:5px;
+padding:8px 10px;
+font-size:12px;
+margin-top:10px
+}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+.action-btn{
+border:1px solid #cbd5e1;
+background:#fff;
+border-radius:7px;
+padding:9px 14px;
+font-weight:700;
+font-size:12px
+}
+
+.action-btn.primary{
+background:#168fe0;
+border-color:#168fe0;
+color:#fff
+}
+
+.action-btn:disabled{opacity:.55;cursor:not-allowed}
+.help{font-size:11px;color:#6e7b8b;margin-top:7px}
+
+.quiz-shell{
+display:grid;
+grid-template-columns:175px 1fr;
+gap:10px
+}
+
+.palette{
+background:#fff;
+border:1px solid #dfe6ef;
+border-radius:8px;
+padding:10px;
+align-self:start;
+position:sticky;
+top:68px;
+max-height:calc(100vh - 78px);
+overflow:auto
+}
+
+.palette-title{font-weight:800;font-size:14px;margin-bottom:8px}
+.palette-sub{font-size:11px;color:#6b7684;margin-bottom:8px}
+
+.qgrid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:6px
+}
+
+.qno{
+width:100%;
+aspect-ratio:1;
+border:0;
+border-radius:50%;
+background:#dfe3e8;
+color:#26313d;
+font-size:11px;
+font-weight:700
+}
+
+.qno.answered{background:#2eae63;color:#fff}
+.qno.visited-unanswered{background:#df3b30;color:#fff}
+.qno.review-only{background:#9c3db8;color:#fff}
+
+.qno.review-answered{
+background:#9c3db8;
+color:#fff;
+position:relative
+}
+
+.qno.review-answered:after{
+content:"";
+position:absolute;
+width:7px;
+height:7px;
+border-radius:50%;
+background:#16b85a;
+right:0;
+bottom:0;
+border:1px solid #fff
+}
+
+.qno.current{
+outline:2px solid #148ee1;
+outline-offset:1px
+}
+
+.status-box{
+margin-top:12px;
+border-top:1px solid #e1e6ec;
+padding-top:10px
+}
+
+.status-title{font-size:12px;font-weight:800;margin-bottom:8px}
+
+.status-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px 6px
+}
+
+.status-item{
+display:flex;
+align-items:center;
+gap:5px;
+font-size:10px;
+line-height:1.15;
+color:#334155
+}
+
+.status-dot{
+flex:0 0 24px;
+width:24px;
+height:24px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+font-weight:800;
+color:#fff
+}
+
+.status-dot.answered{background:#2eae63}
+.status-dot.unanswered{background:#df3b30}
+.status-dot.notvisited{background:#dfe3e8;color:#26313d}
+.status-dot.reviewonly{background:#9c3db8}
+
+.status-dot.reviewanswered{
+background:#9c3db8;
+position:relative
+}
+
+.status-dot.reviewanswered:after{
+content:"";
+position:absolute;
+width:5px;
+height:5px;
+border-radius:50%;
+background:#16b85a;
+right:0;
+bottom:0;
+border:1px solid #fff
+}
+
+.quiz-main{min-width:0}
+
+.quiz-nav{
+background:#fff;
+border:1px solid #dfe6ef;
+border-radius:8px;
+padding:9px;
+display:flex;
+align-items:center;
+gap:8px;
+overflow:auto
+}
+
+.subject-tabs{
+display:flex;
+gap:5px;
+flex:1;
+overflow:auto
+}
+
+.section-tab{
+border:0;
+background:transparent;
+padding:7px 10px;
+border-radius:5px;
+font-size:11px;
+font-weight:800;
+white-space:nowrap
+}
+
+.section-tab.active{background:#1995e4;color:#fff}
+
+.timer{
+font-weight:800;
+color:#c34b39;
+white-space:nowrap;
+font-size:12px
+}
+
+.lang{
+height:31px;
+border:1px solid #ccd5df;
+border-radius:5px;
+background:#fff;
+font-size:11px
+}
+
+.progress{
+height:6px;
+background:#e5eaf0;
+border-radius:10px;
+overflow:hidden;
+margin:8px 0
+}
+
+.progress span{
+display:block;
+height:100%;
+background:#1995e4;
+width:0
+}
+
+.question-card{
+background:#fff;
+border:1px solid #dfe6ef;
+border-radius:8px;
+margin-top:8px;
+padding:14px;
+min-height:315px
+}
+
+.qtop{
+display:flex;
+justify-content:space-between;
+gap:8px;
+align-items:center;
+margin-bottom:12px
+}
+
+.qtitle{font-weight:800;font-size:14px}
+
+.top-submit{
+background:#168fe0;
+color:#fff;
+border:0;
+border-radius:7px;
+padding:9px 14px;
+font-weight:800;
+font-size:12px
+}
+
+.question{
+font-size:16px;
+font-weight:600;
+margin:18px 0
+}
+
+.options{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px
+}
+
+.option{
+position:relative;
+text-align:left;
+border:1px solid #d6dde6;
+background:#fff;
+border-radius:6px;
+padding:11px 12px;
+min-height:44px;
+font-size:13px
+}
+
+.option.selected{
+border:2px solid #25a866;
+padding:10px 11px
+}
+
+.option.selected:before{
+content:"✓";
+position:absolute;
+right:9px;
+top:7px;
+width:20px;
+height:20px;
+border-radius:50%;
+background:#25a866;
+color:#fff;
+text-align:center;
+line-height:20px;
+font-weight:800
+}
+
+.bottom-actions{
+display:flex;
+justify-content:space-between;
+gap:8px;
+margin-top:12px
+}
+
+.left-actions,.right-actions{
+display:flex;
+gap:8px
+}
+
+.review-on{
+background:#fff8df;
+border-color:#f0c746
+}
+
+.result{
+background:#fff;
+border-radius:12px;
+border:1px solid #dfe6ef;
+padding:25px;
+text-align:center
+}
+
+.score{
+font-size:42px;
+font-weight:900;
+color:#0875c9
+}
+
+.result-stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:20px 0
+}
+
+.stat{
+background:#f1f5fa;
+border-radius:8px;
+padding:14px 8px
+}
+
+.stat strong{
+display:block;
+font-size:20px
+}
+
+.stat span{
+font-size:11px;
+color:#657184
+}
+
+.review-heading{
+text-align:left;
+margin:25px 0 10px;
+font-size:19px
+}
+
+.review-list{text-align:left}
+
+.review-item{
+background:#fff;
+border:1px solid #dfe6ef;
+border-radius:10px;
+padding:14px;
+margin-bottom:10px
+}
+
+.review-q{
+font-weight:800;
+margin-bottom:10px
+}
+
+.review-option{
+padding:8px 10px;
+border-radius:6px;
+margin:5px 0;
+border:1px solid #e0e5eb;
+font-size:13px
+}
+
+.review-option.correct{
+border:2px solid #25a866;
+background:#f2fff7
+}
+
+.review-option.wrong{
+border:2px solid #df4b4b
+}
+
+.answer-label{
+font-size:11px;
+color:#657184;
+margin-top:8px
+}
+
+.answer-key-page{
+background:#fff;
+border:1px solid #dfe6ef;
+border-radius:12px;
+padding:25px;
+margin-top:20px
+}
+
+.answer-key-page h2{
+text-align:center;
+color:#14539b;
+margin-bottom:6px
+}
+
+.answer-key-page p{
+text-align:center;
+color:#687385;
+font-size:12px;
+margin-bottom:20px
+}
+
+.answer-key-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px
+}
+
+.answer-key-item{
+background:#f3f7fc;
+border:1px solid #dfe6ef;
+border-radius:7px;
+padding:9px;
+text-align:center;
+font-size:12px
+}
+
+.answer-key-item strong{
+color:#168f57;
+margin-left:4px
+}
+
+
+/* PREMIUM PRIVACY LAYER — applies only to an active Paid quiz */
+.privacy-shield{
+position:fixed;
+inset:0;
+z-index:9999;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:rgba(10,18,30,.97);
+color:#fff;
+text-align:center
+}
+
+.privacy-shield.show{display:flex}
+
+.privacy-shield-box{
+width:min(430px,100%);
+background:#111b2a;
+border:1px solid #2d3b4e;
+border-radius:14px;
+padding:25px 20px;
+box-shadow:0 18px 50px rgba(0,0,0,.35)
+}
+
+.privacy-shield-icon{
+font-size:38px;
+margin-bottom:8px
+}
+
+.privacy-shield h2{
+font-size:20px;
+margin-bottom:7px
+}
+
+.privacy-shield p{
+font-size:12px;
+color:#aeb8c5;
+line-height:1.55
+}
+
+.privacy-badge{
+position:fixed;
+right:10px;
+bottom:10px;
+z-index:10000;
+background:#111824;
+color:#8e9aaa;
+border:1px solid #283444;
+border-radius:7px;
+padding:5px 8px;
+font-size:9px;
+pointer-events:none
+}
+
+@media print{
+body>{display:none!important}
+
+body:after{
+content:"HimChayan — Premium content printing is disabled.";
+display:block;
+padding:40px;
+font:700 18px Arial
+}
+}
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+
+.settings-grid{
+grid-template-columns:1fr 1fr
+}
+
+.quiz-shell{
+grid-template-columns:115px 1fr
+}
+
+.options{
+grid-template-columns:1fr
+}
+
+.result-stats{
+grid-template-columns:repeat(2,1fr)
+}
+
+.answer-key-grid{
+grid-template-columns:repeat(4,1fr)
+}
+
+}
+
+@media(max-width:520px){
+
+.wrap{
+padding:12px 9px 25px
+}
+
+.grid{
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+
+.hero{
+padding:18px 15px
+}
+
+.hero h1{
+font-size:20px
+}
+
+.settings-grid{
+grid-template-columns:1fr
+}
+
+.quiz-shell{
+grid-template-columns:92px 1fr
+}
+
+.timer{
+font-size:10px
+}
+
+.qtop{
+align-items:flex-start
+}
+
+.result-stats{
+grid-template-columns:1fr 1fr
+}
+
+.answer-key-grid{
+grid-template-columns:repeat(3,1fr)
+}
+
+}
+
+/* =========================================================
+   TBT / DIGITAL OMR EXAM TEMPLATE — INNER QUIZ ONLY
+   Setup/Home pages intentionally remain unchanged.
+========================================================= */
+.tbt-app{height:calc(100vh - 55px);min-height:560px;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+.tbt-header{height:58px;flex:0 0 58px;background:linear-gradient(180deg,#08a995,#087f77);color:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;box-shadow:0 2px 5px #0003;z-index:10}
+.tbt-logo{font-weight:800;font-size:16px;line-height:1.05;min-width:125px}.tbt-logo small{font-size:10px;font-weight:600;opacity:.9}
+.tbt-header-center{flex:1;text-align:center;font-size:13px;font-weight:700}.tbt-header-right{display:flex;align-items:center;gap:8px}.tbt-timer{background:#fff;color:#222;border-radius:5px;padding:7px 10px;font-weight:800;font-size:13px;min-width:62px;text-align:center}.tbt-dots{font-size:22px}
+.tbt-exam-title{height:34px;flex:0 0 34px;background:#fafafa;border-bottom:1px solid #d6d6d6;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.tbt-section-bar{height:42px;flex:0 0 42px;background:#fff;border-bottom:1px solid #dfe5ea;display:flex;align-items:center;gap:7px;padding:5px 10px;box-shadow:0 1px 3px #0001;z-index:8}
+.tbt-section-tabs{display:flex;gap:7px;overflow-x:auto;flex:1}.tbt-section-tabs::-webkit-scrollbar{height:0}
+.tbt-section-tab{border:1px solid transparent;background:#fff;border-radius:5px;padding:7px 13px;font-size:11px;font-weight:800;color:#222;cursor:pointer;white-space:nowrap}.tbt-section-tab.active{background:#159bd6;color:#fff;border-color:#159bd6;box-shadow:0 1px 2px #0002}
+.tbt-lang-wrap{position:relative}.tbt-lang-icon{width:34px;height:30px;border:1px solid #9ea8b1;border-radius:5px;background:#fff;display:grid;place-items:center;font-size:16px;font-weight:800;cursor:pointer}.tbt-lang-menu{display:none;position:absolute;right:0;top:35px;background:#fff;border:1px solid #ccd4da;border-radius:6px;box-shadow:0 5px 18px #0003;padding:4px;min-width:145px;z-index:30}.tbt-lang-menu.show{display:block}.tbt-lang-option{width:100%;text-align:left;border:0;background:#fff;border-radius:4px;padding:8px 9px;font-size:11px;font-weight:700;cursor:pointer}.tbt-lang-option:hover,.tbt-lang-option.active{background:#eaf6fd;color:#0877d1}
+.tbt-question-pane{height:46%;min-height:145px;overflow:auto;background:#fff;position:relative;flex:0 0 46%}.tbt-paper{max-width:950px;margin:0 auto;padding:13px 22px 28px}.tbt-paper h3{text-align:center;font-size:14px;margin:2px 0 12px;text-decoration:underline}.tbt-paper .tbt-section-heading{font-size:12px;font-weight:800;margin:12px 0 8px;padding:6px 8px;background:#f3f8fc;border-left:3px solid #1597d5;border-radius:3px}.tbt-q{font-size:12px;line-height:1.45;margin:0 0 12px;padding:8px 7px;border-radius:5px;border:1px solid transparent;scroll-margin-top:8px}.tbt-q.current{border-color:#1597d5;background:#f4fbff}.tbt-q .tbt-qn{font-weight:800}.tbt-opts{padding-left:18px;margin-top:3px}.tbt-optline{margin:2px 0}.tbt-paper-hint{position:sticky;bottom:6px;float:right;background:#eef7ff;border:1px solid #9cccf1;border-radius:12px;padding:4px 9px;font-size:9px;color:#17689b}
+.tbt-divider{height:13px;flex:0 0 13px;background:#e6f5fb;border-top:3px solid #1597d5;border-bottom:1px solid #9fcde5;position:relative;cursor:row-resize;touch-action:none;z-index:9}.tbt-handle{position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:44px;height:20px;border-radius:12px;background:#168ed0;color:#fff;display:grid;place-items:center;font-size:10px;box-shadow:0 1px 3px #0003}
+.tbt-omr-pane{flex:1;min-height:145px;overflow:auto;background:#fff7fb;position:relative}.tbt-omr-head{position:sticky;top:0;z-index:6;background:#ffeaf4;border-bottom:1px solid #efc6d9;padding:7px 10px 6px}.tbt-omr-title{color:#d12675;font-size:17px;font-weight:900;margin-bottom:5px}.tbt-review-btn{float:right;margin-top:-3px;border:1px solid #c7d0d7;background:#e8edf0;color:#555;border-radius:5px;padding:6px 9px;font-size:10px;font-weight:700;cursor:pointer}.tbt-review-btn.review-on{background:#fff4c7;border-color:#e4c05a;color:#7d6100}.tbt-legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;font-size:9px;color:#555}.tbt-legend span{display:flex;align-items:center;gap:4px}.tbt-lcircle{width:10px;height:10px;border:1.5px solid #777;border-radius:50%;display:inline-block;background:#fff}.tbt-lcircle.sel{border-color:#147ed0;background:#147ed0}.tbt-lsquare{width:10px;height:10px;background:#ffc928;border-radius:2px}.tbt-lsquare2{width:10px;height:10px;background:#8358c9;border-radius:2px}.tbt-omr-grid{padding:7px 9px 18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 9px;max-width:1000px;margin:auto}.tbt-omr-col{border-right:1px solid #ead5df;padding-right:5px}.tbt-omr-col:last-child{border-right:0}.tbt-omr-row{display:grid;grid-template-columns:34px repeat(4,1fr);align-items:center;min-height:40px;border-bottom:1px solid #efdce5;scroll-margin-top:72px}.tbt-omr-row.row-review{background:#fff7cf}.tbt-omr-row.row-both{background:#f0eaff}.tbt-omr-num{text-align:center;font-size:11px;font-weight:800;color:#444}.tbt-status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-left:2px;background:#fff;border:1px solid #aaa}.tbt-omr-row.row-answered .tbt-status-dot{background:#159447;border-color:#159447}.tbt-omr-row.row-reviewed .tbt-status-dot{background:#f2c500;border-color:#f2c500}.tbt-omr-row.row-both .tbt-status-dot{background:#8057c8;border-color:#8057c8}
+.tbt-bubble{width:29px;height:29px;border:1.8px solid #777;border-radius:50%;background:#fff;display:grid;place-items:center;margin:auto;font-size:10px;font-weight:700;color:#444;cursor:pointer;transition:.1s}.tbt-bubble:hover{border-color:#168ed0;background:#edf7ff}.tbt-bubble.selected{border:2px solid #0c79c9;background:#168ed0;color:#fff;box-shadow:inset 0 0 0 4px #fff}.tbt-bottom{display:flex;justify-content:flex-end;align-items:center;min-height:0;padding:4px 8px;background:#f4f4f4;border-top:1px solid #ccc}.tbt-submit{border:1px solid #0877d1;background:#0877d1;color:#fff;border-radius:4px;padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer}
+@media(max-width:520px){.tbt-app{height:calc(100vh - 55px);min-height:500px}.tbt-header{height:52px;flex-basis:52px;padding:0 7px}.tbt-logo{font-size:13px;min-width:105px}.tbt-header-center{font-size:10px}.tbt-timer{padding:5px 7px;font-size:11px}.tbt-exam-title{height:30px;flex-basis:30px;font-size:11px}.tbt-section-bar{height:38px;flex-basis:38px;padding:4px 6px;gap:3px}.tbt-section-tab{padding:6px 7px;font-size:9px}.tbt-lang-icon{width:31px;height:28px;font-size:14px}.tbt-paper{padding:9px 11px 18px}.tbt-paper h3{font-size:12px}.tbt-q{font-size:11px;margin-bottom:9px}.tbt-omr-title{font-size:15px}.tbt-omr-grid{padding:5px 4px 14px;gap:2px}.tbt-omr-row{grid-template-columns:27px repeat(4,1fr);min-height:37px}.tbt-bubble{width:27px;height:27px;font-size:9px}.tbt-legend{gap:8px}.tbt-submit{padding:7px 10px}}
+
+</style>
+</head>
+
+<body>
+
+<header class="top">
+<div class="nav">
+<div class="brand">HimChayan</div>
+<a class="home" href="index.html">🏠 Home</a>
+</div>
+</header>
+
+
+<!-- ================= CATEGORY PAGE ================= -->
+
+<div id="categoryPage">
+
+<main class="wrap">
+
+<a href="index.html" class="back">← Back to Home</a>
+
+<section class="hero">
+<h1>📝 Mock Test 2</h1>
+<p>Free aur Premium Mock Tests — pehle apna test type select karein.</p>
+</section>
+
+
+<div class="choice-grid">
+
+<!-- RENAMED FREE MOCK CARD -->
+<div class="choice-card free">
+
+<div class="choice-icon">🎯</div>
+
+<h2>ONE FREE MOCK DEMO</h2>
+
+<p>
+Sabhi exams ke liye 1 Free Demo Mock — bina Login aur bina Payment ke attempt karein.
+</p>
+
+<button
+class="btn free-btn"
+onclick="showFreeSubjects()"
+>
+Start Free Demo →
+</button>
+
+</div>
+
+
+<!-- EXISTING PREMIUM CARD -->
+<div class="choice-card premium">
+
+<div class="choice-icon">👑</div>
+
+<h2>Premium Mock Tests</h2>
+
+<p>
+Advanced subject-wise premium tests — 10 mocks per subject.
+</p>
+
+<button
+class="btn paid-btn"
+onclick="showPremiumSubjects()"
+>
+View Premium Mocks →
+</button>
+
+</div>
+
+</div>
+
+
+<div style="text-align:center;color:#778191;font-size:12px;padding:28px 10px 10px">
+© 2026 HimChayan — Mock Test Platform
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= ONE FREE MOCK DEMO PAGE ================= -->
+
+<div class="hidden" id="freePage">
+
+<main class="wrap">
+
+<button
+class="back"
+onclick="showCategory()"
+>
+← Back to Mock Test 2
+</button>
+
+
+<section class="hero">
+
+<h1>🎯 ONE FREE MOCK DEMO</h1>
+
+<p>
+Sabhi exams ke liye 1 Free Demo Mock — bina Login aur bina Payment ke.
+</p>
+
+</section>
+
+
+<div class="section-head">
+
+<h2>📚 Select Exam</h2>
+
+<p>
+Apne exam ka 1 Free Demo Mock start karein.
+</p>
+
+</div>
+
+
+<section
+class="grid"
+id="freeSubjectGrid"
+></section>
+
+</main>
+
+</div>
+
+
+<!-- ================= PREMIUM SUBJECT PAGE ================= -->
+
+<div class="hidden" id="premiumPage">
+
+<main class="wrap">
+
+<button
+class="back"
+onclick="showCategory()"
+>
+← Back to Mock Test 2
+</button>
+
+
+<section class="hero">
+
+<h1>👑 Premium Mock Tests</h1>
+
+<p>
+Advanced subject-wise premium practice — 10 mocks per subject.
+</p>
+
+</section>
+
+
+<div id="adminStatus"></div>
+
+
+<div class="section-head">
+
+<h2>📚 Select Subject</h2>
+
+<p>
+Har subject mein 10 Premium Mocks • ₹299 per subject package.
+</p>
+
+</div>
+
+
+<section
+class="grid"
+id="premiumSubjectGrid"
+></section>
+
+</main>
+
+</div>
+
+
+<!-- ================= PAID MOCK LIST ================= -->
+
+<div class="hidden" id="mockListPage">
+
+<main class="wrap">
+
+<button
+class="back"
+onclick="showCategory()"
+>
+← Back to Mock Tests
+</button>
+
+
+<section class="hero">
+
+<h1 id="mockListTitle">
+📚 Paid Mock Tests
+</h1>
+
+<p id="mockListSubtitle">
+इस exam के 10 premium mock tests में से कोई एक चुनें।
+</p>
+
+</section>
+
+
+<div id="mockAccessStatus"></div>
+
+
+<section
+class="grid"
+id="mockListGrid"
+></section>
+
+</main>
+
+</div>
+
+
+<!-- ================= SETUP PAGE ================= -->
+
+<div class="hidden" id="setupPage">
+
+<main class="wrap">
+
+<button
+class="back"
+onclick="backFromSetup()"
+>
+← Back
+</button>
+
+
+<section class="hero">
+
+<h1 id="setupTitle">
+📚 HimChayan — Mock Test 2
+</h1>
+
+<p id="setupSubtitle">
+Mock Test शुरू करने से पहले अपना paper format अपनी जरूरत के अनुसार सेट करें।
+</p>
+
+</section>
+
+
+<section class="setup-card">
+
+<h2>⚙️ Mock Settings</h2>
+
+
+<div class="settings-grid">
+
+<div class="field">
+
+<label>Total Questions</label>
+
+<select id="totalQ"></select>
+
+</div>
+
+
+<div class="field">
+
+<label>Timer (Minutes)</label>
+
+<input
+id="minutes"
+type="number"
+min="1"
+value="120"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Negative Marking</label>
+
+<input
+id="negative"
+type="number"
+min="0"
+step="0.25"
+value="0.25"
+>
+
+</div>
+
+</div>
+
+
+<div class="subhead">
+🌐 Language
+</div>
+
+
+<div class="field">
+
+<label>Question Language</label>
+
+<select id="language">
+
+<option
+value="Hindi"
+selected
+>
+हिन्दी
+</option>
+
+<option value="English">
+English
+</option>
+
+<option value="Both">
+Hindi + English
+</option>
+
+</select>
+
+</div>
+
+
+<div
+id="setupNotice"
+class="notice"
+>
+✓ Question bank तैयार है।
+</div>
+
+
+<div class="actions">
+
+<button
+class="action-btn"
+id="shuffleBtn"
+>
+☑ Questions Shuffle करें
+</button>
+
+
+<button
+class="action-btn primary"
+id="beginBtn"
+>
+🚀 I am ready to begin
+</button>
+
+</div>
+
+
+<div
+class="help"
+id="sectionHelp"
+>
+Section A = 70 Questions • Section B = 15 Questions • Section C = 35 Questions
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================= QUIZ PAGE ================= -->
+<div class="hidden" id="quizPage">
+  <div class="tbt-app" id="tbtApp">
+    <header class="tbt-header">
+      <div class="tbt-logo">HIMCHAYAN MOCK<br><small>HPRCA • TBT DIGITAL OMR</small></div>
+      <div class="tbt-header-center">TBT / Online Examination</div>
+      <div class="tbt-header-right">
+        <div class="tbt-timer" id="timer">120:00</div>
+        <div class="tbt-dots">⋮</div>
+      </div>
+    </header>
+
+    <div class="tbt-exam-title" id="tbtExamTitle">SAMPLE QUESTION PAPER</div>
+
+    <div class="tbt-section-bar">
+      <div class="tbt-section-tabs" id="subjectTabs"></div>
+      <div class="tbt-lang-wrap">
+        <button class="tbt-lang-icon" id="tbtLangIcon" title="Language">文A</button>
+        <div class="tbt-lang-menu" id="tbtLangMenu">
+          <button class="tbt-lang-option active" data-lang="Hindi">हिन्दी</button>
+          <button class="tbt-lang-option" data-lang="English">English</button>
+          <button class="tbt-lang-option" data-lang="Both">Hindi + English</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="tbt-question-pane" id="tbtQuestionPane">
+      <div class="tbt-paper" id="tbtPaper">
+        <h3>GENERAL MOCK TEST</h3>
+        <div class="tbt-section-heading">Multiple Choice Questions</div>
+        <div id="tbtPaperQuestions"></div>
+        <span class="tbt-paper-hint">Scroll to view question paper</span>
+      </div>
+    </section>
+
+    <div class="tbt-divider" id="tbtDivider"><div class="tbt-handle">↕</div></div>
+
+    <section class="tbt-omr-pane" id="tbtOmrPane">
+      <div class="tbt-omr-head">
+        <button class="tbt-review-btn" id="reviewBtn">Mark for Review</button>
+        <div class="tbt-omr-title">ANSWERS</div>
+        <div class="tbt-legend">
+          <span><i class="tbt-lcircle"></i> Not Answered <b id="countNA">(0)</b></span>
+          <span><i class="tbt-lcircle sel"></i> Answered <b id="countA">(0)</b></span>
+          <span><i class="tbt-lsquare"></i> Marked for Review <b id="countR">(0)</b></span>
+          <span><i class="tbt-lsquare2"></i> Answered for Review <b id="countAR">(0)</b></span>
+        </div>
+      </div>
+      <div class="tbt-omr-grid">
+        <div class="tbt-omr-col" id="omrLeft"></div>
+        <div class="tbt-omr-col" id="omrRight"></div>
+      </div>
+    </section>
+
+    <div class="tbt-bottom">
+      <button class="tbt-submit" id="submitTopBtn">Submit Test</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= RESULT PAGE ================= -->
+
+<div class="hidden" id="resultPage">
+
+<main class="wrap">
+
+<div class="result">
+
+<h2>
+🎉 Mock Test Submitted
+</h2>
+
+
+<div
+class="score"
+id="score"
+>
+0
+</div>
+
+
+<p id="resultText"></p>
+
+
+<div class="result-stats">
+
+<div class="stat">
+
+<strong id="statTotal">
+0
+</strong>
+
+<span>
+कुल प्रश्न
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="statAttempted">
+0
+</strong>
+
+<span>
+Attempted
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="statCorrect">
+0
+</strong>
+
+<span>
+सही
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="statWrong">
+0
+</strong>
+
+<span>
+गलत
+</span>
+
+</div>
+
+</div>
+
+
+<button
+class="action-btn primary"
+onclick="showCategory()"
+>
+🏠 Mock Tests पर जाएँ
+</button>
+
+
+<h2 class="review-heading">
+📋 सभी प्रश्नों का Review
+</h2>
+
+
+<div
+class="review-list"
+id="reviewList"
+></div>
+
+
+<div
+id="answerKeyContainer"
+></div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= PREMIUM PRIVACY OVERLAY ================= -->
+
+<div
+id="privacyShield"
+class="privacy-shield"
+aria-hidden="true"
+>
+
+<div class="privacy-shield-box">
+
+<div class="privacy-shield-icon">
+🔐
+</div>
+
+<h2>
+Premium Content Protected
+</h2>
+
+<p>
+Premium question content is temporarily hidden while this page is in the background. Return to this tab to continue the test.
+</p>
+
+</div>
+
+</div>
+
+
+<div
+id="privacyBadge"
+class="privacy-badge hidden"
+>
+🔐 Protected
+</div>
+
+
+<!-- ================= EXISTING SCRIPTS ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="./backend-config.js"></script>
+
+
+<!-- EXISTING PAID QUESTION BANKS -->
+<script src="./patwari-data.js"></script>
+<script src="./police-data.js"></script>
+<script src="./joa-it-data.js"></script>
+
+<!-- ONLY NEW FREE DEMO DATA -->
+<script src="./mock2-demo-data.js"></script>
+
+
+<script>
+
+window.addEventListener(
+"error",
+function(e){
+
+if(
+e.target &&
+e.target.tagName === "SCRIPT" &&
+(
+e.target.src.includes("patwari-data.js") ||
+e.target.src.includes("police-data.js") ||
+e.target.src.includes("joa-it-data.js") ||
+e.target.src.includes("mock2-demo-data.js")
+)
+){
+
+console.error(
+"Question bank script failed:",
+e.target.src
+);
+
+}
+
+},
+true
+);
+
+</script>
+
+
+<script>
+
+/* =========================================================
+   MOCK TEST 2 — ACCESS/PAYMENT LAYER
+   Existing paid quiz engine remains unchanged.
+========================================================= */
+
+
+const categories=[
+
+["🎓","PGT","PGT ke Free Mock Tests",100],
+
+["👮","Police","Police recruitment practice tests",90],
+
+["🌲","Forest Guard","Forest Guard preparation tests",120],
+
+["📘","SSC","SSC examination practice",120],
+
+["🛡️","SSC GD","SSC GD practice tests",80],
+
+["📊","CGL","SSC CGL mock practice",120],
+
+["⚖️","High Court","High Court examination tests",100],
+
+["🏢","Secretariat","Secretariat exam practice",120],
+
+["🏥","Staff Nurse","Staff Nurse preparation tests",120],
+
+["📚","JBT","JBT preparation mock tests",120],
+
+["👨‍💼","JOA IT","JOA IT examination practice",120],
+
+["📑","TGT","TGT examination practice",120],
+
+["🎯","Patwari","Patwari preparation practice",120]
+
+];
+
+
+const sectionTemplate120=[
+
+{name:"Section A",start:0,end:70},
+
+{name:"Section B",start:70,end:85},
+
+{name:"Section C",start:85,end:120}
+
+];
+
+
+const sectionTemplate90=[
+
+{name:"Section A",start:0,end:90}
+
+];
+
+
+let selectedCategory="Patwari",
+selectedType="Free",
+selectedMock=1,
+total=120,
+minutes=120,
+negative=.25,
+shuffleQuestions=true,
+questions=[],
+answers=[],
+review=new Set(),
+visited=new Set(),
+current=0,
+timeLeft=0,
+timerId=null,
+currentLanguage="Hindi";
+
+
+let currentUser=null,
+isAdmin=false,
+accessCache={};
+
+
+/* =========================================================
+   PREMIUM PRIVACY — Paid quiz only
+========================================================= */
+
+function isPremiumContext(){
+
+const quiz=
+document.getElementById("quizPage");
+
+return selectedType==="Paid" &&
+quiz &&
+!quiz.classList.contains("hidden");
+
+}
+
+
+function setPrivacyShield(show){
+
+const shield=
+document.getElementById("privacyShield");
+
+const badge=
+document.getElementById("privacyBadge");
+
+if(!shield)return;
+
+shield.classList.toggle(
+"show",
+!!show
+);
+
+shield.setAttribute(
+"aria-hidden",
+show?"false":"true"
+);
+
+if(badge)
+badge.classList.toggle(
+"hidden",
+!show
+);
+
+}
+
+
+function handleVisibilityChange(){
+
+if(!isPremiumContext())
+return;
+
+setPrivacyShield(
+document.hidden
+);
+
+}
+
+
+document.addEventListener(
+"visibilitychange",
+handleVisibilityChange
+);
+
+
+window.addEventListener(
+"blur",
+function(){
+
+if(isPremiumContext())
+setPrivacyShield(true);
+
+}
+);
+
+
+window.addEventListener(
+"focus",
+function(){
+
+if(
+!document.hidden &&
+isPremiumContext()
+)
+
+setPrivacyShield(false);
+
+}
+);
+
+
+window.addEventListener(
+"pagehide",
+function(){
+
+if(isPremiumContext())
+setPrivacyShield(true);
+
+}
+);
+
+
+document.addEventListener(
+"contextmenu",
+function(e){
+
+if(isPremiumContext())
+e.preventDefault();
+
+}
+);
+
+
+document.addEventListener(
+"copy",
+function(e){
+
+if(isPremiumContext())
+e.preventDefault();
+
+}
+);
+
+
+document.addEventListener(
+"cut",
+function(e){
+
+if(isPremiumContext())
+e.preventDefault();
+
+}
+);
+
+
+document.addEventListener(
+"dragstart",
+function(e){
+
+if(isPremiumContext())
+e.preventDefault();
+
+}
+);
+
+
+document.addEventListener(
+"selectstart",
+function(e){
+
+if(isPremiumContext())
+e.preventDefault();
+
+}
+);
+
+
+document.addEventListener(
+"keydown",
+function(e){
+
+if(!isPremiumContext())
+return;
+
+const k=
+(e.key||"").toLowerCase();
+
+const blocked=
+
+(
+e.ctrlKey &&
+(
+k==="c" ||
+k==="x" ||
+k==="s" ||
+k==="p" ||
+k==="u"
+)
+) ||
+
+(
+e.ctrlKey &&
+e.shiftKey &&
+(
+k==="i" ||
+k==="j" ||
+k==="c"
+)
+) ||
+
+k==="printscreen";
+
+
+if(blocked){
+
+e.preventDefault();
+e.stopPropagation();
+
+}
+
+}
+);
+
+
+/* =========================================================
+   CATEGORY HELPERS
+========================================================= */
+
+function getCategoryData(name){
+
+return categories.find(
+c=>c[1]===name
+);
+
+}
+
+
+function hideAllPages(){
+
+[
+"categoryPage",
+"freePage",
+"premiumPage",
+"mockListPage",
+"setupPage",
+"quizPage",
+"resultPage"
+]
+
+.forEach(
+
+id=>
+document
+.getElementById(id)
+?.classList.add("hidden")
+
+);
+
+}
+
+
+function showCategory(){
+
+clearInterval(timerId);
+
+hideAllPages();
+
+document
+.getElementById("categoryPage")
+.classList.remove("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+
+/* IMPORTANT:
+   Mock Test 2 MUST send lowercase type=mock2.
+   payment.html uses type=mock2 to select the ₹299 package.
+*/
+
+function openPayment(
+category,
+mockNumber=1
+){
+
+const url=
+
+"payment.html?category="+
+encodeURIComponent(category)+
+
+"&type=mock2&amount=299&mock="+
+encodeURIComponent(mockNumber);
+
+window.location.href=url;
+
+}
+
+
+/* =========================================================
+   ARRAY SHUFFLE
+========================================================= */
+
+function shuffleArray(arr){
+
+const a=[...arr];
+
+for(
+let i=a.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[a[i],a[j]]=
+[a[j],a[i]];
+
+}
+
+return a;
+
+}
+
+
+/* =========================================================
+   QUESTION NORMALIZER
+========================================================= */
+
+function normalizeQuestion(q){
+
+if(Array.isArray(q)){
+
+return{
+
+hi:q[0],
+
+en:q[1],
+
+optionsHi:[
+q[2],
+q[3],
+q[4],
+q[5]
+],
+
+optionsEn:[
+q[2],
+q[3],
+q[4],
+q[5]
+],
+
+correct:Number(q[6])
+
+};
+
+}
+
+
+return{
+
+hi:
+q.hi ||
+q.questionHi ||
+q.question ||
+"",
+
+en:
+q.en ||
+q.questionEn ||
+q.question ||
+"",
+
+optionsHi:
+[
+...(q.optionsHi ||
+q.options ||
+[])
+]
+.slice(0,4),
+
+optionsEn:
+[
+...(q.optionsEn ||
+q.options ||
+q.optionsHi ||
+[])
+]
+.slice(0,4),
+
+correct:
+Number(
+q.correct ??
+q.answer ??
+q.correctAnswer ??
+0
+)
+
+};
+
+}
+
+
+/* =========================================================
+   EXISTING PATWARI BANK
+========================================================= */
+
+function getPatwariBank(
+mockNumber
+){
+
+if(
+typeof patwariPaidMocks==="undefined"
+){
+
+alert(
+"patwari-data.js load नहीं हुई।"
+);
+
+return[];
+
+}
+
+
+const raw=
+patwariPaidMocks[mockNumber] ||
+patwariPaidMocks[String(mockNumber)];
+
+
+if(!Array.isArray(raw)){
+
+alert(
+`Patwari Mock ${mockNumber} का question bank नहीं मिला।`
+);
+
+return[];
+
+}
+
+
+return raw
+.slice(0,120)
+.map(normalizeQuestion);
+
+}
+
+
+/* =========================================================
+   EXISTING POLICE BANK
+========================================================= */
+
+function getPoliceBank(
+mockNumber
+){
+
+let source=null;
+
+
+if(
+typeof policePaidMocks!=="undefined"
+)
+
+source=policePaidMocks;
+
+else if(
+typeof policeMocks!=="undefined"
+)
+
+source=policeMocks;
+
+else if(
+typeof policeMockData!=="undefined"
+)
+
+source=policeMockData;
+
+
+if(!source){
+
+alert(
+"police-data.js load नहीं हुई।"
+);
+
+return[];
+
+}
+
+
+const raw=
+source[mockNumber] ||
+source[String(mockNumber)];
+
+
+if(!Array.isArray(raw)){
+
+alert(
+`Police Mock ${mockNumber} का question bank नहीं मिला।`
+);
+
+return[];
+
+}
+
+
+return raw
+.slice(0,90)
+.map(normalizeQuestion);
+
+}
+
+   
+/* =========================================================
+   EXISTING JOA IT BANK
+========================================================= */
+
+function getJOAITBank(
+mockNumber
+){
+
+if(
+typeof joaItData==="undefined"
+){
+
+alert(
+"joa-it-data.js load नहीं हुई।"
+);
+
+return[];
+
+}
+
+
+const raw=
+joaItData[mockNumber] ||
+joaItData[String(mockNumber)];
+
+
+if(!Array.isArray(raw)){
+
+alert(
+`JOA IT Mock ${mockNumber} का question bank नहीं मिला।`
+);
+
+return[];
+
+}
+
+
+return raw
+.slice(0,120)
+.map(normalizeQuestion);
+
+}
+   
+
+/* =========================================================
+   NEW FREE DEMO BANK
+   ONLY mock2-demo-data.js
+========================================================= */
+
+function getDemoBank(
+category
+){
+
+if(
+typeof mock2DemoQuestionBanks==="undefined"
+){
+
+alert(
+"mock2-demo-data.js load नहीं हुई।"
+);
+
+return[];
+
+}
+
+
+const raw=
+mock2DemoQuestionBanks[category];
+
+
+if(!Array.isArray(raw)){
+
+alert(
+`${category} Free Demo का question bank नहीं मिला।`
+);
+
+return[];
+
+}
+
+
+return raw.map(
+normalizeQuestion
+);
+
+}
+
+
+/* =========================================================
+   SECURE ACCESS CHECK
+========================================================= */
+
+async function checkAdminAndAccess(){
+
+if(
+typeof supabaseClient==="undefined"
+)
+
+return;
+
+
+try{
+
+const {data,error}=
+await supabaseClient.auth.getUser();
+
+
+if(
+error ||
+!data?.user
+)
+
+return;
+
+
+currentUser=
+data.user;
+
+
+const r=
+await supabaseClient.rpc(
+"is_admin"
+);
+
+
+isAdmin=
+!r.error &&
+r.data===true;
+
+
+renderAdminStatus();
+
+renderCategories();
+
+}
+catch(e){
+
+console.error(
+"Access check:",
+e
+);
+
+}
+
+}
+
+
+/* =========================================================
+   ADMIN STATUS
+========================================================= */
+
+function renderAdminStatus(){
+
+const box=
+document.getElementById(
+"adminStatus"
+);
+
+
+if(box){
+
+box.innerHTML=
+
+isAdmin
+
+?
+
+'<div class="access-note">👑 Admin account detected — सभी Premium Mock Tests आपके लिए बिना payment सीधे available हैं।</div>'
+
+:
+
+"";
+
+}
+
+}
+
+
+/* =========================================================
+   PREMIUM ACCESS
+========================================================= */
+
+async function hasPremiumAccess(
+category
+){
+
+if(isAdmin)
+return true;
+
+
+if(!currentUser)
+return false;
+
+
+const key=
+category+"|mock2";
+
+
+if(
+Object.prototype.hasOwnProperty.call(
+accessCache,
+key
+)
+)
+
+return accessCache[key];
+
+
+try{
+
+const {data,error}=
+await supabaseClient
+
+.from("premium_access")
+
+.select("is_active")
+
+.eq(
+"user_id",
+currentUser.id
+)
+
+.eq(
+"category",
+category
+)
+
+.eq(
+"package_type",
+"mock2"
+)
+
+.eq(
+"is_active",
+true
+)
+
+.maybeSingle();
+
+
+accessCache[key]=
+!error &&
+!!data;
+
+
+return accessCache[key];
+
+}
+catch(e){
+
+console.error(
+"Premium access:",
+e
+);
+
+return false;
+
+}
+
+}
+
+
+/* =========================================================
+   OPEN PAID CATEGORY
+========================================================= */
+
+async function openPaidCategory(
+category
+){
+
+selectedCategory=
+category;
+
+selectedType=
+"Paid";
+
+
+const allowed=
+await hasPremiumAccess(
+category
+);
+
+
+if(!allowed){
+
+openPayment(
+category,
+1
+);
+
+return;
+
+}
+
+
+showPaidMockList(
+category
+);
+
+}
+
+
+/* =========================================================
+   SELECT PAID MOCK
+========================================================= */
+
+async function selectPaidMock(
+mockNumber
+){
+
+const allowed=
+await hasPremiumAccess(
+selectedCategory
+);
+
+
+if(!allowed){
+
+openPayment(
+selectedCategory,
+mockNumber
+);
+
+return;
+
+}
+
+
+openSetup(
+selectedCategory,
+"Paid",
+mockNumber
+);
+
+}
+
+
+/* =========================================================
+   PAID MOCK LIST
+========================================================= */
+
+function showPaidMockList(
+category
+){
+
+selectedCategory=
+category;
+
+selectedType=
+"Paid";
+
+
+hideAllPages();
+
+document
+.getElementById("mockListPage")
+.classList.remove("hidden");
+
+
+document
+.getElementById("mockListTitle")
+.textContent=
+
+`📚 ${category} — Paid Mock Tests`;
+
+
+document
+.getElementById("mockListSubtitle")
+.textContent=
+
+`${category} के 10 Premium Mock Tests में से कोई एक चुनें।`;
+
+
+document
+.getElementById("mockAccessStatus")
+.innerHTML=
+
+isAdmin
+
+?
+
+'<div class="access-note">👑 Admin Access — payment की जरूरत नहीं।</div>'
+
+:
+
+'<div class="access-note">✅ Premium Access Active — इस category के सभी 10 mocks available हैं।</div>';
+
+
+renderPaidMockList(
+getCategoryData(category)?.[3] ||
+120
+);
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   RENDER CATEGORIES
+========================================================= */
+
+function renderCategories(){
+
+const free=
+document.getElementById(
+"freeSubjectGrid"
+);
+
+const premium=
+document.getElementById(
+"premiumSubjectGrid"
+);
+
+
+if(free)
+free.innerHTML="";
+
+
+if(premium)
+premium.innerHTML="";
+
+
+categories.forEach(
+c=>{
+
+
+/* =====================================================
+   ONE FREE MOCK DEMO
+   DATA WILL COME ONLY FROM mock2-demo-data.js
+===================================================== */
+
+if(free){
+
+free.insertAdjacentHTML(
+
+"beforeend",
+
+`<div class="card">
+
+<div class="card-title">
+${c[0]} ${c[1]}
+</div>
+
+<div class="card-desc">
+${c[1]} Free Demo Mock
+</div>
+
+<span class="free-tag">
+🎯 FREE DEMO • 1 MOCK
+</span>
+
+<div style="font-size:12px;color:#687385;margin-bottom:9px">
+1 Free Demo Mock
+</div>
+
+<button
+class="btn free-btn"
+onclick="openDemoMock('${c[1]}')"
+>
+🚀 Start Free Demo →
+</button>
+
+</div>`
+
+);
+
+}
+
+
+/* =====================================================
+   EXISTING PREMIUM
+===================================================== */
+
+if(premium){
+
+premium.insertAdjacentHTML(
+
+"beforeend",
+
+`<div class="card">
+
+<div class="card-title">
+${c[0]} ${c[1]}
+</div>
+
+<div class="card-desc">
+Premium ${c[1]} Mock Tests
+</div>
+
+<span class="paid-tag">
+🔒 PREMIUM • 10 MOCKS • ₹299
+</span>
+
+<div
+style="font-size:12px;font-weight:800;color:#14539b;margin-bottom:9px"
+>
+💰 Premium Package — ₹299
+</div>
+
+<button
+class="btn paid-btn"
+onclick="openPaidCategory('${c[1]}')"
+>
+
+${
+isAdmin
+?
+"👑 Admin — Open 10 Mocks"
+:
+"🔒 ₹299 — Unlock 10 Mocks"
+}
+
+</button>
+
+</div>`
+
+);
+
+}
+
+});
+
+}
+
+
+/* =========================================================
+   ONE FREE MOCK DEMO PAGE
+========================================================= */
+
+function showFreeSubjects(){
+
+hideAllPages();
+
+document
+.getElementById("freePage")
+.classList.remove("hidden");
+
+renderCategories();
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   OPEN ONE FREE MOCK DEMO
+========================================================= */
+
+function openDemoMock(
+category
+){
+
+selectedCategory=
+category;
+
+selectedType=
+"Demo";
+
+selectedMock=
+1;
+
+
+openSetup(
+category,
+"Demo",
+1
+);
+
+}
+
+
+/* =========================================================
+   PREMIUM SUBJECTS
+========================================================= */
+
+function showPremiumSubjects(){
+
+hideAllPages();
+
+document
+.getElementById("premiumPage")
+.classList.remove("hidden");
+
+renderAdminStatus();
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   PAID MOCK LIST
+========================================================= */
+
+function renderPaidMockList(
+questionCount
+){
+
+const grid=
+document.getElementById(
+"mockListGrid"
+);
+
+grid.innerHTML="";
+
+
+for(
+let i=1;
+i<=10;
+i++
+){
+
+grid.insertAdjacentHTML(
+
+"beforeend",
+
+`<div class="card mock-list-card">
+
+<div class="mock-number">
+📝 Mock Test ${i}
+</div>
+
+<div class="mock-info">
+${selectedCategory} Premium Mock Test ${i}
+<br>
+कुल प्रश्न: ${questionCount}
+</div>
+
+<span class="mock-tag">
+🔒 PREMIUM MOCK ${i}
+</span>
+
+<button
+class="btn paid-btn"
+onclick="selectPaidMock(${i})"
+>
+
+${
+isAdmin
+?
+"👑 Open Mock "+i
+:
+"🚀 Open Mock "+i
+}
+
+</button>
+
+</div>`
+
+);
+
+}
+
+}
+
+
+/* =========================================================
+   SETUP
+========================================================= */
+
+function openSetup(
+category,
+type,
+mockNumber=1
+){
+
+selectedCategory=
+category;
+
+selectedType=
+type;
+
+selectedMock=
+mockNumber;
+
+
+const data=
+getCategoryData(
+category
+);
+
+total=
+data
+?
+data[3]
+:
+120;
+
+
+hideAllPages();
+
+document
+.getElementById("setupPage")
+.classList.remove("hidden");
+
+
+document
+.getElementById("setupTitle")
+.textContent=
+
+`📚 ${category} — Mock Test ${mockNumber}`;
+
+
+document
+.getElementById("setupSubtitle")
+.textContent=
+
+`${type} Mock Test ${mockNumber} — paper format अपनी जरूरत के अनुसार सेट करें।`;
+
+
+document
+.getElementById("totalQ")
+.innerHTML=
+
+`<option value="${total}">${total}</option>`;
+
+
+document
+.getElementById("totalQ")
+.disabled=true;
+
+
+/* =====================================================
+   DEMO SETUP
+===================================================== */
+
+if(type==="Demo"){
+
+document
+.getElementById("setupNotice")
+.textContent=
+
+`✓ ${category} Free Demo का question bank तैयार है।`;
+
+
+document
+.getElementById("sectionHelp")
+.textContent=
+
+`Total Questions = ${total}`;
+
+}
+
+
+/* =====================================================
+   EXISTING PATWARI SETUP
+===================================================== */
+
+else if(category==="Patwari"){
+
+document
+.getElementById("setupNotice")
+.textContent=
+
+`✓ Patwari Mock ${selectedMock} का question bank तैयार है।`;
+
+
+document
+.getElementById("sectionHelp")
+.textContent=
+
+"Section A = 70 Questions • Section B = 15 Questions • Section C = 35 Questions";
+
+}
+
+
+/* =====================================================
+   EXISTING POLICE SETUP
+===================================================== */
+
+else if(category==="Police"){
+
+document
+.getElementById("setupNotice")
+.textContent=
+
+`✓ Police Mock ${selectedMock} का question bank तैयार है。`;
+
+
+document
+.getElementById("sectionHelp")
+.textContent=
+
+"Police Mock = 90 Questions";
+
+}
+
+   
+/* =====================================================
+   EXISTING JOA IT SETUP
+===================================================== */
+
+else if(category==="JOA IT"){
+
+document
+.getElementById("setupNotice")
+.textContent=
+
+`✓ JOA IT Mock ${selectedMock} का question bank तैयार है।`;
+
+
+document
+.getElementById("sectionHelp")
+.textContent=
+
+"Section A = 70 Questions • Section B = 15 Questions • Section C = 35 Questions";
+
+}
+   
+
+/* =====================================================
+   EXISTING OTHER SETUP
+===================================================== */
+
+else{
+
+document
+.getElementById("setupNotice")
+.textContent=
+
+`✓ ${total} Questions तैयार हैं.`;
+
+
+document
+.getElementById("sectionHelp")
+.textContent=
+
+`Total Questions = ${total}`;
+
+}
+
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   BACK FROM SETUP
+========================================================= */
+
+function backFromSetup(){
+
+if(
+selectedType==="Paid"
+){
+
+showPaidMockList(
+selectedCategory
+);
+
+return;
+
+}
+
+
+if(
+selectedType==="Demo"
+){
+
+showFreeSubjects();
+
+return;
+
+}
+
+
+showCategory();
+
+}
+
+
+/* =========================================================
+   SECTION TEMPLATE
+========================================================= */
+
+function getCurrentSectionTemplate(){
+
+if(
+selectedCategory==="Patwari"
+)
+
+return sectionTemplate120;
+
+if(
+selectedCategory==="JOA IT"
+)
+
+return sectionTemplate120;
+   
+if(
+selectedCategory==="Police"
+)
+
+return sectionTemplate90;
+
+ 
+return[
+
+{
+name:"Section A",
+start:0,
+end:total
+}
+
+];
+
+}
+
+
+function getSectionName(
+index
+){
+
+const s=
+getCurrentSectionTemplate()
+.find(
+
+x=>
+index>=x.start &&
+index<x.end
+
+);
+
+
+return s
+?
+s.name
+:
+"Section A";
+
+}
+
+
+/* =========================================================
+   EXISTING FREE BANK
+   NOTE:
+   This remains only for the OLD Free Mock Tests logic.
+   ONE FREE MOCK DEMO does NOT use this.
+========================================================= */
+
+function getFreeBank(
+category
+){
+
+if(
+category==="Patwari"
+)
+
+return getPatwariBank(1);
+
+
+if(
+category==="Police"
+)
+
+return getPoliceBank(1);
+
+
+const base=[
+
+{
+hi:
+`${category} Free Test — Sample Question 1`,
+
+en:
+`${category} Free Test — Sample Question 1`,
+
+optionsHi:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+optionsEn:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+correct:0
+},
+
+{
+hi:
+`${category} Free Test — Sample Question 2`,
+
+en:
+`${category} Free Test — Sample Question 2`,
+
+optionsHi:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+optionsEn:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+correct:1
+},
+
+{
+hi:
+`${category} Free Test — Sample Question 3`,
+
+en:
+`${category} Free Test — Sample Question 3`,
+
+optionsHi:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+optionsEn:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+correct:2
+},
+
+{
+hi:
+`${category} Free Test — Sample Question 4`,
+
+en:
+`${category} Free Test — Sample Question 4`,
+
+optionsHi:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+optionsEn:[
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+],
+
+correct:3
+}
+
+];
+
+
+const count=
+getCategoryData(category)?.[3] ||
+120;
+
+
+const out=[];
+
+
+for(
+let i=0;
+i<count;
+i++
+)
+
+out.push(
+base[i%base.length]
+);
+
+
+return out.map(
+normalizeQuestion
+);
+
+}
+
+
+/* =========================================================
+   BUILD QUESTIONS
+========================================================= */
+
+function buildQuestions(){
+
+let bank=[];
+
+
+/* =====================================================
+   ONE FREE MOCK DEMO
+   ONLY external mock2-demo-data.js
+===================================================== */
+
+if(
+selectedType==="Demo"
+){
+
+bank=
+getDemoBank(
+selectedCategory
+);
+
+}
+
+
+/* =====================================================
+   EXISTING FREE
+===================================================== */
+
+else if(
+selectedType==="Free"
+){
+
+bank=
+getFreeBank(
+selectedCategory
+);
+
+}
+
+
+/* =====================================================
+   EXISTING PAID
+===================================================== */
+
+else{
+
+if(
+selectedCategory==="Patwari"
+)
+
+bank=
+getPatwariBank(
+selectedMock
+);
+
+
+if(
+selectedCategory==="JOA IT"
+)
+
+bank=
+getJOAITBank(
+selectedMock
+);
+
+if(
+selectedCategory==="Police"
+)
+
+bank=
+getPoliceBank(
+selectedMock
+);
+
+}
+
+
+if(!bank.length)
+return false;
+
+
+if(
+bank.length<total
+){
+
+alert(
+
+`Question bank error: Mock ${selectedMock} में ${bank.length} questions मिले, लेकिन ${total} required हैं.`
+
+);
+
+return false;
+
+}
+
+
+/* =====================================================
+   PATWARI SECTION LOGIC
+===================================================== */
+
+if(
+selectedCategory==="Patwari"
+){
+
+const A=
+bank.slice(0,70);
+
+const B=
+bank.slice(70,85);
+
+const C=
+bank.slice(85,120);
+
+
+bank=
+
+shuffleQuestions
+
+?
+
+[
+...shuffleArray(A),
+...shuffleArray(B),
+...shuffleArray(C)
+]
+
+:
+
+[
+...A,
+...B,
+...C
+];
+
+}
+
+
+/* =====================================================
+   ALL OTHER EXAMS
+===================================================== */
+
+else{
+
+bank=
+bank.slice(0,total);
+
+
+if(shuffleQuestions)
+
+bank=
+shuffleArray(bank);
+
+}
+
+
+questions=
+bank.map(
+
+(q,i)=>({
+
+...q,
+
+section:
+getSectionName(i),
+
+category:
+selectedCategory,
+
+type:
+selectedType,
+
+mock:
+selectedMock
+
+})
+
+);
+
+
+answers=
+Array(
+questions.length
+)
+.fill(null);
+
+
+review=
+new Set();
+
+
+visited=
+new Set();
+
+
+current=0;
+
+
+return questions.length===total;
+
+}
+
+
+/* =========================================================
+   QUIZ ENGINE
+========================================================= */
+
+function startQuiz(){
+
+minutes=
+Math.max(
+1,
+Number(
+document.getElementById(
+"minutes"
+).value
+)||120
+);
+
+
+negative=
+Math.max(
+0,
+Number(
+document.getElementById(
+"negative"
+).value
+)||0
+);
+
+
+currentLanguage=
+document.getElementById(
+"language"
+).value;
+
+
+if(!buildQuestions())
+return;
+
+
+hideAllPages();
+
+document
+.getElementById("quizPage")
+.classList.remove("hidden");
+
+
+document.querySelectorAll(".tbt-lang-option").forEach(x=>x.classList.toggle("active",x.dataset.lang===currentLanguage));
+document.getElementById("tbtLangIcon").textContent=currentLanguage==="Hindi"?"अA":"文A";
+
+
+timeLeft=
+minutes*60;
+
+
+clearInterval(
+timerId
+);
+
+
+timerId=
+setInterval(
+tick,
+1000
+);
+
+
+renderQuiz();
+
+tick();
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function tick(){
+
+const m=
+Math.floor(
+timeLeft/60
+);
+
+const s=
+timeLeft%60;
+
+
+document
+.getElementById("timer")
+.textContent=
+
+`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+
+
+if(
+timeLeft<=0
+){
+
+clearInterval(
+timerId
+);
+
+submitTest();
+
+return;
+
+}
+
+
+timeLeft--;
+
+}
+
+
+/* =========================================================
+   QUESTION TEXT
+========================================================= */
+
+function getQuestionText(q){
+
+if(
+currentLanguage==="English"
+)
+
+return q.en;
+
+
+if(
+currentLanguage==="Both"
+)
+
+return `${q.hi}<br><span style="font-size:14px;color:#64748b">${q.en}</span>`;
+
+
+return q.hi;
+
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+function getOptions(q){
+
+if(
+currentLanguage==="English"
+)
+
+return q.optionsEn;
+
+
+if(
+currentLanguage==="Both"
+)
+
+return q.optionsHi.map(
+
+(x,i)=>
+`${x} / ${q.optionsEn[i]}`
+
+);
+
+
+return q.optionsHi;
+
+}
+
+
+/* =========================================================
+   SECTION TABS
+========================================================= */
+
+function renderSectionTabs(q){
+const tabs=document.getElementById("subjectTabs");
+const template=getCurrentSectionTemplate();
+tabs.innerHTML=template.map(s=>`<button type="button" class="tbt-section-tab ${s.name===q.section?"active":""}" onclick="jumpToSection('${s.name}')">${s.name} (${s.end-s.start})</button>`).join("");
+}
+
+/* =========================================================
+   RENDER QUIZ
+========================================================= */
+
+function renderQuiz(preserveScroll=false){
+
+const q=questions[current];
+if(!q)return;
+
+const questionPane=document.getElementById("tbtQuestionPane");
+const omrPane=document.getElementById("tbtOmrPane");
+const oldQuestionScroll=questionPane?questionPane.scrollTop:0;
+const oldOmrScroll=omrPane?omrPane.scrollTop:0;
+
+renderSectionTabs(q);
+
+const paper=document.getElementById("tbtPaperQuestions");
+paper.innerHTML="";
+
+let lastSection="";
+questions.forEach((item,i)=>{
+  if(item.section!==lastSection){
+    const sh=document.createElement("div");
+    sh.className="tbt-section-heading";
+    sh.textContent=`${item.section} (${getSectionCount(item.section)})`;
+    paper.appendChild(sh);
+    lastSection=item.section;
+  }
+
+  const d=document.createElement("div");
+  d.className="tbt-q"+(i===current?" current":"");
+  d.id=`tbt-question-${i}`;
+
+  const qText=getQuestionText(item);
+  let opts="";
+  getOptions(item).forEach((o,j)=>{
+    opts+=`<div class="tbt-optline">(${String.fromCharCode(65+j)}) ${o}</div>`;
+  });
+
+  d.innerHTML=`<span class="tbt-qn">${i+1}. </span>${qText}<div class="tbt-opts">${opts}</div>`;
+  d.addEventListener("click",()=>{
+    current=i;
+    renderQuiz(true);
+    const target=document.getElementById(`tbt-question-${i}`);
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  paper.appendChild(d);
+});
+
+const left=document.getElementById("omrLeft");
+const right=document.getElementById("omrRight");
+left.innerHTML="";
+right.innerHTML="";
+
+let answered=0, notAnswered=0, markedOnly=0, answeredReview=0;
+
+questions.forEach((item,i)=>{
+  const ans=answers[i]!==null;
+  const rev=review.has(i);
+  if(ans)answered++; else notAnswered++;
+  if(rev&&!ans)markedOnly++;
+  if(rev&&ans)answeredReview++;
+
+  const row=document.createElement("div");
+  row.className="tbt-omr-row"+(ans&&rev?" row-both":rev?" row-reviewed":ans?" row-answered":"");
+  row.id=`tbt-omr-${i}`;
+
+  const num=document.createElement("div");
+  num.className="tbt-omr-num";
+  num.innerHTML=`${i+1}<i class="tbt-status-dot"></i>`;
+  row.appendChild(num);
+
+  for(let j=0;j<4;j++){
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="tbt-bubble"+(answers[i]===j?" selected":"");
+    b.textContent=String.fromCharCode(65+j);
+let pressTimer = null;
+let longPressTriggered = false;
+
+b.addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  longPressTriggered = false;
+
+  pressTimer = setTimeout(() => {
+    longPressTriggered = true;
+
+    answers[i] = j;
+    current = i;
+
+    renderQuiz(true);
+
+    const target = document.getElementById(`tbt-question-${i}`);
+    if(target) {
+      target.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }
+  }, 800);
+});
+
+b.addEventListener("pointerup", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  clearTimeout(pressTimer);
+});
+
+b.addEventListener("pointerleave", () => {
+  clearTimeout(pressTimer);
+});
+
+b.addEventListener("pointercancel", () => {
+  clearTimeout(pressTimer);
+});
+    row.appendChild(b);
+  }
+
+  row.onclick=()=>{
+    current=i;
+    renderQuiz(true);
+    const target=document.getElementById(`tbt-question-${i}`);
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  };
+
+  (i<Math.ceil(questions.length/2)?left:right).appendChild(row);
+});
+
+document.getElementById("countNA").textContent=`(${notAnswered})`;
+document.getElementById("countA").textContent=`(${answered})`;
+document.getElementById("countR").textContent=`(${markedOnly})`;
+document.getElementById("countAR").textContent=`(${answeredReview})`;
+
+const rb=document.getElementById("reviewBtn");
+rb.textContent=review.has(current)?"Unmark Review":"Mark for Review";
+rb.classList.toggle("review-on",review.has(current));
+
+const template=getCurrentSectionTemplate();
+const section=template.find(s=>current>=s.start&&current<s.end);
+const sectionCount=section?section.end-section.start:questions.length;
+document.getElementById("tbtExamTitle").textContent=`${selectedCategory} — Mock Test ${selectedMock}`;
+
+// Restore the user's manual scroll position unless a new question was deliberately selected.
+if(preserveScroll){
+  requestAnimationFrame(()=>{
+    if(questionPane)questionPane.scrollTop=oldQuestionScroll;
+    if(omrPane)omrPane.scrollTop=oldOmrScroll;
+  });
+}else{
+  if(questionPane)questionPane.scrollTop=0;
+  if(omrPane)omrPane.scrollTop=0;
+}
+
+}
+
+function getSectionCount(name){
+const s=getCurrentSectionTemplate().find(x=>x.name===name);
+return s?s.end-s.start:questions.length;
+}
+
+/* =========================================================
+   SECTION JUMP
+========================================================= */
+
+function jumpToSection(
+name
+){
+
+const s=
+getCurrentSectionTemplate()
+.find(
+x=>x.name===name
+);
+
+
+if(s){
+
+current=
+s.start;
+
+renderQuiz();
+
+}
+
+}
+
+
+/* =========================================================
+   NEXT / PREVIOUS
+========================================================= */
+
+function next(){
+
+if(
+current<
+questions.length-1
+){
+
+current++;
+
+renderQuiz();
+
+}
+
+}
+
+
+function prev(){
+
+if(current>0){
+
+current--;
+
+renderQuiz();
+
+}
+
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+document
+.getElementById(
+"reviewBtn"
+)
+.onclick=()=>{
+
+review.has(current)
+
+?
+review.delete(current)
+:
+review.add(current);
+
+
+renderQuiz();
+
+};
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+const tbtLangIcon=document.getElementById("tbtLangIcon");
+const tbtLangMenu=document.getElementById("tbtLangMenu");
+
+tbtLangIcon.addEventListener("click",e=>{
+  e.stopPropagation();
+  tbtLangMenu.classList.toggle("show");
+});
+
+document.addEventListener("click",()=>tbtLangMenu.classList.remove("show"));
+
+document.querySelectorAll(".tbt-lang-option").forEach(btn=>btn.addEventListener("click",e=>{
+  e.stopPropagation();
+  currentLanguage=btn.dataset.lang;
+  document.querySelectorAll(".tbt-lang-option").forEach(x=>x.classList.toggle("active",x===btn));
+  tbtLangIcon.textContent=currentLanguage==="Hindi"?"अA":"文A";
+  tbtLangMenu.classList.remove("show");
+  renderQuiz(true);
+}));
+
+document.getElementById("reviewBtn").onclick=()=>{
+  review.has(current)?review.delete(current):review.add(current);
+  renderQuiz(true);
+};
+
+/* =========================================================
+   SUBMIT TEST
+========================================================= */
+
+function submitTest(){
+
+if(!questions.length)
+return;
+
+
+clearInterval(
+timerId
+);
+
+
+let attempted=0;
+
+let correct=0;
+
+
+answers.forEach(
+(a,i)=>{
+
+if(a!==null){
+
+attempted++;
+
+
+if(
+a===questions[i].correct
+)
+
+correct++;
+
+}
+
+});
+
+
+const wrong=
+attempted-correct;
+
+
+const score=
+correct-wrong*negative;
+
+
+hideAllPages();
+
+
+document
+.getElementById(
+"resultPage"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"score"
+)
+.textContent=
+
+`${score.toFixed(2)} / ${questions.length}`;
+
+
+document
+.getElementById(
+"resultText"
+)
+.textContent=
+
+`${selectedCategory} • Mock ${selectedMock} | Attempted: ${attempted} | Correct: ${correct} | Wrong: ${wrong} | Negative Marking: ${negative}`;
+
+
+document
+.getElementById(
+"statTotal"
+)
+.textContent=
+questions.length;
+
+
+document
+.getElementById(
+"statAttempted"
+)
+.textContent=
+attempted;
+
+
+document
+.getElementById(
+"statCorrect"
+)
+.textContent=
+correct;
+
+
+document
+.getElementById(
+"statWrong"
+)
+.textContent=
+wrong;
+
+
+renderFinalReview();
+
+renderAnswerKey();
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   FINAL REVIEW
+========================================================= */
+
+function renderFinalReview(){
+
+const box=
+document.getElementById(
+"reviewList"
+);
+
+box.innerHTML="";
+
+
+questions.forEach(
+(q,i)=>{
+
+const selected=
+answers[i];
+
+
+const options=
+q.optionsHi.map(
+
+(x,j)=>
+`${x} / ${q.optionsEn[j]}`
+
+);
+
+
+let html="";
+
+
+options.forEach(
+
+(o,j)=>{
+
+let cls=
+"review-option";
+
+
+if(
+j===q.correct
+)
+
+cls+=" correct";
+
+
+if(
+selected!==null &&
+j===selected &&
+selected!==q.correct
+)
+
+cls+=" wrong";
+
+
+html+=
+
+`<div class="${cls}">
+
+${String.fromCharCode(65+j)}. ${o}
+
+${j===q.correct?" ✓ Correct Answer":""}
+
+${j===selected?" — Your Answer":""}
+
+</div>`;
+
+}
+);
+
+
+box.insertAdjacentHTML(
+
+"beforeend",
+
+`<div class="review-item">
+
+<div class="review-q">
+
+Q${i+1}. ${q.hi}
+
+<br>
+
+<span
+style="font-size:12px;font-weight:500;color:#64748b"
+>
+
+${q.en}
+
+</span>
+
+</div>
+
+${html}
+
+<div class="answer-label">
+
+Your Answer:
+
+<strong>
+
+${
+selected===null
+?
+"Not Attempted"
+:
+options[selected]
+}
+
+</strong>
+
+</div>
+
+<div class="answer-label">
+
+Correct Answer:
+
+<strong style="color:#168f57">
+
+${options[q.correct]}
+
+</strong>
+
+</div>
+
+</div>`
+
+);
+
+}
+);
+
+}
+
+
+/* =========================================================
+   ANSWER KEY
+========================================================= */
+
+function renderAnswerKey(){
+
+document
+.getElementById(
+"answerKeyContainer"
+)
+.innerHTML=
+
+`<div class="answer-key-page">
+
+<h2>
+📋 FINAL ANSWER KEY
+</h2>
+
+<p>
+${selectedCategory} • Mock Test ${selectedMock} • Total ${questions.length} Questions
+</p>
+
+<div class="answer-key-grid">
+
+${questions.map(
+
+(q,i)=>
+
+`<div class="answer-key-item">
+
+<b>Q${i+1}</b>
+
+<strong>
+${["A","B","C","D"][q.correct]}
+</strong>
+
+</div>`
+
+).join("")}
+
+</div>
+
+</div>`;
+
+}
+
+
+/* =========================================================
+   TBT RESIZABLE QUESTION / OMR DIVIDER
+========================================================= */
+const tbtDivider=document.getElementById("tbtDivider");
+const tbtQuestionPane=document.getElementById("tbtQuestionPane");
+const tbtApp=document.getElementById("tbtApp");
+let tbtDragging=false;
+
+function tbtStartDrag(e){tbtDragging=true;e.preventDefault();}
+function tbtMoveDrag(e){
+  if(!tbtDragging)return;
+  const y=e.touches?e.touches[0].clientY:e.clientY;
+  const rect=tbtApp.getBoundingClientRect();
+  const fixedTop=58+34+42;
+  const bottom=0;
+  const divider=13;
+  const min=145;
+  const max=rect.height-fixedTop-divider-min-bottom;
+  let h=y-rect.top-fixedTop;
+  h=Math.max(min,Math.min(max,h));
+  tbtQuestionPane.style.flex="0 0 "+h+"px";
+  tbtQuestionPane.style.height=h+"px";
+}
+function tbtEndDrag(){tbtDragging=false;}
+
+tbtDivider.addEventListener("mousedown",tbtStartDrag);
+window.addEventListener("mousemove",tbtMoveDrag);
+window.addEventListener("mouseup",tbtEndDrag);
+tbtDivider.addEventListener("touchstart",tbtStartDrag,{passive:false});
+window.addEventListener("touchmove",tbtMoveDrag,{passive:false});
+window.addEventListener("touchend",tbtEndDrag);
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
+
+document
+.getElementById(
+"beginBtn"
+)
+.onclick=
+startQuiz;
+
+
+document
+.getElementById(
+"submitTopBtn"
+)
+.onclick=()=>{
+
+if(
+confirm(
+"क्या आप Mock Test Submit करना चाहते हैं?"
+)
+)
+
+submitTest();
+
+};
+
+
+document
+.getElementById(
+"shuffleBtn"
+)
+.onclick=()=>{
+
+shuffleQuestions=
+!shuffleQuestions;
+
+
+document
+.getElementById(
+"shuffleBtn"
+)
+.textContent=
+
+shuffleQuestions
+
+?
+
+"☑ Questions Shuffle करें"
+
+:
+
+"☐ Questions Shuffle बंद है";
+
+};
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+renderCategories();
+
+checkAdminAndAccess();
+
+</script>
+
+</body>
+</html>
