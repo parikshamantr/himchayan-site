@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Login / Register | HimChayan</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f7fd;
+  color:#14213d;
+  min-height:100vh;
+  padding:25px 15px;
+}
+
+.container{
+  max-width:520px;
+  margin:30px auto;
+}
+
+.card{
+  background:#fff;
+  border-radius:22px;
+  padding:30px 28px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  border:1px solid #e8edf5;
+}
+
+.logo-area{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.logo-icon{
+  font-size:48px;
+  margin-bottom:5px;
+}
+
+.logo{
+  font-size:29px;
+  font-weight:900;
+  color:#1266d6;
+}
+
+.subtitle{
+  color:#7b8491;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#edf3fa;
+  padding:4px;
+  border-radius:11px;
+  margin-bottom:22px;
+}
+
+.tab{
+  border:0;
+  background:transparent;
+  padding:12px;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:800;
+  color:#687587;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:#1479e8;
+  color:white;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #dce3ec;
+  border-radius:9px;
+  font-size:15px;
+  outline:none;
+  background:#fff;
+}
+
+input:focus{
+  border-color:#1479e8;
+  box-shadow:0 0 0 3px rgba(20,121,232,.10);
+}
+
+.main-btn{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#1479e8;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+.main-btn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+.secondary-btn{
+  width:100%;
+  border:1px solid #1479e8;
+  padding:12px;
+  border-radius:9px;
+  background:#fff;
+  color:#1479e8;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.message{
+  display:none;
+  padding:12px 14px;
+  border-radius:9px;
+  margin-bottom:15px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.message.success{
+  display:block;
+  background:#e8f8ef;
+  color:#147a45;
+  border-left:4px solid #20a866;
+}
+
+.message.error{
+  display:block;
+  background:#fff0f0;
+  color:#b42318;
+  border-left:4px solid #e04444;
+}
+
+.info{
+  margin-top:18px;
+  padding:11px 13px;
+  background:#eef8ff;
+  color:#35617d;
+  border-left:4px solid #20a875;
+  border-radius:7px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.forgot{
+  display:block;
+  text-align:right;
+  margin-top:-5px;
+  margin-bottom:15px;
+  color:#1479e8;
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  margin-top:18px;
+  color:#1479e8;
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.reset-title{
+  text-align:center;
+  font-size:21px;
+  font-weight:900;
+  color:#1266d6;
+  margin-bottom:8px;
+}
+
+.reset-subtitle{
+  text-align:center;
+  color:#6f7b89;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:20px;
+}
+
+@media(max-width:480px){
+
+  body{
+    padding:15px 10px;
+  }
+
+  .container{
+    margin:10px auto;
+  }
+
+  .card{
+    padding:25px 18px;
+  }
+
+  .logo{
+    font-size:25px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<div class="card">
+
+
+<div class="logo-area">
+
+<div class="logo-icon">
+🎓
+</div>
+
+<div class="logo">
+HimChayan
+</div>
+
+<div class="subtitle">
+Login karke apni preparation save karein
+</div>
+
+</div>
+
+
+<!-- ================= NORMAL TABS ================= -->
+
+<div class="tabs" id="normalTabs">
+
+<button
+class="tab active"
+id="loginTab"
+type="button"
+onclick="showLogin()">
+
+Login
+
+</button>
+
+
+<button
+class="tab"
+id="registerTab"
+type="button"
+onclick="showRegister()">
+
+Register
+
+</button>
+
+</div>
+
+
+<div
+id="message"
+class="message">
+</div>
+
+
+
+<!-- =================================================
+     LOGIN FORM
+================================================= -->
+
+<form id="loginForm">
+
+<div class="form-group">
+
+<label for="loginEmail">
+Email
+</label>
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Enter your email"
+autocomplete="email"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="loginPassword">
+Password
+</label>
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter your password"
+autocomplete="current-password"
+required>
+
+</div>
+
+
+<a
+class="forgot"
+href="javascript:void(0)"
+onclick="showForgotPassword()">
+
+Forgot Password?
+
+</a>
+
+
+<button
+class="main-btn"
+type="submit"
+id="loginBtn">
+
+🔐 Login
+
+</button>
+
+</form>
+
+
+
+<!-- =================================================
+     REGISTER FORM
+================================================= -->
+
+<form
+id="registerForm"
+class="hidden">
+
+
+<div class="form-group">
+
+<label for="fullName">
+Full Name
+</label>
+
+<input
+type="text"
+id="fullName"
+placeholder="Enter your full name"
+autocomplete="name"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="registerEmail">
+Email
+</label>
+
+<input
+type="email"
+id="registerEmail"
+placeholder="Enter your email"
+autocomplete="email"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="mobile">
+Mobile Number
+</label>
+
+<input
+type="tel"
+id="mobile"
+placeholder="Enter mobile number"
+pattern="[0-9]{10}"
+maxlength="10"
+inputmode="numeric"
+autocomplete="tel"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="registerPassword">
+Password
+</label>
+
+<input
+type="password"
+id="registerPassword"
+placeholder="Create a password"
+minlength="6"
+autocomplete="new-password"
+required>
+
+</div>
+
+
+<button
+class="main-btn"
+type="submit"
+id="registerBtn">
+
+✨ Create Account
+
+</button>
+
+</form>
+
+
+
+<!-- =================================================
+     FORGOT PASSWORD FORM
+================================================= -->
+
+<form
+id="forgotForm"
+class="hidden">
+
+<div class="reset-title">
+🔑 Reset Password
+</div>
+
+<div class="reset-subtitle">
+अपने registered email पर password reset link प्राप्त करें।
+</div>
+
+
+<div class="form-group">
+
+<label for="forgotEmail">
+Registered Email
+</label>
+
+<input
+type="email"
+id="forgotEmail"
+placeholder="Enter your registered email"
+autocomplete="email"
+required>
+
+</div>
+
+
+<button
+class="main-btn"
+type="submit"
+id="forgotBtn">
+
+📧 Send Reset Link
+
+</button>
+
+
+<button
+type="button"
+class="secondary-btn"
+onclick="showLogin()">
+
+← Back to Login
+
+</button>
+
+</form>
+
+
+
+<!-- =================================================
+     NEW PASSWORD FORM
+================================================= -->
+
+<form
+id="resetForm"
+class="hidden">
+
+<div class="reset-title">
+🔐 Create New Password
+</div>
+
+<div class="reset-subtitle">
+आपका password reset link verify हो चुका है। अब नया password बनाएं।
+</div>
+
+
+<div class="form-group">
+
+<label for="newPassword">
+New Password
+</label>
+
+<input
+type="password"
+id="newPassword"
+placeholder="Enter new password"
+minlength="6"
+autocomplete="new-password"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="confirmPassword">
+Confirm New Password
+</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Re-enter new password"
+minlength="6"
+autocomplete="new-password"
+required>
+
+</div>
+
+
+<button
+class="main-btn"
+type="submit"
+id="resetBtn">
+
+✅ Update Password
+
+</button>
+
+</form>
+
+
+
+<div
+class="info"
+id="securityInfo">
+
+🔒 Account security ke liye password kabhi bhi kisi ke saath share na karein.
+
+</div>
+
+
+<a
+class="back"
+href="index.html"
+id="backHome">
+
+← Back to Home
+
+</a>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =================================================
+     SUPABASE
+================================================= -->
+
+<!-- =================================================
+     HIMCHAYAN CLOUDFLARE AUTH
+     ================================================= -->
+
+<script>
+/*
+  UI/CSS/forms are preserved from the old login page.
+  Authentication calls the Cloudflare Auth Bridge.
+
+  Default same-origin endpoint:
+      /auth/login
+      /auth/signup
+      /auth/refresh
+      /auth/user
+      /auth/logout
+      /auth/recover
+      /auth/password
+
+  If the site Worker exposes the bridge on another URL,
+  set window.HIMCHAYAN_AUTH_API before this script.
+*/
+
+const AUTH_API =
+  String(window.HIMCHAYAN_AUTH_API || "/auth")
+    .replace(/\/+$/, "");
+
+const ACCESS_TOKEN_KEY = "himchayan_auth_access_token";
+const REFRESH_TOKEN_KEY = "himchayan_auth_refresh_token";
+const USER_KEY = "himchayan_auth_user";
+
+function getAccessToken(){
+  return localStorage.getItem(ACCESS_TOKEN_KEY) || "";
+}
+
+function getRefreshToken(){
+  return localStorage.getItem(REFRESH_TOKEN_KEY) || "";
+}
+
+function saveSession(data){
+  if(data?.access_token){
+    localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
+  }
+  if(data?.refresh_token){
+    localStorage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
+  }
+  if(data?.user){
+    localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+  }
+}
+
+function clearSession(){
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+}
+
+async function authRequest(path, options={}){
+  const headers = new Headers(options.headers || {});
+  headers.set("Content-Type", "application/json");
+
+  const token = getAccessToken();
+  if(token){
+    headers.set("Authorization", "Bearer " + token);
+  }
+
+  const response = await fetch(
+    AUTH_API + path,
+    {...options, headers}
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if(!response.ok){
+    throw new Error(
+      data?.error ||
+      data?.message ||
+      "Authentication request failed."
+    );
+  }
+
+  return data;
+}
+
+
+/* =====================================================
+   SAFE REDIRECT SYSTEM
+   ===================================================== */
+
+const urlParams =
+  new URLSearchParams(window.location.search);
+
+let redirectPage = urlParams.get("redirect");
+
+function getSafeRedirect(value){
+  if(!value) return "index.html";
+
+  try{
+    value = decodeURIComponent(value);
+  }catch{
+    return "index.html";
+  }
+
+  value = value.trim();
+  if(!value) return "index.html";
+
+  try{
+    const target = new URL(
+      value,
+      window.location.origin
+    );
+
+    if(target.origin !== window.location.origin){
+      return "index.html";
+    }
+
+    return (
+      target.pathname +
+      target.search +
+      target.hash
+    );
+  }catch{
+    return "index.html";
+  }
+}
+
+redirectPage = getSafeRedirect(redirectPage);
+
+function redirectAfterLogin(){
+  window.location.replace(redirectPage);
+}
+
+
+/* =====================================================
+   RECOVERY MODE
+   ===================================================== */
+
+let recoveryMode = false;
+
+const hashParams =
+  new URLSearchParams(
+    (window.location.hash || "").replace(/^#/, "")
+  );
+
+const recoveryAccessToken =
+  hashParams.get("access_token");
+
+const recoveryRefreshToken =
+  hashParams.get("refresh_token");
+
+const recoveryType =
+  hashParams.get("type");
+
+if(
+  recoveryType === "recovery" &&
+  recoveryAccessToken
+){
+  recoveryMode = true;
+
+  localStorage.setItem(
+    ACCESS_TOKEN_KEY,
+    recoveryAccessToken
+  );
+
+  if(recoveryRefreshToken){
+    localStorage.setItem(
+      REFRESH_TOKEN_KEY,
+      recoveryRefreshToken
+    );
+  }
+}
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const forgotForm = document.getElementById("forgotForm");
+const resetForm = document.getElementById("resetForm");
+const normalTabs = document.getElementById("normalTabs");
+const securityInfo = document.getElementById("securityInfo");
+const backHome = document.getElementById("backHome");
+
+
+/* =====================================================
+   TAB SWITCH
+   ===================================================== */
+
+function showLogin(){
+  recoveryMode = false;
+
+  loginForm.classList.remove("hidden");
+  registerForm.classList.add("hidden");
+  forgotForm.classList.add("hidden");
+  resetForm.classList.add("hidden");
+
+  normalTabs.classList.remove("hidden");
+  securityInfo.classList.remove("hidden");
+  backHome.classList.remove("hidden");
+
+  document.getElementById("loginTab")
+    .classList.add("active");
+
+  document.getElementById("registerTab")
+    .classList.remove("active");
+
+  clearMessage();
+}
+
+function showRegister(){
+  recoveryMode = false;
+
+  loginForm.classList.add("hidden");
+  registerForm.classList.remove("hidden");
+  forgotForm.classList.add("hidden");
+  resetForm.classList.add("hidden");
+
+  normalTabs.classList.remove("hidden");
+  securityInfo.classList.remove("hidden");
+  backHome.classList.remove("hidden");
+
+  document.getElementById("loginTab")
+    .classList.remove("active");
+
+  document.getElementById("registerTab")
+    .classList.add("active");
+
+  clearMessage();
+}
+
+
+/* =====================================================
+   FORGOT / RESET SCREENS
+   ===================================================== */
+
+function showForgotPassword(){
+  recoveryMode = false;
+
+  loginForm.classList.add("hidden");
+  registerForm.classList.add("hidden");
+  forgotForm.classList.remove("hidden");
+  resetForm.classList.add("hidden");
+
+  normalTabs.classList.add("hidden");
+  securityInfo.classList.add("hidden");
+  backHome.classList.remove("hidden");
+
+  clearMessage();
+}
+
+function showResetPassword(){
+  recoveryMode = true;
+
+  loginForm.classList.add("hidden");
+  registerForm.classList.add("hidden");
+  forgotForm.classList.add("hidden");
+  resetForm.classList.remove("hidden");
+
+  normalTabs.classList.add("hidden");
+  securityInfo.classList.add("hidden");
+  backHome.classList.add("hidden");
+}
+
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+function showMessage(text, type){
+  const box = document.getElementById("message");
+  box.textContent = text;
+  box.className = "message " + type;
+}
+
+function clearMessage(){
+  const box = document.getElementById("message");
+  box.textContent = "";
+  box.className = "message";
+}
+
+
+/* =====================================================
+   FRIENDLY ERROR
+   ===================================================== */
+
+function getFriendlyError(error){
+  const message =
+    String(error?.message || "").toLowerCase();
+
+  if(
+    message.includes("email rate limit") ||
+    message.includes("rate limit exceeded") ||
+    message.includes("too many requests")
+  ){
+    return "❌ अभी email sending limit पूरी हो गई है। कुछ समय बाद दोबारा try करें।";
+  }
+
+  if(message.includes("email not confirmed")){
+    return "❌ पहले अपने email में confirmation link खोलकर account confirm करें, फिर Login करें।";
+  }
+
+  if(message.includes("invalid login credentials")){
+    return "❌ Email या Password गलत है।";
+  }
+
+  if(message.includes("user already registered")){
+    return "❌ इस email से account पहले से बना हुआ है। Login करें।";
+  }
+
+  if(message.includes("password should be at least")){
+    return "❌ Password कम से कम 6 characters का होना चाहिए।";
+  }
+
+  if(message.includes("invalid email")){
+    return "❌ कृपया सही email address डालें।";
+  }
+
+  if(
+    message.includes("expired") ||
+    message.includes("invalid token") ||
+    message.includes("otp")
+  ){
+    return "❌ Password reset link expire या invalid हो गया है। कृपया नया reset link भेजें।";
+  }
+
+  if(
+    message.includes("network") ||
+    message.includes("fetch")
+  ){
+    return "❌ Internet connection check करके दोबारा try करें।";
+  }
+
+  return (
+    "❌ " +
+    (
+      error?.message ||
+      "कुछ समस्या हुई। कृपया दोबारा try करें।"
+    )
+  );
+}
+
+
+/* =====================================================
+   REGISTER
+   ===================================================== */
+
+registerForm.addEventListener("submit", async function(e){
+  e.preventDefault();
+  clearMessage();
+
+  const fullName =
+    document.getElementById("fullName").value.trim();
+
+  const email =
+    document.getElementById("registerEmail")
+      .value.trim().toLowerCase();
+
+  const mobile =
+    document.getElementById("mobile").value.trim();
+
+  const password =
+    document.getElementById("registerPassword").value;
+
+  if(!/^[0-9]{10}$/.test(mobile)){
+    showMessage(
+      "❌ कृपया 10 digit mobile number enter करें।",
+      "error"
+    );
+    return;
+  }
+
+  if(password.length < 6){
+    showMessage(
+      "❌ Password कम से कम 6 characters का होना चाहिए।",
+      "error"
+    );
+    return;
+  }
+
+  const button =
+    document.getElementById("registerBtn");
+
+  button.disabled = true;
+  button.textContent = "Creating Account...";
+
+  try{
+    const data = await authRequest(
+      "/signup",
+      {
+        method:"POST",
+        body:JSON.stringify({
+          email,
+          password,
+          data:{
+            full_name:fullName,
+            mobile
+          },
+          email_redirect_to:
+            window.location.origin + "/login.html"
+        })
+      }
+    );
+
+    if(data?.access_token){
+      saveSession(data);
+
+      showMessage(
+        "✅ Account successfully create हो गया! Login हो गया है।",
+        "success"
+      );
+
+      setTimeout(redirectAfterLogin, 700);
+      return;
+    }
+
+    showMessage(
+      "✅ Account create हो गया! अपने Gmail में confirmation link खोलें। Confirm करने के बाद Login करें।",
+      "success"
+    );
+
+    registerForm.reset();
+
+    setTimeout(showLogin, 1800);
+
+  }catch(error){
+    console.error("Registration error:", error);
+
+    showMessage(
+      getFriendlyError(error),
+      "error"
+    );
+
+  }finally{
+    button.disabled = false;
+    button.textContent = "✨ Create Account";
+  }
+});
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+loginForm.addEventListener("submit", async function(e){
+  e.preventDefault();
+  clearMessage();
+
+  const email =
+    document.getElementById("loginEmail")
+      .value.trim().toLowerCase();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const button =
+    document.getElementById("loginBtn");
+
+  button.disabled = true;
+  button.textContent = "Logging in...";
+
+  try{
+    const data = await authRequest(
+      "/login",
+      {
+        method:"POST",
+        body:JSON.stringify({
+          email,
+          password
+        })
+      }
+    );
+
+    if(!data?.access_token){
+      throw new Error(
+        "Login session create नहीं हुई। कृपया दोबारा try करें।"
+      );
+    }
+
+    saveSession(data);
+
+    showMessage(
+      "✅ Login successful! वापस जा रहे हैं...",
+      "success"
+    );
+
+    setTimeout(redirectAfterLogin, 500);
+
+  }catch(error){
+    console.error("Login error:", error);
+
+    showMessage(
+      getFriendlyError(error),
+      "error"
+    );
+
+  }finally{
+    button.disabled = false;
+    button.textContent = "🔐 Login";
+  }
+});
+
+
+/* =====================================================
+   FORGOT PASSWORD
+   ===================================================== */
+
+forgotForm.addEventListener("submit", async function(e){
+  e.preventDefault();
+  clearMessage();
+
+  const email =
+    document.getElementById("forgotEmail")
+      .value.trim().toLowerCase();
+
+  const button =
+    document.getElementById("forgotBtn");
+
+  button.disabled = true;
+  button.textContent = "Sending...";
+
+  try{
+    await authRequest(
+      "/recover",
+      {
+        method:"POST",
+        body:JSON.stringify({
+          email,
+          redirect_to:
+            window.location.origin + "/login.html"
+        })
+      }
+    );
+
+    showMessage(
+      "✅ Password reset link आपके email पर भेज दिया गया है। Gmail खोलकर Reset Password link पर click करें।",
+      "success"
+    );
+
+    forgotForm.reset();
+
+  }catch(error){
+    console.error(
+      "Password reset error:",
+      error
+    );
+
+    showMessage(
+      getFriendlyError(error),
+      "error"
+    );
+
+  }finally{
+    button.disabled = false;
+    button.textContent = "📧 Send Reset Link";
+  }
+});
+
+
+/* =====================================================
+   UPDATE NEW PASSWORD
+   ===================================================== */
+
+resetForm.addEventListener("submit", async function(e){
+  e.preventDefault();
+  clearMessage();
+
+  const newPassword =
+    document.getElementById("newPassword").value;
+
+  const confirmPassword =
+    document.getElementById("confirmPassword").value;
+
+  if(newPassword.length < 6){
+    showMessage(
+      "❌ Password कम से कम 6 characters का होना चाहिए।",
+      "error"
+    );
+    return;
+  }
+
+  if(newPassword !== confirmPassword){
+    showMessage(
+      "❌ दोनों passwords समान नहीं हैं।",
+      "error"
+    );
+    return;
+  }
+
+  const button =
+    document.getElementById("resetBtn");
+
+  button.disabled = true;
+  button.textContent = "Updating...";
+
+  try{
+    await authRequest(
+      "/password",
+      {
+        method:"POST",
+        body:JSON.stringify({
+          password:newPassword
+        })
+      }
+    );
+
+    showMessage(
+      "✅ Password successfully बदल गया! अब नए password से Login करें।",
+      "success"
+    );
+
+    resetForm.reset();
+
+    try{
+      await authRequest(
+        "/logout",
+        {
+          method:"POST",
+          body:JSON.stringify({})
+        }
+      );
+    }catch(_){}
+
+    clearSession();
+
+    setTimeout(function(){
+      window.location.replace("login.html");
+    }, 1500);
+
+  }catch(error){
+    console.error(
+      "Password update error:",
+      error
+    );
+
+    showMessage(
+      getFriendlyError(error),
+      "error"
+    );
+
+  }finally{
+    button.disabled = false;
+    button.textContent = "✅ Update Password";
+  }
+});
+
+
+/* =====================================================
+   EXISTING SESSION CHECK + REFRESH
+   ===================================================== */
+
+(async function(){
+
+  if(recoveryMode){
+    showResetPassword();
+
+    showMessage(
+      "🔐 Password reset mode active है। नया password बनाएं।",
+      "success"
+    );
+
+    return;
+  }
+
+  const token = getAccessToken();
+
+  if(!token){
+    return;
+  }
+
+  try{
+    const data = await authRequest(
+      "/user",
+      {method:"GET"}
+    );
+
+    if(data?.user){
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify(data.user)
+      );
+
+      showMessage(
+        "✅ आप पहले से Login हैं। वापस जा रहे हैं...",
+        "success"
+      );
+
+      setTimeout(
+        redirectAfterLogin,
+        500
+      );
+    }
+
+  }catch(error){
+
+    console.error(
+      "Existing session error:",
+      error
+    );
+
+    const refresh = getRefreshToken();
+
+    if(!refresh){
+      clearSession();
+      return;
+    }
+
+    try{
+      const data = await authRequest(
+        "/refresh",
+        {
+          method:"POST",
+          body:JSON.stringify({
+            refresh_token:refresh
+          })
+        }
+      );
+
+      saveSession(data);
+
+      showMessage(
+        "✅ Session restored. वापस जा रहे हैं...",
+        "success"
+      );
+
+      setTimeout(
+        redirectAfterLogin,
+        500
+      );
+
+    }catch(refreshError){
+
+      console.error(
+        "Session refresh error:",
+        refreshError
+      );
+
+      clearSession();
+    }
+  }
+
+})();
+
+
+/* =====================================================
+   RECOVERY PAGE INITIAL CHECK
+   ===================================================== */
+
+if(recoveryMode){
+  setTimeout(
+    function(){
+      showResetPassword();
+    },
+    500
+  );
+}
+
+</script>
+
+</body>
+
+</html>
