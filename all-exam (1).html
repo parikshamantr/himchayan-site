@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HimChayan | All Exam PYQ / Mock Test etc.</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#f3f7fd;color:#14213d;line-height:1.5;min-height:100vh}
+button{font:inherit}
+.pm-page{max-width:1200px;margin:0 auto;padding:18px 14px 35px}
+.pm-top{background:linear-gradient(135deg,#071d47,#1266d6,#087cf0);color:#fff;border-radius:20px;padding:22px 18px;margin-bottom:16px;box-shadow:0 12px 30px rgba(0,80,180,.18);text-align:center}
+.pm-top .kicker{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);padding:7px 12px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.5px}
+.pm-top h1{font-size:28px;line-height:1.15;margin:12px 0 6px;font-weight:950}
+.pm-top h1 span{color:#ffe600}
+.pm-top p{font-size:13px;opacity:.92}
+.pm-home{display:inline-flex;align-items:center;gap:7px;margin:0 0 14px;background:#fff;color:#075fae;border:0;border-radius:12px;padding:9px 13px;font-weight:900;box-shadow:0 5px 15px rgba(0,65,140,.10);cursor:pointer;text-decoration:none}
+/* ================= ALL EXAM PORTFOLIO DEMO ================= */
+.pm-portfolio{
+  display:none;
+  margin:22px 12px 30px;
+  padding:18px;
+  border-radius:26px;
+  background:linear-gradient(180deg,#f7fbff,#eef6ff);
+  border:1px solid rgba(0,95,190,.14);
+  box-shadow:0 16px 40px rgba(0,65,140,.12);
+  scroll-margin-top:92px;
+}
+.pm-portfolio.pm-portfolio-open{display:block;animation:pmPortfolioIn .45s ease both}
+@keyframes pmPortfolioIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.pm-portfolio-head{text-align:center;margin-bottom:16px}
+.pm-portfolio-kicker{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#e4f2ff;color:#0866b8;font-size:12px;font-weight:900;letter-spacing:.5px}
+.pm-portfolio-head h2{margin:11px 0 5px;font-size:28px;color:#083b6f;font-weight:950}
+.pm-portfolio-head p{margin:0;color:#6c7b89;font-size:13px}
+.pm-portfolio-body{min-height:80px}
+.pm-portfolio-back{display:inline-flex;align-items:center;gap:7px;border:0;background:#fff;color:#075fae;font-weight:900;border-radius:12px;padding:9px 13px;box-shadow:0 5px 15px rgba(0,65,140,.10);cursor:pointer;margin-bottom:15px}
+.pm-portfolio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pm-portfolio-card{appearance:none;width:100%;text-align:left;border:1px solid rgba(0,91,170,.12);background:#fff;border-radius:18px;padding:15px;cursor:pointer;box-shadow:0 8px 22px rgba(0,50,120,.07);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.pm-portfolio-card:hover{transform:translateY(-3px);box-shadow:0 13px 28px rgba(0,50,120,.12);border-color:rgba(0,120,220,.30)}
+.pm-portfolio-card .pm-card-icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:#e9f5ff;color:#0878c9;font-size:19px;margin-bottom:10px}
+.pm-portfolio-card h3{margin:0 0 5px;color:#17334f;font-size:16px;font-weight:950}
+.pm-portfolio-card p{margin:0;color:#7a8792;font-size:12px;line-height:1.45}
+.pm-portfolio-card .pm-card-arrow{float:right;margin-top:-30px;color:#0b83d1;font-weight:900}
+.pm-portfolio-empty{text-align:center;background:#fff;border-radius:18px;padding:28px 16px;color:#6e7d89;border:1px dashed rgba(0,100,190,.20)}
+.pm-portfolio-note{margin-top:12px;text-align:center;font-size:11px;color:#7b8995}
+.pm-resource-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,91,170,.12);border-radius:16px;padding:13px;margin-bottom:10px;box-shadow:0 7px 18px rgba(0,50,120,.06)}
+.pm-resource-card .pm-resource-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#eef8ff;color:#0878c9;font-size:18px;flex:0 0 42px}
+.pm-resource-card .pm-resource-info{min-width:0;flex:1}
+.pm-resource-card h3{margin:0 0 3px;font-size:14px;color:#18334d}
+.pm-resource-card p{margin:0;font-size:11px;color:#7a8792}
+.pm-resource-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}.pm-resource-action{border:0;border-radius:10px;padding:8px 11px;background:#087fd1;color:#fff;font-weight:900;font-size:11px;cursor:pointer;white-space:nowrap}.pm-resource-download{background:#075fae}
+@media(max-width:520px){
+  .pm-portfolio{margin:18px 10px 26px;padding:14px;border-radius:22px}
+  .pm-portfolio-head h2{font-size:23px}
+  .pm-portfolio-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .pm-portfolio-card{padding:12px;border-radius:15px}
+  .pm-portfolio-card h3{font-size:14px}
+  .pm-portfolio-card p{font-size:10px}
+  .pm-resource-card{padding:11px}
+}
+
+
+.pm-portfolio{display:block;margin:0;padding:18px;border-radius:26px}
+.pm-portfolio-note{display:none}
+@media(max-width:520px){
+.pm-page{padding:12px 9px 25px}
+.pm-top{padding:19px 12px;border-radius:18px}
+.pm-top h1{font-size:22px}
+.pm-top p{font-size:11px}
+.pm-portfolio{padding:14px;border-radius:22px}
+}
+
+
+/* ================= ALL EXAM SEARCH ================= */
+.pm-exam-search{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid rgba(0,91,170,.14);border-radius:15px;padding:10px 12px;margin:0 0 14px;box-shadow:0 8px 20px rgba(0,50,120,.06)}
+.pm-exam-search i{color:#0878c9;font-size:16px}
+.pm-exam-search input{width:100%;border:0;outline:0;background:transparent;color:#18334d;font-size:14px;font-weight:700}
+.pm-exam-search input::placeholder{color:#8997a5;font-weight:600}
+.pm-search-status{text-align:center;color:#71808d;font-size:11px;font-weight:700;margin:-4px 0 12px}
+.pm-search-results{display:flex;flex-direction:column}
+@media(max-width:520px){
+  .pm-exam-search{padding:9px 11px;border-radius:13px}
+  .pm-exam-search input{font-size:13px}
+}
+
+/* ================= PROTECTED PDF VIEWER ================= */
+.pm-pdf-viewer{position:fixed;inset:0;z-index:99999;background:#111827;display:none;flex-direction:column;color:#fff;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pm-pdf-viewer.pm-pdf-open{display:flex}
+.pm-pdf-toolbar{height:58px;flex:0 0 58px;background:#071d47;display:flex;align-items:center;gap:10px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.pm-pdf-toolbar .pm-pdf-title{flex:1;min-width:0;font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm-pdf-btn{border:0;background:#fff;color:#075fae;border-radius:9px;padding:8px 12px;font-weight:900;cursor:pointer;white-space:nowrap}
+.pm-pdf-btn.pm-pdf-close{background:#e9eef5;color:#18334d}
+.pm-pdf-stage{flex:1;overflow:auto;background:#525659;padding:18px 10px 35px}
+.pm-pdf-pages{display:flex;flex-direction:column;align-items:center;gap:16px}
+.pm-pdf-viewer.pm-pdf-open .pm-pdf-loading{display:none!important}
+@media print{
+  #pmPdfViewer{display:none!important}
+}
+.pm-pdf-page{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
+
+.pm-pdf-page{background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.35);max-width:100%;height:auto;display:block}
+.pm-pdf-loading{min-height:100%;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;padding:30px}
+.pm-pdf-error{max-width:600px;background:#fff;color:#14213d;border-radius:16px;padding:22px;text-align:center;font-weight:700}
+@media(max-width:520px){
+  .pm-pdf-toolbar{height:54px;flex-basis:54px;padding:7px 8px}
+  .pm-pdf-toolbar .pm-pdf-title{font-size:12px}
+  .pm-pdf-btn{padding:7px 9px;font-size:11px}
+  .pm-pdf-stage{padding:10px 4px 24px}
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+<main class="pm-page">
+  <div class="pm-top">
+    <div class="kicker"><i class="fa-solid fa-graduation-cap"></i> HIMCHAYAN • EXAM HUB</div>
+    <h1>Prepare Smart. <span>Score Better.</span></h1>
+    <p>PYQ • Mock Tests • Notes • Syllabus • Results • Cutoff • Answer Key</p>
+  </div>
+  <a class="pm-home" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Homepage</a>
+  <section class="pm-portfolio pm-portfolio-open" id="all-exam-portfolio" aria-label="All Exam Portfolio">
+    <div class="pm-portfolio-head">
+      <div class="pm-portfolio-kicker"><i class="fa-solid fa-graduation-cap"></i> HIMCHAYAN EXAM HUB</div>
+      <h2 id="pmPortfolioTitle">All Exam Resources</h2>
+      <p id="pmPortfolioCrumb">Choose a section</p>
+    </div>
+    <div class="pm-portfolio-body" id="pmPortfolioBody"></div>
+  </section>
+</main>
+
+<div class="pm-pdf-viewer" id="pmPdfViewer" aria-hidden="true">
+  <div class="pm-pdf-toolbar">
+    <button class="pm-pdf-btn pm-pdf-close" id="pmPdfClose" type="button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <div class="pm-pdf-title" id="pmPdfTitle">PDF Viewer</div>
+    <button class="pm-pdf-btn" id="pmPdfDownload" type="button" style="display:none"><i class="fa-solid fa-download"></i> Download</button>
+  </div>
+  <div class="pm-pdf-stage" id="pmPdfStage">
+    <div class="pm-pdf-loading" id="pmPdfLoading">Opening secure PDF…</div>
+    <div class="pm-pdf-pages" id="pmPdfPages"></div>
+  </div>
+</div>
+
+<script>
+/* ================= ALL EXAM PORTFOLIO DEMO NAVIGATION ================= */
+(function(){
+  const portfolio=document.getElementById('all-exam-portfolio');
+  const body=document.getElementById('pmPortfolioBody');
+  const title=document.getElementById('pmPortfolioTitle');
+  const crumb=document.getElementById('pmPortfolioCrumb');
+  if(!portfolio||!body||!title||!crumb)return;
+
+  const SUPABASE_URL="https://ugfimbafjqajpogatvld.supabase.co";
+  const SUPABASE_KEY="sb_publishable_aIb1saXmG-6vbXcFi2E__w_6eDrGn4r";
+  const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const RESOURCE_FN=SUPABASE_URL+"/functions/v1/resource-gateway";
+  const groups=[
+    ['JBT','fa-school'],['TGT Arts','fa-book-open'],['TGT Medical','fa-heart-pulse'],['TGT Non-Medical','fa-flask'],
+    ['TGT Special Educator','fa-person-chalkboard'],['LT','fa-graduation-cap'],['CTET','fa-certificate'],['HP TET','fa-award'],
+    ['PGT','fa-chalkboard-user'],['NET','fa-globe'],['SET','fa-ranking-star'],['HAS','fa-landmark'],
+    ['NT','fa-file-signature'],['Allied','fa-people-group'],['High Court','fa-scale-balanced'],['JOA','fa-desktop'],
+    ['Patwari','fa-map-location-dot'],['Staff Nurse','fa-user-nurse'],['Police','fa-shield-halved'],['Forest Guard','fa-tree'],
+    ['Secretariat Clerk','fa-building-columns'],['Panchayat Secretary','fa-people-roof'],['All Banking Exam','fa-building-columns'],
+    ['SSC MTS','fa-file-lines'],['SSC OTHER','fa-file-lines'],['SSC GD','fa-shield-halved'],['RAILWAY','fa-train'],['Other','fa-layer-group']
+  ];
+  const pgtSubjects=['Hindi','English','History','Geography','Political Science','Economics','Other'];
+  const ctetSubjects=['JBT','TGT','Special Educator','LT'];
+
+  const esc=(v)=>String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const card=(label,icon,sub,onClick)=>`<button class="pm-portfolio-card" type="button" data-pm-action="${esc(label)}"><div class="pm-card-icon"><i class="fa-solid ${icon}"></i></div><h3>${esc(label)}</h3><p>${esc(sub||'Open resources')}</p><span class="pm-card-arrow">→</span></button>`;
+  const back=(label='All Exam Resources')=>`<button class="pm-portfolio-back" type="button" data-pm-back="1"><i class="fa-solid fa-arrow-left"></i>${esc(label)}</button>`;
+
+  function openPortfolio(){
+    portfolio.classList.add('pm-portfolio-open');
+    portfolio.scrollIntoView({behavior:'smooth',block:'start'});
+    navStack.length=0;
+    currentView=renderHome;
+    window.__pmCurrentView=renderHome;
+    renderHome();
+  }
+
+  function renderHome(){
+    title.textContent='All Exam Resources';
+    crumb.textContent='Search or choose a section';
+    body.innerHTML=`<div class="pm-exam-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="pmExamSearch" type="search" inputmode="search" autocomplete="off" placeholder="Search PDF, Photos, PYQ, Syllabus, JBT, TGT..." aria-label="Search all exam resources">
+      </div>
+      <div id="pmSearchStatus" class="pm-search-status" style="display:none"></div>
+      <div id="pmHomeContent" class="pm-portfolio-grid">
+        ${card('PYQ & Mock','fa-file-circle-check','Exam-wise PYQ, Mock Test, Notes & Other')}
+        ${card('Syllabus','fa-book','Direct PDF / Photos')}
+        ${card('Result','fa-trophy','Exam-wise PDF / Photos')}
+        ${card('Cutoff','fa-chart-column','Exam-wise PDF / Photos')}
+        ${card('Answer Key','fa-key','Exam-wise PDF / Photos')}
+      </div>`;
+    bindHomeActions();
+    bindExamSearch();
+  }
+
+  let pmSearchTimer=null;
+  async function searchAllExamResources(term){
+    const qtext=String(term||'').trim();
+    const content=document.getElementById('pmHomeContent');
+    const status=document.getElementById('pmSearchStatus');
+    if(!content||!status)return;
+    if(!qtext){
+      status.style.display='none';
+      content.className='pm-portfolio-grid';
+      content.innerHTML=`
+        ${card('PYQ & Mock','fa-file-circle-check','Exam-wise PYQ, Mock Test, Notes & Other')}
+        ${card('Syllabus','fa-book','Direct PDF / Photos')}
+        ${card('Result','fa-trophy','Exam-wise PDF / Photos')}
+        ${card('Cutoff','fa-chart-column','Exam-wise PDF / Photos')}
+        ${card('Answer Key','fa-key','Exam-wise PDF / Photos')}
+      `;
+      bindHomeActions();
+      return;
+    }
+
+    status.style.display='block';
+    status.textContent='Searching...';
+    content.className='pm-search-results';
+    content.innerHTML='<div class="pm-portfolio-empty">Searching resources...</div>';
+
+    try{
+      const safe=qtext.replace(/[,%]/g,' ').replace(/\s+/g,' ').trim();
+      if(!safe){
+        content.innerHTML='<div class="pm-portfolio-empty">Please enter a valid search.</div>';
+        status.textContent='';
+        return;
+      }
+      const pattern=`%${safe}%`;
+      const {data,error}=await supabaseClient.from('exam_resources')
+        .select('*')
+        .eq('is_published',true)
+        .eq('is_active',true)
+        .neq('access_type','HIDDEN')
+        .or(`title.ilike.${pattern},description.ilike.${pattern},exam_group.ilike.${pattern},content_type.ilike.${pattern},subject.ilike.${pattern},file_type.ilike.${pattern}`)
+        .order('display_order',{ascending:true})
+        .order('created_at',{ascending:false});
+      if(error)throw error;
+
+      const rows=data||[];
+      resourceMeta.clear();
+      status.textContent=`${rows.length} resource${rows.length===1?'':'s'} found`;
+      content.innerHTML=rows.length
+        ? rows.map(resourceCard).join('')
+        : '<div class="pm-portfolio-empty">No matching PDF, Photo or other resource found.</div>';
+      bindBackAndResources();
+      syncPaidAccessButtons();
+    }catch(e){
+      status.textContent='';
+      content.innerHTML=`<div class="pm-portfolio-empty">${esc(e.message||'Could not search resources')}</div>`;
+    }
+  }
+
+  function bindExamSearch(){
+    const input=document.getElementById('pmExamSearch');
+    if(!input)return;
+    input.addEventListener('input',()=>{
+      clearTimeout(pmSearchTimer);
+      const value=input.value;
+      pmSearchTimer=setTimeout(()=>searchAllExamResources(value),260);
+    });
+  }
+
+  async function invokeGateway(payload){
+    const {data:{session}}=await supabaseClient.auth.getSession();
+    if(!session) throw new Error("Please login first");
+    const res=await fetch(RESOURCE_FN,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error||"Request failed");
+    return data;
+  }
+
+  async function loadResources(filters){
+    let q=supabaseClient.from("exam_resources").select("*").eq("is_published",true).eq("is_active",true).neq("access_type","HIDDEN").order("display_order",{ascending:true}).order("created_at",{ascending:false});
+    Object.entries(filters||{}).forEach(([k,v])=>{
+      if(v!==undefined&&v!==null&&v!==""){
+        if(Array.isArray(v)) q=q.in(k,v);
+        else q=q.eq(k,v);
+      }
+    });
+    const {data,error}=await q;
+    if(error) throw error;
+    return data||[];
+  }
+
+  const resourceMeta=new Map();
+
+  function resourceCard(r){
+    resourceMeta.set(String(r.id),r);
+    const paid=r.access_type==='PAID';
+    const canView=r.allow_view!==false;
+    const canDownload=r.allow_download===true;
+
+    let actions='';
+    if(paid){
+      // Paid resources keep the existing payment protection.
+      // After ownership/admin access is verified, the same View/Download
+      // settings control which student buttons are available.
+      if(canView){
+        actions+=`<button class="pm-resource-action" type="button" data-resource-id="${esc(r.id)}" data-resource-paid="true" data-resource-action="view">₹${Number(r.price).toFixed(0)} • Buy / Open</button>`;
+      }
+      if(canDownload){
+        actions+=`<button class="pm-resource-action pm-resource-download" type="button" data-resource-id="${esc(r.id)}" data-resource-paid="true" data-resource-action="download" style="display:none"><i class="fa-solid fa-download"></i> Download</button>`;
+      }
+    }else{
+      if(canView){
+        actions+=`<button class="pm-resource-action" type="button" data-resource-id="${esc(r.id)}" data-resource-paid="false" data-resource-action="view">${r.file_type==='MOCK'?'Open Mock':'Open'}</button>`;
+      }
+      if(canDownload){
+        actions+=`<button class="pm-resource-action pm-resource-download" type="button" data-resource-id="${esc(r.id)}" data-resource-paid="false" data-resource-action="download"><i class="fa-solid fa-download"></i> Download</button>`;
+      }
+    }
+
+    const sub=paid
+      ?`Paid • ${canView&&canDownload?'View + Download':canView?'Website View Only':canDownload?'Download Only':'No Access'}`
+      :(r.file_type==='MOCK'?'Website TBT/CBT Mock':`${r.file_type} • ${canView&&canDownload?'View + Download':canView?'Free View':canDownload?'Download':'No Access'}`);
+
+    return `<div class="pm-resource-card">
+      <div class="pm-resource-icon"><i class="fa-solid ${r.file_type==='MOCK'?'fa-laptop-code':r.file_type==='IMAGE'?'fa-images':'fa-file-pdf'}"></i></div>
+      <div class="pm-resource-info"><h3>${esc(r.title)}</h3><p>${esc(r.description||sub)}</p></div>
+      <div class="pm-resource-actions">${actions}</div>
+    </div>`;
+  }
+
+  async function showResources(filters,titleText,crumbText,backLabel){
+    title.textContent=titleText; crumb.textContent=crumbText; body.innerHTML=`${back(backLabel)}<div class="pm-portfolio-empty">Loading resources...</div>`;
+    bindBackAndResources();
+    try{
+      const rows=await loadResources(filters);
+      resourceMeta.clear();
+      body.innerHTML=`${back(backLabel)}${rows.length?rows.map(resourceCard).join(''):`<div class="pm-portfolio-empty">No resources added yet.</div>`}`;
+      bindBackAndResources();
+      if(rows.length) syncPaidAccessButtons();
+    }catch(e){ body.innerHTML=`${back(backLabel)}<div class="pm-portfolio-empty">${esc(e.message||'Could not load resources')}</div>`; bindBackAndResources(); }
+  }
+
+  function renderExamGroups(){
+    title.textContent='PYQ & Mock'; crumb.textContent='Choose Exam / Exam Group';
+    body.innerHTML=`${back()}<div class="pm-portfolio-grid">${groups.map(g=>card(g[0],g[1],'Open exam resources')).join('')}</div>`; bindGroupActions();
+  }
+
+  const simpleResourceGroups=new Set([
+    'JBT','TGT Arts','TGT Medical','TGT Non-Medical','TGT Special Educator','LT','SET','HAS','NT','Allied',
+    'High Court','JOA','Patwari','Staff Nurse','Police','Forest Guard','Secretariat Clerk','Panchayat Secretary',
+    'All Banking Exam','SSC MTS','SSC OTHER','SSC GD','RAILWAY','Other'
+  ]);
+
+  function renderSimpleGroup(group){
+    title.textContent=group;
+    crumb.textContent='PYQ & Mock → '+group;
+    const options=[
+      {label:'PYQ',icon:'fa-file-circle-check',type:'PYQ'},
+      {label:'Mock Test',icon:'fa-laptop-code',type:'MOCK'},
+      {label:'Notes',icon:'fa-book-open',type:'NOTES'},
+      {label:'Other',icon:'fa-folder-open',type:'OTHER'}
+    ];
+    body.innerHTML=`${back('PYQ & Mock')}<div class="pm-portfolio-grid">${options.map(o=>card(o.label,o.icon,'Open '+group+' '+o.label)).join('')}</div>`;
+    bindSimpleOptions(group,options);
+  }
+
+  function renderSubjectGroup(group){
+    title.textContent=group;
+    crumb.textContent='PYQ & Mock → '+group;
+    const options=[
+      {label:group+' PYQ',icon:'fa-file-circle-check',type:'PYQ'},
+      {label:group+' Mock',icon:'fa-laptop-code',type:'MOCK'},
+      {label:'Notes',icon:'fa-book-open',type:'NOTES'},
+      {label:'Other',icon:'fa-folder-open',type:'OTHER'}
+    ];
+    body.innerHTML=`${back('PYQ & Mock')}<div class="pm-portfolio-grid">${options.map(o=>card(o.label,o.icon,'Open '+o.label)).join('')}</div>`;
+    bindSubjectOptions(group,options);
+  }
+
+  function renderSubjects(group,type,subjects,heading){
+    title.textContent=heading;
+    crumb.textContent='PYQ & Mock → '+group+' → '+heading;
+    body.innerHTML=`${back(group)}<div class="pm-portfolio-grid">${subjects.map(s=>card(s,'fa-book-open','Open '+group+' '+heading+' → '+s)).join('')}</div>`;
+    bindSubjectCards(group,type,heading);
+  }
+
+  function renderGroup(group){
+    if(simpleResourceGroups.has(group)) return renderSimpleGroup(group);
+    if(['CTET','HP TET','PGT','NET'].includes(group)) return renderSubjectGroup(group);
+    return renderSimpleGroup(group);
+  }
+
+  function renderFileType(type){
+    title.textContent=type;
+    crumb.textContent='All Exam Resources → '+type;
+    const options=[
+      {label:type+' PDF',icon:'fa-file-pdf',fileType:'PDF'},
+      {label:type+' Photos',icon:'fa-images',fileType:'IMAGE'}
+    ];
+    body.innerHTML=`${back()}<div class="pm-portfolio-grid">${options.map(o=>card(o.label,o.icon,'Direct file resource')).join('')}</div>`;
+    bindFileTypes(type,options);
+  }
+
+  let currentPdfResourceId=null;
+
+  function closePdfViewer(){
+    const viewer=document.getElementById('pmPdfViewer');
+    const pages=document.getElementById('pmPdfPages');
+    const loading=document.getElementById('pmPdfLoading');
+    if(!viewer)return;
+    viewer.classList.remove('pm-pdf-open');
+    viewer.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    currentPdfResourceId=null;
+    if(pages)pages.innerHTML='';
+    if(loading){loading.style.display='grid';loading.innerHTML='Opening secure PDF…';}
+  }
+
+  async function downloadResource(id){
+    try{
+      const r=resourceMeta.get(String(id));
+      if(!r||!r.allow_download) throw new Error('Download is not enabled for this resource.');
+      const d=await invokeGateway({action:'get_resource',resource_id:id,download:true});
+      if(!d.url) throw new Error('Download link unavailable.');
+      const res=await fetch(d.url);
+      if(!res.ok) throw new Error('Download could not be started.');
+      const blob=await res.blob();
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=(r.title||'HimChayan-resource').replace(/[^a-z0-9._-]+/gi,'_')+'.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
+    }catch(e){alert(e.message||'Unable to download resource');}
+  }
+
+  async function openProtectedPdf(id,d){
+    const viewer=document.getElementById('pmPdfViewer');
+    const titleEl=document.getElementById('pmPdfTitle');
+    const loading=document.getElementById('pmPdfLoading');
+    const pages=document.getElementById('pmPdfPages');
+    const downloadBtn=document.getElementById('pmPdfDownload');
+
+    if(!viewer||!window.pdfjsLib){
+      throw new Error('Private PDF viewer is unavailable.');
+    }
+
+    currentPdfResourceId=id;
+    titleEl.textContent=d.title||resourceMeta.get(String(id))?.title||'PDF Viewer';
+    downloadBtn.style.display=d.allow_download?'inline-flex':'none';
+    downloadBtn.onclick=()=>downloadResource(id);
+
+    viewer.classList.add('pm-pdf-open');
+    viewer.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    pages.innerHTML='';
+    loading.style.display='grid';
+    loading.innerHTML='Opening secure PDF…';
+
+    try{
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc=
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      /*
+       * Keep PDF.js as the private in-page renderer.
+       * useSystemFonts:false + disableFontFace:false tells PDF.js to prefer
+       * the fonts contained/defined by the PDF instead of replacing them
+       * with the phone's system font.
+       */
+      const pdf=await window.pdfjsLib.getDocument({
+        url:d.url,
+        disableAutoFetch:false,
+        disableStream:false,
+        useSystemFonts:false,
+        disableFontFace:false,
+        fontExtraProperties:true,
+        verbosity:0
+      }).promise;
+
+      loading.style.display='none';
+
+      for(let n=1;n<=pdf.numPages;n++){
+        const page=await pdf.getPage(n);
+
+        // Render at a high device-aware resolution so the original glyph
+        // shapes remain sharp without changing the PDF's page proportions.
+        const base=page.getViewport({scale:1});
+        const maxWidth=Math.min(window.innerWidth-18,1000);
+        const cssScale=Math.min(1.8,maxWidth/base.width);
+        const dpr=Math.min(window.devicePixelRatio||1,2);
+        const renderScale=cssScale*dpr;
+
+        const cssViewport=page.getViewport({scale:cssScale});
+        const renderViewport=page.getViewport({scale:renderScale});
+
+        const canvas=document.createElement('canvas');
+        canvas.className='pm-pdf-page';
+        canvas.style.width=Math.ceil(cssViewport.width)+'px';
+        canvas.style.height=Math.ceil(cssViewport.height)+'px';
+        canvas.width=Math.ceil(renderViewport.width);
+        canvas.height=Math.ceil(renderViewport.height);
+        canvas.setAttribute('aria-label','PDF page '+n);
+
+        pages.appendChild(canvas);
+
+        const ctx=canvas.getContext('2d',{alpha:false});
+        ctx.imageSmoothingEnabled=true;
+
+        await page.render({
+          canvasContext:ctx,
+          viewport:renderViewport,
+          intent:'display'
+        }).promise;
+      }
+    }catch(e){
+      loading.style.display='grid';
+      loading.innerHTML=
+        '<div class="pm-pdf-error">PDF could not be opened.<br><small>Please try again.</small></div>';
+    }
+  }
+
+  async function openResource(id,download=false){
+    try{
+      const d=await invokeGateway({action:'get_resource',resource_id:id,download});
+      if(!d.url) throw new Error('Resource URL unavailable.');
+      const r=resourceMeta.get(String(id));
+      if(download){ 
+        const a=document.createElement('a');
+        a.href=d.url;a.download='';document.body.appendChild(a);a.click();a.remove();
+        markResourceOpen(id);
+        return true;
+      }
+      markResourceOpen(id);
+      if((d.file_type||r?.file_type)==='PDF' && !d.external){
+        await openProtectedPdf(id,d);
+        return true;
+      }
+      window.open(d.url,'_blank','noopener');
+      return true;
+    }catch(e){
+      const msg=String(e.message||'').toLowerCase();
+      if(msg.includes('purchase')||msg.includes('access')){
+        return buyResource(id);
+      }
+      alert(e.message||'Unable to open resource');
+      return false;
+    }
+  }
+
+  function markResourceOpen(id){
+    const resource=resourceMeta.get(String(id));
+    if(!resource)return;
+
+    const buttons=[...body.querySelectorAll(`[data-resource-id="${id}"]`)];
+    const canView=resource.allow_view!==false;
+    const canDownload=resource.allow_download===true;
+
+    buttons.forEach(btn=>{
+      const action=btn.getAttribute('data-resource-action');
+      if(action==='view'){
+        btn.setAttribute('data-resource-paid','false');
+        if(canView){
+          btn.textContent=resource.file_type==='MOCK'?'Open Mock':'Open';
+          btn.style.display='inline-flex';
+        }else{
+          btn.style.display='none';
+        }
+      }
+      if(action==='download'){
+        btn.setAttribute('data-resource-paid','false');
+        btn.style.display=canDownload?'inline-flex':'none';
+      }
+    });
+  }
+
+  async function syncPaidAccessButtons(){
+    const buttons=[...body.querySelectorAll('[data-resource-paid="true"]')];
+    await Promise.all(buttons.map(async btn=>{
+      const id=btn.getAttribute('data-resource-id');
+      if(!id)return;
+      try{
+        const d=await invokeGateway({action:'get_resource',resource_id:id,download:false});
+        if(d&&d.url) markResourceOpen(id);
+      }catch(e){/* purchase-required resources stay unchanged */}
+    }));
+  }
+
+  async function openPaidOrOwnedResource(id){
+    try{
+      const d=await invokeGateway({action:'get_resource',resource_id:id,download:false});
+      if(!d.url) throw new Error('Resource URL unavailable.');
+      markResourceOpen(id);
+      const r=resourceMeta.get(String(id));
+      if((d.file_type||r?.file_type)==='PDF' && !d.external) return openProtectedPdf(id,d);
+      window.open(d.url,'_blank','noopener');
+    }catch(e){
+      const msg=String(e.message||'').toLowerCase();
+      if(msg.includes('purchase')||msg.includes('access')) return buyResource(id);
+      alert(e.message||'Unable to open resource');
+    }
+  }
+
+  async function openPaidOrOwnedDownload(id){
+    try{
+      const d=await invokeGateway({action:'get_resource',resource_id:id,download:true});
+      if(!d.url) throw new Error('Download link unavailable.');
+      markResourceOpen(id);
+      await downloadResource(id);
+    }catch(e){
+      const msg=String(e.message||'').toLowerCase();
+      if(msg.includes('purchase')||msg.includes('access')) return buyResource(id);
+      alert(e.message||'Unable to download resource');
+    }
+  }
+
+  async function buyResource(id){
+    try{
+      const d=await invokeGateway({action:'create_order',resource_id:id});
+      if(d.admin_free){markResourceOpen(id);return openResource(id,false);}
+      if(d.already_owned){markResourceOpen(id);return openResource(id,false);}
+      const rzp=new Razorpay({key:d.key_id,amount:d.amount,currency:d.currency,name:'HimChayan',description:d.title,order_id:d.order_id,handler:async function(resp){
+        try{
+          await invokeGateway({action:'verify_payment',local_order_id:d.local_order_id,razorpay_order_id:resp.razorpay_order_id,razorpay_payment_id:resp.razorpay_payment_id,razorpay_signature:resp.razorpay_signature});
+          markResourceOpen(id);
+          alert('Payment successful. Resource access granted.');
+          await openResource(id,false);
+        }catch(e){alert(e.message||'Payment verification failed');}
+      }});
+      rzp.open();
+    }catch(e){alert(e.message||'Could not start payment');}
+  }
+
+  const navStack=[];
+  let currentView=null;
+
+  function showView(renderFn,push=true){
+    if(push && currentView) navStack.push(currentView);
+    currentView=renderFn;
+    window.__pmCurrentView=renderFn;
+    renderFn();
+  }
+
+  function go(renderFn){showView(renderFn,true);}
+
+  function backOne(){
+    if(navStack.length){
+      currentView=navStack.pop();
+      window.__pmCurrentView=currentView;
+      currentView();
+    }else{
+      renderHome();
+    }
+  }
+
+  function bindBackAndResources(){
+    body.querySelectorAll('[data-pm-back]').forEach(b=>b.addEventListener('click',backOne));
+    body.querySelectorAll('[data-resource-id]').forEach(b=>b.addEventListener('click',async()=>{
+      const id=b.getAttribute('data-resource-id');
+      const action=b.getAttribute('data-resource-action')||'view';
+      const paid=b.getAttribute('data-resource-paid')==='true';
+
+      if(action==='download'){
+        if(paid) return openPaidOrOwnedDownload(id);
+        return downloadResource(id);
+      }
+
+      if(paid) return openPaidOrOwnedResource(id);
+      return openResource(id,false);
+    }));
+  }
+
+  function bindHomeActions(){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const label=b.getAttribute('data-pm-action')||'';
+      if(label==='PYQ & Mock') return go(renderExamGroups);
+      if(['Syllabus','Result','Cutoff','Answer Key'].includes(label)) return go(()=>renderFileType(label));
+      return go(()=>renderGroup(label));
+    }));
+    bindBackAndResources();
+  }
+
+  function bindGroupActions(){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const label=b.getAttribute('data-pm-action')||'';
+      if(groups.some(g=>g[0]===label)) return go(()=>renderGroup(label));
+    }));
+    bindBackAndResources();
+  }
+
+  function bindSimpleOptions(group,options){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const label=b.getAttribute('data-pm-action')||'';
+      const selected=options.find(o=>o.label===label);
+      if(!selected)return;
+      const groupFilter=(group==='TGT Arts')?['TGT Arts','TGT']:group;
+      go(()=>showResources(
+        {exam_group:groupFilter,content_type:selected.type},
+        group+' → '+selected.label,
+        'PYQ & Mock → '+group+' → '+selected.label,
+        group
+      ));
+    }));
+    bindBackAndResources();
+  }
+
+  function bindSubjectOptions(group,options){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const label=b.getAttribute('data-pm-action')||'';
+      const selected=options.find(o=>o.label===label);
+      if(!selected)return;
+      if(selected.type==='NOTES'||selected.type==='OTHER'){
+        go(()=>showResources({exam_group:group,content_type:selected.type},group+' → '+selected.label,'PYQ & Mock → '+group+' → '+selected.label,group));
+        return;
+      }
+      const subjects=(group==='PGT'||group==='NET')?pgtSubjects:ctetSubjects;
+      go(()=>renderSubjects(group,selected.type,subjects,selected.label));
+    }));
+    bindBackAndResources();
+  }
+
+  function bindSubjectCards(group,type,heading){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const subject=b.getAttribute('data-pm-action')||'';
+      go(()=>showResources(
+        {exam_group:group,content_type:type,subject:subject},
+        group+' → '+heading+' → '+subject,
+        'PYQ & Mock → '+group+' → '+heading+' → '+subject,
+        group
+      ));
+    }));
+    bindBackAndResources();
+  }
+
+  function bindFileTypes(type,options){
+    body.querySelectorAll('[data-pm-action]').forEach(b=>b.addEventListener('click',()=>{
+      const label=b.getAttribute('data-pm-action')||'';
+      const selected=options.find(o=>o.label===label);
+      if(!selected)return;
+      go(()=>showResources(
+        {content_type:type.toUpperCase().replace(' ','_'),file_type:selected.fileType},
+        selected.label,
+        'All Exam Resources → '+type+' → '+selected.label,
+        type
+      ));
+    }));
+    bindBackAndResources();
+  }
+
+
+  document.getElementById('pmPdfClose')?.addEventListener('click',closePdfViewer);
+  document.getElementById('pmPdfViewer')?.addEventListener('contextmenu',e=>e.preventDefault());
+  document.getElementById('pmPdfViewer')?.addEventListener('keydown',e=>{
+    if(e.ctrlKey && ['p','s','u','c'].includes(e.key.toLowerCase())) e.preventDefault();
+    if(e.key==='PrintScreen'){ e.preventDefault(); }
+  });
+  document.addEventListener('keydown',e=>{
+    const viewer=document.getElementById('pmPdfViewer');
+    if(viewer?.classList.contains('pm-pdf-open')){
+      if(e.key==='Escape'){closePdfViewer();return;}
+      const k=e.key.toLowerCase();
+      if(e.key==='PrintScreen') e.preventDefault();
+      if(e.key==='F12') e.preventDefault();
+      if(e.ctrlKey && ['p','s','u','c','a'].includes(k)) e.preventDefault();
+      if(e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) e.preventDefault();
+    }
+  });
+  document.getElementById('pmPdfStage')?.addEventListener('contextmenu',e=>e.preventDefault());
+  document.getElementById('pmPdfPages')?.addEventListener('copy',e=>e.preventDefault());
+  document.getElementById('pmPdfPages')?.addEventListener('cut',e=>e.preventDefault());
+  document.getElementById('pmPdfPages')?.addEventListener('dragstart',e=>e.preventDefault());
+  document.getElementById('pmPdfPages')?.addEventListener('selectstart',e=>e.preventDefault());
+  document.getElementById('pmPdfPages')?.addEventListener('contextmenu',e=>e.preventDefault());
+  window.addEventListener('beforeprint',()=>{
+    const viewer=document.getElementById('pmPdfViewer');
+    if(viewer?.classList.contains('pm-pdf-open')) viewer.style.display='none';
+  });
+  window.addEventListener('afterprint',()=>{
+    const viewer=document.getElementById('pmPdfViewer');
+    if(viewer?.classList.contains('pm-pdf-open')) viewer.style.display='flex';
+  });
+  document.addEventListener('visibilitychange',()=>{
+    const viewer=document.getElementById('pmPdfViewer');
+    if(!viewer?.classList.contains('pm-pdf-open'))return;
+    if(document.hidden){
+      viewer.style.visibility='hidden';
+    }else{
+      viewer.style.visibility='visible';
+    }
+  });
+
+  document.querySelectorAll('a[href="#all-exam-portfolio"]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();openPortfolio();}));
+  currentView=renderHome;
+  window.__pmCurrentView=renderHome;
+  renderHome();
+})();
+
+</script>
+</body>
+</html>

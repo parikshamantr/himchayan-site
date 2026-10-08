@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HimChayan | Premium Preparation</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f3f7fd;
+color:#172033;
+line-height:1.5;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+font:inherit;
+cursor:pointer;
+}
+
+.top{
+background:#0b101b;
+border-bottom:1px solid #202733;
+padding:9px 4%;
+}
+
+.nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.brand{
+font-size:19px;
+font-weight:900;
+color:#35b9f5;
+}
+
+.home-btn{
+background:#168fe0;
+color:#fff;
+padding:8px 13px;
+border-radius:7px;
+font-size:11px;
+font-weight:800;
+}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:14px 15px 35px;
+}
+
+.back-btn{
+display:inline-block;
+background:#e9f2fc;
+color:#315d91;
+padding:7px 11px;
+border-radius:7px;
+font-size:10px;
+font-weight:800;
+margin-bottom:12px;
+}
+
+.hero{
+background:linear-gradient(135deg,#082653,#087ce9);
+color:#fff;
+border-radius:16px;
+padding:25px 18px;
+margin-bottom:14px;
+box-shadow:0 8px 25px rgba(0,70,160,.18);
+}
+
+.hero-icon{
+font-size:42px;
+margin-bottom:6px;
+}
+
+.hero h1{
+font-size:24px;
+margin-bottom:6px;
+}
+
+.hero p{
+font-size:11px;
+color:#dcecff;
+}
+
+.hero-badge{
+display:inline-block;
+margin-top:12px;
+background:#ffe16a;
+color:#745700;
+padding:6px 9px;
+border-radius:6px;
+font-size:9px;
+font-weight:900;
+}
+
+
+/* ACCESS */
+
+.access{
+background:#fff;
+border:1px solid #e3e8ef;
+border-radius:13px;
+padding:13px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:18px;
+box-shadow:0 3px 12px rgba(0,0,0,.04);
+}
+
+.access-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.access-icon{
+font-size:30px;
+}
+
+.access-title{
+font-size:13px;
+font-weight:900;
+}
+
+.access-text{
+font-size:9px;
+color:#7c8694;
+margin-top:2px;
+}
+
+.login-btn{
+background:#168fe0;
+color:#fff;
+padding:8px 11px;
+border-radius:7px;
+font-size:9px;
+font-weight:900;
+white-space:nowrap;
+}
+
+
+/* SECTION */
+
+.section-title{
+text-align:center;
+margin:18px 0 13px;
+}
+
+.section-title h2{
+font-size:20px;
+color:#244366;
+}
+
+.section-title p{
+font-size:10px;
+color:#84909d;
+margin-top:3px;
+}
+
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
+
+.card{
+background:#fff;
+border:1px solid #e2e7ed;
+border-radius:12px;
+padding:13px;
+box-shadow:0 3px 12px rgba(0,0,0,.04);
+position:relative;
+}
+
+.card-icon{
+font-size:31px;
+margin-bottom:7px;
+}
+
+.locked{
+position:absolute;
+right:8px;
+top:8px;
+background:#fff2c9;
+color:#8c6800;
+padding:4px 6px;
+border-radius:5px;
+font-size:8px;
+font-weight:900;
+}
+
+.card h3{
+font-size:13px;
+margin-bottom:4px;
+}
+
+.card p{
+font-size:9px;
+color:#7d8793;
+min-height:31px;
+margin-bottom:8px;
+}
+
+.list{
+list-style:none;
+margin-bottom:10px;
+}
+
+.list li{
+font-size:8px;
+color:#687482;
+margin:3px 0;
+}
+
+.list li:before{
+content:"✓";
+color:#2497b8;
+font-weight:900;
+margin-right:4px;
+}
+
+
+/* LOGIN BUTTONS */
+
+.login-action{
+display:block;
+width:100%;
+border:0;
+background:#168fe0;
+color:#fff;
+padding:9px 4px;
+border-radius:7px;
+font-size:8px;
+font-weight:900;
+text-align:center;
+}
+
+.login-action:hover{
+background:#0d72cb;
+}
+
+
+/* PREMIUM MOCK */
+
+.mock-card{
+border:2px solid #ead99b;
+background:linear-gradient(
+135deg,
+#fffdf5,
+#fff9e8
+);
+}
+
+.mock-card h3{
+padding-right:55px;
+}
+
+.mock-buttons{
+display:grid;
+grid-template-columns:1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.mock-btn{
+display:flex;
+align-items:center;
+justify-content:center;
+width:100%;
+min-height:42px;
+padding:10px 8px;
+border-radius:8px;
+font-size:10px;
+font-weight:900;
+text-align:center;
+transition:.15s;
+}
+
+.mock-btn:hover{
+transform:translateY(-1px);
+}
+
+.mock1-btn{
+background:#168fe0;
+color:#fff;
+}
+
+
+/* COMING */
+
+.coming{
+margin-top:18px;
+background:#fff4c9;
+border:1px solid #f0dfa3;
+border-radius:13px;
+padding:22px 15px;
+text-align:center;
+}
+
+.coming-icon{
+font-size:34px;
+margin-bottom:5px;
+}
+
+.coming h2{
+font-size:16px;
+color:#69551a;
+margin-bottom:5px;
+}
+
+.coming p{
+font-size:9px;
+color:#877644;
+max-width:650px;
+margin:auto;
+}
+
+.coming-btn{
+display:inline-block;
+margin-top:9px;
+background:#fff;
+border:1px solid #e3d49d;
+color:#766020;
+padding:7px 10px;
+border-radius:7px;
+font-size:8px;
+font-weight:900;
+}
+
+
+/* INFO */
+
+.info{
+margin-top:16px;
+background:#fff;
+border:1px solid #e3e8ef;
+border-radius:12px;
+padding:12px;
+}
+
+.info h3{
+font-size:11px;
+margin-bottom:4px;
+}
+
+.info p{
+font-size:8px;
+color:#7b8592;
+}
+
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+font-size:9px;
+color:#7c8692;
+padding:25px 0 5px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.wrap{
+padding:12px 10px 30px;
+}
+
+.hero{
+padding:23px 16px;
+}
+
+.hero h1{
+font-size:21px;
+}
+
+.hero p{
+font-size:10px;
+}
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.card{
+padding:11px;
+}
+
+.access{
+padding:11px;
+}
+
+}
+
+@media(max-width:500px){
+
+.brand{
+font-size:16px;
+}
+
+.home-btn{
+font-size:9px;
+padding:7px 9px;
+}
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+}
+
+.card{
+padding:10px 9px;
+border-radius:10px;
+}
+
+.card-icon{
+font-size:27px;
+}
+
+.card h3{
+font-size:11px;
+}
+
+.card p{
+font-size:8px;
+}
+
+.list li{
+font-size:7px;
+}
+
+.login-action{
+font-size:7px;
+padding:8px 3px;
+}
+
+.mock-btn{
+font-size:7px;
+padding:8px 4px;
+min-height:38px;
+}
+
+.locked{
+font-size:7px;
+padding:3px 4px;
+}
+
+.access-title{
+font-size:11px;
+}
+
+.access-text{
+font-size:7px;
+}
+
+.login-btn{
+font-size:7px;
+padding:7px 8px;
+}
+
+.section-title h2{
+font-size:18px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<div class="nav">
+
+<div class="brand">
+HimChayan
+</div>
+
+<a href="index.html" class="home-btn">
+🏠 Home
+</a>
+
+</div>
+
+</header>
+
+
+<main class="wrap">
+
+<a href="index.html" class="back-btn">
+← Back to Home
+</a>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-icon">
+⭐
+</div>
+
+<h1>
+Premium Preparation
+</h1>
+
+<p>
+Premium users के लिए advanced study material, exam resources और focused preparation का dedicated section।
+</p>
+
+<span class="hero-badge">
+👑 PREMIUM PREPARATION
+</span>
+
+</section>
+
+
+<!-- ACCESS -->
+
+<section class="access">
+
+<div class="access-left">
+
+<div class="access-icon">
+🔐
+</div>
+
+<div>
+
+<div class="access-title">
+Premium Access
+</div>
+
+<div class="access-text">
+Premium content access करने के लिए अपने HimChayan account में Login करें।
+</div>
+
+</div>
+
+</div>
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-btn">
+Login / Register →
+</a>
+
+</section>
+
+
+<!-- PREMIUM AREAS -->
+
+<div class="section-title">
+
+<h2>
+📚 Premium Preparation Areas
+</h2>
+
+<p>
+Premium resources की planned categories
+</p>
+
+</div>
+
+
+<section class="grid">
+
+
+<!-- PREMIUM NOTES -->
+
+<div class="card">
+
+<span class="locked">
+🔒 LOCKED
+</span>
+
+<div class="card-icon">
+📚
+</div>
+
+<h3>
+Premium Notes
+</h3>
+
+<p>
+Detailed subject-wise notes और advanced revision material
+</p>
+
+<ul class="list">
+<li>Subject-wise Notes</li>
+<li>Detailed Concepts</li>
+<li>Revision Material</li>
+</ul>
+
+<div class="premium-actions">
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-action">
+🔐 Login / Register
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PREMIUM PDF -->
+
+<div class="card">
+
+<span class="locked">
+🔒 LOCKED
+</span>
+
+<div class="card-icon">
+📕
+</div>
+
+<h3>
+Premium PDFs
+</h3>
+
+<p>
+Important PDFs और advanced preparation resources
+</p>
+
+<ul class="list">
+<li>Important Questions</li>
+<li>Revision PDFs</li>
+<li>Exam Resources</li>
+</ul>
+
+<div class="premium-actions">
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-action">
+🔐 Login / Register
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PREMIUM PRACTICE -->
+
+<div class="card">
+
+<span class="locked">
+🔒 LOCKED
+</span>
+
+<div class="card-icon">
+📝
+</div>
+
+<h3>
+Premium Practice
+</h3>
+
+<p>
+Advanced practice questions और focused question sets
+</p>
+
+<ul class="list">
+<li>Practice Questions</li>
+<li>Topic-wise Practice</li>
+<li>Advanced Sets</li>
+</ul>
+
+<div class="premium-actions">
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-action">
+🔐 Login / Register
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PREMIUM MOCK TESTS -->
+
+<div class="card mock-card">
+
+<span class="locked">
+🔒 PREMIUM
+</span>
+
+<div class="card-icon">
+🎯
+</div>
+
+<h3>
+Premium Mock Tests
+</h3>
+
+<p>
+Premium Mock Test 1 और Mock Test 2 के अंदर Free तथा Paid दोनों प्रकार के tests उपलब्ध होंगे।
+</p>
+
+<ul class="list">
+<li>Mock Test 1 — Free + Paid</li>
+<li>Mock Test 2 — Free + Paid</li>
+<li>Payment actual paid mock पर</li>
+</ul>
+
+
+<div class="mock-buttons">
+
+<a
+href="login.html?redirect=mock1.html"
+class="mock-btn mock1-btn">
+🔐 Login / Register — Mock Test 1
+</a>
+
+
+<a
+href="login.html?redirect=mock2.html"
+class="mock-btn mock1-btn">
+🔐 Login / Register — Mock Test 2
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PREMIUM PYQ -->
+
+<div class="card">
+
+<span class="locked">
+🔒 LOCKED
+</span>
+
+<div class="card-icon">
+📜
+</div>
+
+<h3>
+Premium PYQs
+</h3>
+
+<p>
+Previous Year Questions और exam-focused question collections
+</p>
+
+<ul class="list">
+<li>Previous Year Questions</li>
+<li>Exam-wise Sets</li>
+<li>Practice Analysis</li>
+</ul>
+
+<div class="premium-actions">
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-action">
+🔐 Login / Register
+</a>
+
+</div>
+
+</div>
+
+
+<!-- CURRENT AFFAIRS -->
+
+<div class="card">
+
+<span class="locked">
+🔒 LOCKED
+</span>
+
+<div class="card-icon">
+📰
+</div>
+
+<h3>
+Premium Current Affairs
+</h3>
+
+<p>
+Exam-oriented current affairs और important updates
+</p>
+
+<ul class="list">
+<li>Important Updates</li>
+<li>Exam-focused Content</li>
+<li>Revision Sets</li>
+</ul>
+
+<div class="premium-actions">
+
+<a
+href="login.html?redirect=premium-preparation.html"
+class="login-action">
+🔐 Login / Register
+</a>
+
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- COMING SOON -->
+
+<section class="coming">
+
+<div class="coming-icon">
+👑
+</div>
+
+<h2>
+Premium Content Coming Soon
+</h2>
+
+<p>
+Premium preparation का structure ready है। Actual premium notes,
+PDFs, questions और paid access system को content और subscription
+setup के बाद activate किया जाएगा।
+</p>
+
+<span class="coming-btn">
+🔐 अभी Premium Content Locked है
+</span>
+
+</section>
+
+
+<!-- INFORMATION -->
+
+<section class="info">
+
+<h3>
+ℹ️ Important Information
+</h3>
+
+<p>
+Premium Preparation के starting page पर कोई payment नहीं ली जाएगी।
+Paid payment केवल उस particular premium content या mock test को
+select करने के बाद ली जाएगी जिसे user खरीदना चाहता है।
+</p>
+
+</section>
+
+
+<div class="footer">
+© 2026 HimChayan — Premium Preparation
+</div>
+
+</main>
+
+</body>
+</html>
