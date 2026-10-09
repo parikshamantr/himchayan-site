@@ -235,6 +235,7 @@ nav.show a{padding:8px}
 .latest-icon{font-size:19px;min-width:24px;text-align:center}
 .latest-title{font-size:13px;font-weight:950;min-width:100px}
 .latest-text{font-size:8px;line-height:1.2;flex:1;color:#dce8f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes dailyTicker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 .latest-arrow{font-size:17px}
 
 /* OFFICIAL LINKS */
@@ -1461,25 +1462,13 @@ if(drawerLogoutBtn){
     searchInput?.focus();
   });
 
-  /* ---------- Latest Updates: latest published engine resource ---------- */
+  /* ---------- Admin-managed Daily Updates ticker ---------- */
   async function loadLatest(){
-    if(latestText) latestText.textContent="Loading latest update…";
-    const data=await api("/api/content/latest?limit=1");
-    const item=data?.data?.[0];
-    if(item && latestText){
-      latestText.textContent =
-        `${item.title || "New Resource"}${item.exam_name ? " · "+item.exam_name : ""}`;
-      const link=document.querySelector(".latest-link");
-      if(link && (item.external_url || item.url)){
-        link.href=item.external_url || item.url;
-      }else if(link){
-        link.href="study-notes.html";
-      }
-    }else if(latestText){
-      latestText.textContent="Learning Engine connected · No published update yet";
-      const link=document.querySelector(".latest-link");
-      if(link) link.href="study-notes.html";
-    }
+    const link=document.querySelector(".latest-link");if(!latestText)return;
+    latestText.textContent="Loading daily updates…";
+    const data=await api("/api/daily-updates");const items=Array.isArray(data?.data)?data.data:[];
+    if(items.length){latestText.textContent=items.map(x=>x.title||"Update").join("   •   ");latestText.style.animation="dailyTicker 28s linear infinite";latestText.style.display="inline-block";latestText.style.textOverflow="clip";if(link)link.href=items[0].external_url||"study-notes.html";}
+    else{latestText.textContent="Daily Updates will appear here";if(link)link.href="study-notes.html";}
   }
 
   /* ---------- Performance Growth: Learning Engine student analysis ---------- */
