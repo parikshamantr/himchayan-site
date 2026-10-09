@@ -1,0 +1,4326 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HimChayan | Previous Year Question Papers</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+body{
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:#f3f7fd;
+  color:#14213d;
+  line-height:1.5
+}
+
+a{
+  text-decoration:none;
+  color:inherit
+}
+
+button{
+  font:inherit;
+  cursor:pointer
+}
+
+.top{
+  background:#fff;
+  border-bottom:1px solid #e5eaf2;
+  padding:10px 4%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 12px rgba(0,0,0,.05)
+}
+
+.nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#1266d6;
+  font-size:20px;
+  font-weight:900
+}
+
+.brand img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  border-radius:50%
+}
+
+.home-btn{
+  background:#1479e8;
+  color:#fff;
+  padding:9px 14px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:800
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 20px 40px
+}
+
+.back{
+  display:inline-block;
+  background:#e8f2ff;
+  color:#1266d6;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:15px;
+  border:0
+}
+
+.hero{
+  background:linear-gradient(135deg,#073b91,#087cf0);
+  color:#fff;
+  border-radius:20px;
+  padding:35px 25px;
+  margin-bottom:22px;
+  box-shadow:0 10px 30px rgba(0,80,180,.18)
+}
+
+.hero-icon{
+  font-size:45px;
+  margin-bottom:8px
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:7px
+}
+
+.hero p{
+  font-size:14px;
+  max-width:850px;
+  color:#e8f3ff
+}
+
+.exam-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px
+}
+
+.exam-card{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 5px 17px rgba(0,0,0,.05);
+  transition:.2s
+}
+
+.exam-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 9px 25px rgba(0,0,0,.09)
+}
+
+.exam-icon{
+  font-size:38px;
+  margin-bottom:8px
+}
+
+.exam-card h3{
+  font-size:18px;
+  margin-bottom:5px
+}
+
+.exam-card p{
+  font-size:12px;
+  color:#788395;
+  min-height:38px;
+  margin-bottom:10px
+}
+
+.exam-info{
+  display:inline-block;
+  background:#edf5ff;
+  color:#1768ad;
+  padding:5px 8px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:800;
+  margin-bottom:12px
+}
+
+.exam-btn{
+  display:block;
+  width:100%;
+  text-align:center;
+  background:#1479e8;
+  color:#fff;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:800;
+  border:0
+}
+
+.exam-btn:hover{
+  background:#086bd5
+}
+
+.demo-section{
+  margin-top:24px;
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 5px 17px rgba(0,0,0,.05)
+}
+
+.demo-section h2{
+  font-size:20px;
+  margin-bottom:5px
+}
+
+.demo-section p{
+  font-size:12px;
+  color:#788395;
+  margin-bottom:14px
+}
+
+.demo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.demo-card{
+  background:#f8fbff;
+  border:1px solid #dce8f5;
+  border-radius:12px;
+  padding:14px
+}
+
+.demo-card h3{
+  font-size:14px;
+  margin-bottom:4px
+}
+
+.demo-card p{
+  font-size:10px;
+  margin-bottom:10px
+}
+
+.demo-tag{
+  display:inline-block;
+  background:#eaf8ef;
+  color:#16803c;
+  padding:4px 7px;
+  border-radius:5px;
+  font-size:9px;
+  font-weight:800;
+  margin-bottom:9px
+}
+
+.demo-btn{
+  width:100%;
+  border:0;
+  background:#159447;
+  color:#fff;
+  padding:9px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:800
+}
+
+.demo-btn:hover{
+  background:#117b3b
+}
+
+.mock-page{
+  display:none
+}
+
+.mock-page.active{
+  display:block
+}
+
+.mock-header{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 5px 17px rgba(0,0,0,.05)
+}
+
+.mock-header h2{
+  font-size:23px;
+  margin-bottom:5px
+}
+
+.mock-header p{
+  font-size:12px;
+  color:#788395
+}
+
+/* PAYMENT */
+.payment-box{
+  background:linear-gradient(135deg,#fff,#f7fbff);
+  border:2px solid #1479e8;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 7px 22px rgba(0,90,190,.10)
+}
+
+.payment-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:5px
+}
+
+.payment-text{
+  font-size:12px;
+  color:#6d7888;
+  margin-bottom:12px
+}
+
+.payment-price{
+  font-size:30px;
+  color:#1479e8;
+  font-weight:900;
+  margin-bottom:12px
+}
+
+.payment-price span{
+  font-size:11px;
+  color:#687386;
+  font-weight:700
+}
+
+.unlock-btn{
+  display:block;
+  width:100%;
+  border:0;
+  background:#1479e8;
+  color:#fff;
+  padding:12px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:900;
+  transition:.15s
+}
+
+.unlock-btn:hover{
+  background:#086bd5
+}
+
+.unlock-btn:disabled{
+  opacity:.65;
+  cursor:not-allowed
+}
+
+.admin-box{
+  display:none;
+  background:#eaf8ef;
+  border:1px solid #bfe8cb;
+  color:#16803c;
+  border-radius:10px;
+  padding:14px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:18px
+}
+
+.access-box{
+  display:none;
+  background:#eaf8ef;
+  border:1px solid #bfe8cb;
+  color:#176b3c;
+  border-radius:10px;
+  padding:14px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:18px
+}
+
+/* MOCK GRID */
+.mock-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.mock-card{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:13px;
+  padding:15px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05)
+}
+
+.mock-tag{
+  display:inline-block;
+  background:#fff4d9;
+  color:#8a6500;
+  padding:4px 7px;
+  border-radius:5px;
+  font-size:9px;
+  font-weight:800;
+  margin-bottom:8px
+}
+
+.mock-card h3{
+  font-size:14px;
+  margin-bottom:4px
+}
+
+.mock-card p{
+  font-size:10px;
+  color:#788395;
+  margin-bottom:12px
+}
+
+.mock-btn{
+  width:100%;
+  border:0;
+  border-radius:7px;
+  padding:9px;
+  font-size:10px;
+  font-weight:800
+}
+
+.locked{
+  background:#e9eef5;
+  color:#6b7788
+}
+
+.locked:hover{
+  background:#dfe6ef
+}
+
+.unlocked{
+  background:#159447;
+  color:#fff
+}
+
+.unlocked:hover{
+  background:#117b3b
+}
+
+.note{
+  margin-top:20px;
+  background:#fff8e8;
+  border:1px solid #f0dfad;
+  color:#806000;
+  border-radius:12px;
+  padding:13px;
+  font-size:11px
+}
+
+/* QUIZ */
+.quiz-page{
+  display:none
+}
+
+.quiz-page.active{
+  display:block
+}
+
+.quiz-settings{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 5px 17px rgba(0,0,0,.05)
+}
+
+.quiz-settings h3{
+  font-size:18px;
+  margin-bottom:12px
+}
+
+.quiz-settings-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.quiz-field label{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  margin-bottom:5px
+}
+
+.quiz-field input,
+.quiz-field select{
+  width:100%;
+  padding:10px;
+  border:1px solid #dce3ec;
+  border-radius:8px;
+  background:#fff;
+  font-size:12px
+}
+
+.quiz-field input[readonly]{
+  background:#f5f7fa;
+  color:#697586
+}
+
+.quiz-ready{
+  margin-top:10px;
+  background:#eefaf3;
+  border-left:3px solid #159447;
+  padding:8px 10px;
+  font-size:11px;
+  color:#176b3c;
+  font-weight:700
+}
+
+.quiz-start-btn{
+  margin-top:12px;
+  border:0;
+  background:#1479e8;
+  color:#fff;
+  padding:11px 18px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:900
+}
+
+.quiz-area{
+  display:none
+}
+
+.quiz-layout{
+  display:grid;
+  grid-template-columns:140px minmax(0,1fr);
+  gap:10px
+}
+
+.quiz-sidebar{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:10px;
+  padding:8px;
+  box-shadow:0 4px 14px rgba(0,0,0,.04);
+  height:max-content
+}
+
+.sidebar-title{
+  font-size:10px;
+  font-weight:900;
+  margin-bottom:8px;
+  line-height:1.4
+}
+
+.question-palette{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  max-height:580px;
+  overflow-y:auto;
+  padding-right:2px
+}
+
+.palette-btn{
+  width:100%;
+  aspect-ratio:1;
+  border:0;
+  border-radius:50%;
+  background:#e8edf3;
+  color:#263445;
+  font-size:9px;
+  font-weight:800
+}
+
+.palette-btn.current{
+  outline:2px solid #1479e8;
+  outline-offset:1px
+}
+
+.palette-btn.answered{
+  background:#159447;
+  color:#fff
+}
+
+.palette-btn.review{
+  background:#9c39b8;
+  color:#fff
+}
+
+.part-details{
+  margin-top:10px;
+  border-top:1px solid #e4e8ef;
+  padding-top:9px
+}
+
+.part-details h4{
+  font-size:10px;
+  margin-bottom:8px
+}
+
+.status-row{
+  display:flex;
+  align-items:flex-start;
+  gap:5px;
+  font-size:8px;
+  margin-bottom:6px;
+  line-height:1.3
+}
+
+.status-dot{
+  width:18px;
+  height:18px;
+  min-width:18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:8px;
+  font-weight:900
+}
+
+.status-green{
+  background:#159447;
+  color:#fff
+}
+
+.status-red{
+  background:#e53935;
+  color:#fff
+}
+
+.status-grey{
+  background:#e8edf3;
+  color:#263445
+}
+
+.status-purple{
+  background:#9c39b8;
+  color:#fff
+}
+
+.quiz-main{
+  min-width:0
+}
+
+.quiz-topbar{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:10px;
+  padding:8px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px
+}
+
+.quiz-part{
+  background:#1479e8;
+  color:#fff;
+  padding:8px 11px;
+  border-radius:5px;
+  font-size:10px;
+  font-weight:900
+}
+
+.quiz-controls{
+  display:flex;
+  align-items:center;
+  gap:7px
+}
+
+.quiz-controls select{
+  padding:6px;
+  border:1px solid #dce3ec;
+  border-radius:5px;
+  font-size:10px;
+  background:#fff
+}
+
+.quiz-timer{
+  color:#b34747;
+  font-size:11px;
+  font-weight:900;
+  min-width:48px;
+  text-align:center
+}
+
+.submit-test-btn{
+  background:#159447;
+  color:#fff;
+  border:0;
+  padding:8px 11px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:900
+}
+
+.quiz-progress{
+  height:5px;
+  background:#e8edf3;
+  border-radius:5px;
+  overflow:hidden;
+  margin-bottom:8px
+}
+
+.quiz-progress-bar{
+  height:100%;
+  width:0%;
+  background:#1479e8;
+  transition:.2s
+}
+
+.question-card{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:10px;
+  padding:15px;
+  min-height:350px;
+  box-shadow:0 4px 14px rgba(0,0,0,.04)
+}
+
+.question-number{
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:15px
+}
+
+.question-text{
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:18px;
+  line-height:1.7
+}
+
+.bilingual-line{
+  display:block;
+  margin-bottom:8px
+}
+
+.bilingual-label{
+  display:block;
+  font-size:9px;
+  color:#788395;
+  margin-bottom:2px;
+  font-weight:800
+}
+
+.options-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px
+}
+
+.option{
+  border:1px solid #dce3ec;
+  border-radius:7px;
+  padding:11px;
+  cursor:pointer;
+  font-size:11px;
+  background:#fff;
+  transition:.15s;
+  line-height:1.5;
+  position:relative
+}
+
+.option:hover{
+  background:#f4f8fd
+}
+
+.option.selected{
+  border-color:#1479e8;
+  background:#eaf4ff;
+  box-shadow:0 0 0 1px #1479e8 inset
+}
+
+.option.correct{
+  border:2px solid #159447;
+  background:#eaf8ef;
+  box-shadow:0 0 0 1px #159447 inset
+}
+
+.option.wrong{
+  border:2px solid #e53935;
+  background:#fff0f0;
+  box-shadow:0 0 0 1px #e53935 inset
+}
+
+.option.correct::after{
+  content:"✓";
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#159447;
+  font-size:17px;
+  font-weight:900
+}
+
+.option.wrong::after{
+  content:"✕";
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#e53935;
+  font-size:17px;
+  font-weight:900
+}
+
+.answer-feedback{
+  display:none;
+  margin-top:12px;
+  padding:8px 10px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:800
+}
+
+.answer-feedback.correct-feedback{
+  display:block;
+  background:#eaf8ef;
+  border-left:4px solid #159447;
+  color:#176b3c
+}
+
+.answer-feedback.wrong-feedback{
+  display:block;
+  background:#fff0f0;
+  border-left:4px solid #e53935;
+  color:#a32929
+}
+
+.quiz-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-top:10px
+}
+
+.quiz-actions-left,
+.quiz-actions-right{
+  display:flex;
+  gap:7px
+}
+
+.quiz-action-btn{
+  border:1px solid #dce3ec;
+  background:#fff;
+  padding:9px 12px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:800
+}
+
+.quiz-action-btn.primary{
+  background:#1479e8;
+  color:#fff;
+  border-color:#1479e8
+}
+
+.quiz-action-btn.review-btn{
+  background:#fff8e8
+}
+
+/* RESULT */
+.result-page{
+  display:none
+}
+
+.result-page.active{
+  display:block
+}
+
+.result-card{
+  background:#fff;
+  border:1px solid #e2e9f2;
+  border-radius:15px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 5px 17px rgba(0,0,0,.05)
+}
+
+.result-card h2{
+  font-size:24px;
+  margin-bottom:8px
+}
+
+.result-title{
+  color:#788395;
+  font-size:12px
+}
+
+.result-score{
+  font-size:35px;
+  font-weight:900;
+  color:#1479e8;
+  margin:10px 0
+}
+
+.result-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:18px
+}
+
+.result-stat{
+  background:#f5f8fc;
+  border-radius:8px;
+  padding:12px 5px
+}
+
+.result-stat strong{
+  display:block;
+  font-size:17px
+}
+
+.result-stat span{
+  font-size:9px;
+  color:#788395
+}
+
+.result-back-btn{
+  margin-top:18px;
+  border:0;
+  background:#1479e8;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:900
+}
+
+.footer{
+  margin-top:25px;
+  text-align:center;
+  color:#788395;
+  font-size:10px
+}
+
+.message{
+  position:fixed;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+  background:#14213d;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:8px;
+  font-size:11px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+  z-index:2000;
+  max-width:90%;
+  text-align:center
+}
+
+.message.show{
+  opacity:1
+}
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+
+.settings-grid{
+grid-template-columns:1fr 1fr
+}
+
+.quiz-shell{
+grid-template-columns:115px 1fr
+}
+
+.options{
+grid-template-columns:1fr
+}
+
+.result-stats{
+grid-template-columns:repeat(2,1fr)
+}
+
+.answer-key-grid{
+grid-template-columns:repeat(4,1fr)
+}
+
+}
+
+@media(max-width:520px){
+
+.wrap{
+padding:12px 9px 25px
+}
+
+.grid{
+grid-template-columns:repeat(3,minmax(0,1fr))
+}
+
+.hero{
+padding:18px 15px
+}
+
+.hero h1{
+font-size:20px
+}
+
+.settings-grid{
+grid-template-columns:1fr
+}
+
+.quiz-shell{
+grid-template-columns:92px 1fr
+}
+
+.timer{
+font-size:10px
+}
+
+.qtop{
+align-items:flex-start
+}
+
+.result-stats{
+grid-template-columns:1fr 1fr
+}
+
+.answer-key-grid{
+grid-template-columns:repeat(3,1fr)
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+  <div class="nav">
+
+    <div class="brand">
+      <img
+        src="file_000000003bcc82118eb5f714c1070c01.png"
+        alt="HimChayan Logo"
+      >
+      HimChayan
+    </div>
+
+    <a href="index.html" class="home-btn">
+      🏠 Home
+    </a>
+
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- =========================================================
+     EXAM PAGE
+========================================================= -->
+
+<section id="examPage">
+
+  <a href="index.html#study" class="back">
+    ← Study Material पर वापस जाएँ
+  </a>
+
+  <section class="hero">
+
+    <div class="hero-icon">📚</div>
+
+    <h1>Previous Year Question Papers</h1>
+
+    <p>
+      JBT, TGT, Patwari, JOA, Staff Nurse, PGT, Police और Forest Guard
+      के लिए Previous Year Practice Mock Tests।
+    </p>
+
+  </section>
+
+  <div class="exam-grid">
+
+    <div class="exam-card">
+      <div class="exam-icon">👨‍🏫</div>
+      <h3>JBT</h3>
+      <p>Junior Basic Teacher Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        9 MOCKS • 200 QUESTIONS + 11 MOCKS • 120 QUESTIONS
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('JBT',200,'👨‍🏫')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">🎓</div>
+      <h3>TGT</h3>
+      <p>Trained Graduate Teacher Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 200 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('TGT',200,'🎓')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">📋</div>
+      <h3>Patwari</h3>
+      <p>Patwari Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 120 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('Patwari',120,'📋')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">💻</div>
+      <h3>JOA</h3>
+      <p>Junior Office Assistant Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        4 VERIFIED PYQ PAPERS • 170 / 170 / 200 / 200 Q
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('JOA',120,'💻')">
+        📚 View JOA Papers →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">🏥</div>
+      <h3>Staff Nurse</h3>
+      <p>Staff Nurse Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 120 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('Staff Nurse',120,'🏥')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">📚</div>
+      <h3>PGT</h3>
+      <p>Post Graduate Teacher Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 100 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('PGT',100,'📚')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">👮</div>
+      <h3>Police</h3>
+      <p>Police Recruitment Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 90 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('Police',90,'👮')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">🌲</div>
+      <h3>Forest Guard</h3>
+      <p>Forest Guard Previous Year Paper Practice</p>
+
+      <span class="exam-info">
+        20 MOCKS • 120 QUESTIONS EACH
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('Forest Guard',120,'🌲')">
+        📚 View 20 Mocks →
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- FREE DEMO -->
+
+  <div class="demo-section">
+
+    <h2>
+      🎯 FREE PREVIOUS YEAR ONE MOCK DEMO
+    </h2>
+
+    <p>
+      सभी 8 exams के लिए 1 Free Previous Year Mock Demo —
+      बिना Login और बिना Payment के।
+    </p>
+
+    <div class="demo-grid" id="demoGrid"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     MOCK PAGE
+========================================================= -->
+
+<section id="mockPage" class="mock-page">
+
+  <a
+    href="#"
+    class="back"
+    onclick="backToExams();return false;">
+    ← All Exams पर वापस जाएँ
+  </a>
+
+
+  <div class="mock-header">
+
+    <h2 id="examTitle">
+      JBT — Previous Year Mock Tests
+    </h2>
+
+    <p id="examDescription">
+      20 Mock Tests • 200 Questions each
+    </p>
+
+  </div>
+
+
+  <!-- PAYMENT BOX -->
+
+  <div id="paymentBox" class="payment-box">
+
+    <div class="payment-title">
+      🔐 Unlock All Mock Tests
+    </div>
+
+    <div class="payment-text">
+      सिर्फ ₹99 में इस examination के पूरे Previous Year Mock Tests
+      unlock करें।
+    </div>
+
+    <div class="payment-price">
+      ₹99
+      <span>
+        / Complete Mock Package
+      </span>
+    </div>
+
+    <button
+      id="mainPaymentButton"
+      class="unlock-btn"
+      onclick="startPayment()">
+
+      💳 Pay ₹99 & Unlock All Mocks →
+
+    </button>
+
+  </div>
+
+
+  <!-- ADMIN -->
+
+  <div id="adminBox" class="admin-box">
+
+    👑 Admin Access — इस examination के सभी Mock Tests
+    आपके लिए FREE हैं। Payment की कोई आवश्यकता नहीं है।
+
+  </div>
+
+
+  <!-- PREMIUM ACCESS -->
+
+  <div id="accessBox" class="access-box">
+
+    ✅ Premium Access Active — इस examination के सभी
+    Mock Tests unlocked हैं।
+
+  </div>
+
+
+  <!-- MOCKS -->
+
+  <div id="mockGrid" class="mock-grid"></div>
+
+
+  <div class="note">
+
+    <strong>ℹ️ ध्यान दें:</strong>
+
+    Paid JBT/TGT/JOA verified data और Free Demo data
+    ऊपर के script order में load होकर FINAL bridge से connect होते हैं।
+    JOA में अभी 4 verified PYQ papers उपलब्ध हैं।
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     QUIZ PAGE
+========================================================= -->
+
+<section id="quizPage" class="quiz-page">
+
+  <a
+    href="#"
+    class="back"
+    onclick="closeQuiz();return false;">
+    ← Mock Tests पर वापस जाएँ
+  </a>
+
+
+  <div id="quizSettings" class="quiz-settings">
+
+    <h3>
+      ⚙️ Mock Settings
+    </h3>
+
+    <div class="quiz-settings-grid">
+
+      <div class="quiz-field">
+
+        <label>
+          Total Questions
+        </label>
+
+        <input
+          id="quizTotalQuestions"
+          type="text"
+          readonly>
+
+      </div>
+
+
+      <div class="quiz-field">
+
+        <label>
+          Timer (Minutes)
+        </label>
+
+        <input
+          id="quizTimerInput"
+          type="number"
+          min="1"
+          value="120">
+
+      </div>
+
+
+      <div class="quiz-field">
+
+        <label>
+          Language
+        </label>
+
+        <select id="quizLanguage">
+
+          <option value="hi">
+            हिन्दी
+          </option>
+
+          <option value="en">
+            English
+          </option>
+
+          <option value="both" selected>
+            हिन्दी + English
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div id="quizReadyMessage" class="quiz-ready"></div>
+
+
+    <button
+      class="quiz-start-btn"
+      onclick="startPreviousYearQuiz()">
+
+      🚀 I am ready to begin
+
+    </button>
+
+  </div>
+
+
+  <div id="quizArea" class="quiz-area">
+
+    <div class="quiz-layout">
+
+      <aside class="quiz-sidebar">
+
+        <div class="sidebar-title">
+
+          Section A —
+          <span id="sidebarTotal">0</span>
+          Questions
+
+        </div>
+
+
+        <div
+          id="questionPalette"
+          class="question-palette">
+        </div>
+
+
+        <div class="part-details">
+
+          <h4>
+            Part Details
+          </h4>
+
+
+          <div class="status-row">
+
+            <span
+              id="answeredCount"
+              class="status-dot status-green">
+              0
+            </span>
+
+            <span>
+              Responded & Saved
+            </span>
+
+          </div>
+
+
+          <div class="status-row">
+
+            <span class="status-dot status-red">
+              !
+            </span>
+
+            <span>
+              Visited but unanswered
+            </span>
+
+          </div>
+
+
+          <div class="status-row">
+
+            <span
+              id="notVisitedCount"
+              class="status-dot status-grey">
+              0
+            </span>
+
+            <span>
+              Not visited
+            </span>
+
+          </div>
+
+
+          <div class="status-row">
+
+            <span
+              id="reviewCount"
+              class="status-dot status-purple">
+              0
+            </span>
+
+            <span>
+              Marked for review
+            </span>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+
+      <div class="quiz-main">
+
+        <div class="quiz-topbar">
+
+          <div
+            id="quizPartTitle"
+            class="quiz-part">
+            Section A
+          </div>
+
+
+          <div class="quiz-controls">
+
+            <select
+              id="quizLanguageTop"
+              onchange="changeQuizLanguage(this.value)">
+
+              <option value="hi">
+                हिन्दी
+              </option>
+
+              <option value="en">
+                English
+              </option>
+
+              <option value="both" selected>
+                हिन्दी + English
+              </option>
+
+            </select>
+
+
+            <span
+              id="quizTimer"
+              class="quiz-timer">
+              120:00
+            </span>
+
+
+            <button
+              class="submit-test-btn"
+              onclick="submitPreviousYearQuiz()">
+
+              Submit Test
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="quiz-progress">
+
+          <div
+            id="quizProgressBar"
+            class="quiz-progress-bar">
+          </div>
+
+        </div>
+
+
+        <div class="question-card">
+
+          <div
+            id="questionNumber"
+            class="question-number">
+            Question No. 1
+          </div>
+
+
+          <div
+            id="questionText"
+            class="question-text">
+          </div>
+
+
+          <div
+            id="optionsGrid"
+            class="options-grid">
+          </div>
+
+
+          <div
+            id="answerFeedback"
+            class="answer-feedback">
+          </div>
+
+        </div>
+
+
+        <div class="quiz-actions">
+
+          <div class="quiz-actions-left">
+
+            <button
+              class="quiz-action-btn"
+              onclick="previousQuestion()">
+
+              ← Previous
+
+            </button>
+
+
+            <button
+              class="quiz-action-btn review-btn"
+              onclick="markForReview()">
+
+              ⭐ Mark for Review
+
+            </button>
+
+          </div>
+
+
+          <div class="quiz-actions-right">
+
+            <button
+              class="quiz-action-btn primary"
+              onclick="saveAndNext()">
+
+              Save & Next
+
+            </button>
+
+
+            <button
+              class="quiz-action-btn"
+              onclick="nextQuestion()">
+
+              Next →
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESULT PAGE
+========================================================= -->
+
+<section id="quizResultPage" class="result-page">
+
+  <a
+    href="#"
+    class="back"
+    onclick="closeResult();return false;">
+
+    ← Mock Tests पर वापस जाएँ
+
+  </a>
+
+
+  <div class="result-card">
+
+    <h2>
+      🎯 Test Result
+    </h2>
+
+
+    <div
+      id="resultTitle"
+      class="result-title">
+    </div>
+
+
+    <div
+      id="resultScore"
+      class="result-score">
+      0 / 0
+    </div>
+
+
+    <div class="result-stats">
+
+      <div class="result-stat">
+
+        <strong id="resultTotal">
+          0
+        </strong>
+
+        <span>
+          Total Questions
+        </span>
+
+      </div>
+
+
+      <div class="result-stat">
+
+        <strong id="resultAttempted">
+          0
+        </strong>
+
+        <span>
+          Attempted
+        </span>
+
+      </div>
+
+
+      <div class="result-stat">
+
+        <strong id="resultCorrect">
+          —
+        </strong>
+
+        <span>
+          Correct
+        </span>
+
+      </div>
+
+
+      <div class="result-stat">
+
+        <strong id="resultWrong">
+          —
+        </strong>
+
+        <span>
+          Wrong
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="result-back-btn"
+      onclick="closeResult()">
+
+      ← Back to Mock Tests
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+  © 2026 HimChayan — Previous Year Question Papers
+</div>
+
+</main>
+
+
+<div id="message" class="message"></div>
+
+
+<!-- =========================================================
+     EXTERNAL SCRIPTS
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="./backend-config.js"></script>
+
+<script src="./jbt-data.js"></script>
+
+<script src="./tgt-data.js"></script>
+
+<script src="./joadatajspyq.js"></script>
+
+<script src="./HimChayan-free-previous-year-one-mock-demo-data.js"></script>
+
+<script src="./HimChayan-previous-year-question-bank-bridge-FINAL-FIXED.js?v=20260922"></script>
+
+
+<script>
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let selectedExam = "";
+let selectedQuestions = 0;
+let selectedIcon = "";
+
+let currentUser = null;
+let isAdmin = false;
+let hasAccess = false;
+
+let quizMockNumber = 0;
+let quizTotalQuestions = 0;
+let quizCurrentQuestion = 0;
+let quizTimerSeconds = 0;
+let quizTimerInterval = null;
+
+let quizLanguage = "both";
+
+let quizAnswers = {};
+let quizReview = {};
+let quizVisited = {};
+let quizQuestions = [];
+
+let isFreeDemo = false;
+
+/*
+ * Prevent multiple payment clicks.
+ */
+let paymentInProgress = false;
+
+
+/* =========================================================
+   QUESTION BANK ENGINE
+========================================================= */
+
+function prepareQuestionBank(){
+
+  const examBank =
+    window.previousYearQuestionBanks &&
+    window.previousYearQuestionBanks[selectedExam];
+
+  const bank =
+    examBank
+      ? (
+          examBank[String(quizMockNumber)] ||
+          examBank[quizMockNumber] ||
+          null
+        )
+      : null;
+
+
+  if(Array.isArray(bank) && bank.length){
+
+    quizQuestions =
+      bank.slice(0, quizTotalQuestions);
+
+    quizTotalQuestions =
+      quizQuestions.length;
+
+
+    document.getElementById(
+      "quizTotalQuestions"
+    ).value = quizTotalQuestions;
+
+
+    document.getElementById(
+      "sidebarTotal"
+    ).textContent = quizTotalQuestions;
+
+
+    return true;
+  }
+
+
+  quizQuestions = [];
+  quizTotalQuestions = 0;
+
+
+  showMessage(
+    "⚠️ " +
+    selectedExam +
+    " Mock " +
+    quizMockNumber +
+    " का verified question bank load नहीं हुआ।"
+  );
+
+
+  return false;
+}
+
+
+/* =========================================================
+   FINAL PAYMENT FUNCTION
+========================================================= */
+
+function startPayment(){
+
+  /*
+   * Already processing?
+   */
+  if(paymentInProgress){
+    showMessage("⏳ Payment page already open हो रही है...");
+    return;
+  }
+
+
+  /*
+   * Exam missing?
+   */
+  if(!selectedExam){
+
+    showMessage(
+      "⚠️ पहले examination select करें।"
+    );
+
+    return;
+  }
+
+
+  /*
+   * Admin should never pay.
+   */
+  if(isAdmin === true){
+
+    showMessage(
+      "👑 Admin Access already active है।"
+    );
+
+    return;
+  }
+
+
+  /*
+   * Already paid.
+   */
+  if(hasAccess === true){
+
+    showMessage(
+      "✅ इस examination का premium access पहले से active है।"
+    );
+
+    renderMocks();
+
+    return;
+  }
+
+
+  paymentInProgress = true;
+
+
+  const button =
+    document.getElementById("mainPaymentButton");
+
+
+  if(button){
+
+    button.disabled = true;
+
+    button.textContent =
+      "⏳ Payment system open हो रहा है...";
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * FIRST PRIORITY:
+   * Existing Previous Year Payment Bridge
+   * -------------------------------------------------------
+   */
+
+  if(
+    typeof window.startPreviousYearPayment ===
+    "function"
+  ){
+
+    try{
+
+      const result =
+        window.startPreviousYearPayment(
+          selectedExam
+        );
+
+      /*
+       * Function successfully called.
+       * Do not show error.
+       */
+
+      setTimeout(function(){
+
+        paymentInProgress = false;
+
+        if(button){
+
+          button.disabled = false;
+
+          button.textContent =
+            "💳 Pay ₹99 & Unlock All Mocks →";
+        }
+
+      },1500);
+
+      return result;
+
+    }catch(error){
+
+      console.error(
+        "startPreviousYearPayment error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * SECOND PRIORITY:
+   * Existing generic payment bridge
+   * -------------------------------------------------------
+   */
+
+  if(
+    typeof window.openPayment ===
+    "function"
+  ){
+
+    try{
+
+      const result =
+        window.openPayment(
+          selectedExam,
+          99,
+          "previous_year"
+        );
+
+
+      setTimeout(function(){
+
+        paymentInProgress = false;
+
+        if(button){
+
+          button.disabled = false;
+
+          button.textContent =
+            "💳 Pay ₹99 & Unlock All Mocks →";
+        }
+
+      },1500);
+
+
+      return result;
+
+    }catch(error){
+
+      console.error(
+        "openPayment error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * THIRD PRIORITY:
+   * Payment page fallback
+   *
+   * Existing Razorpay system is NOT replaced.
+   * This only sends package information.
+   * -------------------------------------------------------
+   */
+
+  try{
+
+    const paymentUrl =
+      "payment.html" +
+      "?category=" +
+      encodeURIComponent(selectedExam) +
+      "&type=previous_year" +
+      "&amount=99" +
+      "&package=all" +
+      "&mock=all" +
+      "&questions=" +
+      encodeURIComponent(
+        String(selectedQuestions || 0)
+      );
+
+
+    window.location.href =
+      paymentUrl;
+
+
+  }catch(error){
+
+    console.error(
+      "Payment redirect error:",
+      error
+    );
+
+
+    paymentInProgress = false;
+
+
+    if(button){
+
+      button.disabled = false;
+
+      button.textContent =
+        "💳 Pay ₹99 & Unlock All Mocks →";
+    }
+
+
+    showMessage(
+      "⚠️ Payment system open नहीं हो पाया।"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   GLOBAL BANK OBJECTS
+========================================================= */
+
+window.previousYearQuestionBanks =
+  window.previousYearQuestionBanks || {};
+
+window.freePreviousYearDemoQuestionBanks =
+  window.freePreviousYearDemoQuestionBanks || {};
+
+
+/* =========================================================
+   FREE DEMO EXAMS
+========================================================= */
+
+const freeDemoExams = [
+
+  ["JBT",200,"👨‍🏫"],
+  ["TGT",200,"🎓"],
+  ["Patwari",100,"📋"],
+  ["JOA",200,"💻"],
+  ["Staff Nurse",120,"🏥"],
+  ["PGT",85,"📚"],
+  ["Police",90,"👮"],
+  ["Forest Guard",85,"🌲"]
+
+];
+
+
+/* =========================================================
+   FREE DEMO CARDS
+========================================================= */
+
+function renderFreeDemoCards(){
+
+  const grid =
+    document.getElementById("demoGrid");
+
+  if(!grid)return;
+
+  grid.innerHTML = "";
+
+
+  freeDemoExams.forEach(function(item){
+
+    const exam = item[0];
+    const questions = item[1];
+    const icon = item[2];
+
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "demo-card";
+
+
+    card.innerHTML =
+
+      '<div class="demo-tag">' +
+      '🎯 FREE ONE MOCK DEMO' +
+      '</div>' +
+
+      '<h3>' +
+      icon +
+      ' ' +
+      exam +
+      '</h3>' +
+
+      '<p>' +
+      '1 Free Previous Year Mock • ' +
+      questions +
+      ' Questions' +
+      '</p>' +
+
+      '<button class="demo-btn" ' +
+      'onclick="openFreePreviousYearDemo(\'' +
+      exam +
+      '\',' +
+      questions +
+      ',\'' +
+      icon +
+      '\')">' +
+
+      '🚀 Start Free Demo →' +
+
+      '</button>';
+
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
+
+async function checkAdmin(){
+
+  isAdmin = false;
+
+
+  if(
+    typeof supabaseClient ===
+    "undefined" ||
+    !supabaseClient
+  ){
+
+    return false;
+  }
+
+
+  try{
+
+    const {data,error} =
+      await supabaseClient.auth.getUser();
+
+
+    if(
+      error ||
+      !data ||
+      !data.user
+    ){
+
+      currentUser = null;
+
+      return false;
+    }
+
+
+    currentUser =
+      data.user;
+
+
+    const r =
+      await window.himchayanPaymentRequest("is_admin");
+
+
+    isAdmin =
+      !r.error &&
+      r.data?.is_admin === true;
+
+
+    return isAdmin;
+
+
+  }catch(error){
+
+    console.error(
+      "Admin check failed:",
+      error
+    );
+
+    return false;
+  }
+
+}
+
+
+/* =========================================================
+   PREMIUM ACCESS CHECK
+========================================================= */
+
+async function checkPreviousYearAccess(){
+
+  hasAccess = false;
+
+
+  if(isAdmin === true){
+
+    hasAccess = true;
+
+    return true;
+  }
+
+
+  if(!currentUser){
+
+    return false;
+  }
+
+
+  try{
+
+    const {data,error} =
+      await window.himchayanPaymentRequest("premium_status", { category: selectedExam, package_type: "previous_year" });
+
+
+    hasAccess =
+      !error &&
+      !!data?.is_active;
+
+
+    return hasAccess;
+
+
+  }catch(error){
+
+    console.error(
+      "Previous Year access check:",
+      error
+    );
+
+    return false;
+  }
+
+}
+
+
+/* =========================================================
+   OPEN EXAM
+========================================================= */
+
+async function openExam(
+  exam,
+  questions,
+  icon
+){
+
+  isFreeDemo = false;
+
+  selectedExam = exam;
+  selectedQuestions = questions;
+  selectedIcon = icon;
+
+  isAdmin = false;
+  hasAccess = false;
+  currentUser = null;
+
+  paymentInProgress = false;
+
+
+  document.getElementById(
+    "examPage"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "mockPage"
+  ).classList.add("active");
+
+
+  document.getElementById(
+    "examTitle"
+  ).textContent =
+    icon +
+    " " +
+    exam +
+    " — Previous Year Mock Tests";
+
+
+  document.getElementById(
+    "examDescription"
+  ).textContent =
+
+    exam === "JOA"
+
+      ? "4 Verified PYQ Papers • 170 + 170 + 200 + 200 Questions"
+
+      : exam === "JBT"
+
+      ? "9 Mocks • 200 Questions + 11 Mocks • 120 Questions"
+
+      : "20 Mock Tests • " +
+        questions +
+        " Questions each";
+
+
+  /*
+   * Reset payment UI
+   */
+
+  document.getElementById(
+    "paymentBox"
+  ).style.display = "block";
+
+
+  document.getElementById(
+    "adminBox"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "accessBox"
+  ).style.display = "none";
+
+
+  const paymentButton =
+    document.getElementById(
+      "mainPaymentButton"
+    );
+
+
+  if(paymentButton){
+
+    paymentButton.disabled = false;
+
+    paymentButton.textContent =
+      "💳 Pay ₹99 & Unlock All Mocks →";
+  }
+
+
+  try{
+
+    await checkAdmin();
+
+
+    if(isAdmin === true){
+
+      document.getElementById(
+        "paymentBox"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "adminBox"
+      ).style.display = "block";
+
+
+      renderMocks();
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+      return;
+    }
+
+
+    await checkPreviousYearAccess();
+
+
+    if(hasAccess === true){
+
+      document.getElementById(
+        "paymentBox"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "accessBox"
+      ).style.display = "block";
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Access system error:",
+      error
+    );
+
+  }
+
+
+  renderMocks();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   MOCK QUESTION COUNT
+========================================================= */
+
+function getMockQuestionCount(
+  mockNumber
+){
+
+  if(selectedExam === "JOA"){
+
+    if(mockNumber === 1)return 170;
+
+    if(mockNumber === 2)return 170;
+
+    if(mockNumber === 3)return 200;
+
+    if(mockNumber === 4)return 200;
+
+    return 0;
+  }
+
+
+  if(selectedExam === "JBT"){
+
+    return mockNumber <= 9
+      ? 200
+      : 120;
+
+  }
+
+
+  return selectedQuestions;
+}
+
+
+/* =========================================================
+   RENDER MOCKS
+========================================================= */
+
+function renderMocks(){
+
+  const grid =
+    document.getElementById(
+      "mockGrid"
+    );
+
+
+  grid.innerHTML = "";
+
+
+  const mockLimit =
+    selectedExam === "JOA"
+      ? 4
+      : 20;
+
+
+  for(
+    let i = 1;
+    i <= mockLimit;
+    i++
+  ){
+
+    const card =
+      document.createElement("div");
+
+
+    card.className =
+      "mock-card";
+
+
+    const unlocked =
+      isAdmin ||
+      hasAccess;
+
+
+    const mockQuestions =
+      getMockQuestionCount(i);
+
+
+    /*
+     * UNLOCKED MOCK
+     */
+
+    if(unlocked){
+
+      card.innerHTML =
+
+        '<span class="mock-tag">' +
+        '📚 MOCK ' +
+        i +
+        '</span>' +
+
+        '<h3>' +
+        selectedExam +
+        ' — Mock ' +
+        i +
+        '</h3>' +
+
+        '<p>' +
+        mockQuestions +
+        ' Questions' +
+        '</p>' +
+
+        '<button class="mock-btn unlocked" ' +
+        'onclick="openMock(' +
+        i +
+        ')">' +
+
+        '✅ Start Mock ' +
+        i +
+        ' →' +
+
+        '</button>';
+
+    }
+
+    /*
+     * LOCKED MOCK
+     *
+     * IMPORTANT:
+     * Every mock uses the SAME ₹99 package.
+     */
+
+    else{
+
+      card.innerHTML =
+
+        '<span class="mock-tag">' +
+        '🔐 MOCK ' +
+        i +
+        '</span>' +
+
+        '<h3>' +
+        selectedExam +
+        ' — Mock ' +
+        i +
+        '</h3>' +
+
+        '<p>' +
+        mockQuestions +
+        ' Questions' +
+        '</p>' +
+
+        '<button class="mock-btn locked" ' +
+        'onclick="startPayment()">' +
+
+        '🔒 Unlock Mock ' +
+        i +
+
+        '</button>';
+
+    }
+
+
+    grid.appendChild(card);
+
+  }
+
+}
+
+
+/* =========================================================
+   FREE DEMO
+========================================================= */
+
+function openFreePreviousYearDemo(
+  exam,
+  questions,
+  icon
+){
+
+  isFreeDemo = true;
+
+  selectedExam = exam;
+  selectedQuestions = questions;
+  selectedIcon = icon;
+
+  isAdmin = false;
+  hasAccess = true;
+
+  quizMockNumber = 1;
+  quizTotalQuestions = questions;
+
+  quizCurrentQuestion = 0;
+
+  quizAnswers = {};
+  quizReview = {};
+  quizVisited = {};
+  quizQuestions = [];
+
+
+  prepareFreeDemoQuestionBank();
+
+
+  document.getElementById(
+    "examPage"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "mockPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.add("active");
+
+
+  document.getElementById(
+    "quizSettings"
+  ).style.display = "block";
+
+
+  document.getElementById(
+    "quizArea"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "quizTotalQuestions"
+  ).value =
+    quizTotalQuestions;
+
+
+  document.getElementById(
+    "sidebarTotal"
+  ).textContent =
+    quizTotalQuestions;
+
+
+  document.getElementById(
+    "quizPartTitle"
+  ).textContent =
+    "Free Demo — " +
+    exam;
+
+
+  document.getElementById(
+    "quizReadyMessage"
+  ).textContent =
+    "✓ " +
+    quizTotalQuestions +
+    " verified Questions loaded. यह Free Previous Year Mock Demo है।";
+
+
+  document.getElementById(
+    "quizTimerInput"
+  ).value = 120;
+
+
+  document.getElementById(
+    "quizLanguage"
+  ).value = "both";
+
+
+  document.getElementById(
+    "quizLanguageTop"
+  ).value = "both";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   PREPARE FREE DEMO BANK
+========================================================= */
+
+function prepareFreeDemoQuestionBank(){
+
+  let bank = null;
+
+
+  try{
+
+    bank =
+      window.freePreviousYearDemoQuestionBanks[
+        selectedExam
+      ];
+
+  }catch(error){
+
+    console.error(
+      "Free demo bank read error:",
+      error
+    );
+
+  }
+
+
+  if(
+    Array.isArray(bank) &&
+    bank.length > 0
+  ){
+
+    quizQuestions =
+      bank.slice();
+
+
+    quizTotalQuestions =
+      quizQuestions.length;
+
+
+    return;
+  }
+
+
+  quizQuestions = [];
+  quizTotalQuestions = 0;
+
+
+  showMessage(
+    "⚠️ इस Free Demo का verified question bank load नहीं हुआ।"
+  );
+
+}
+
+
+/* =========================================================
+   OPEN PAID MOCK
+========================================================= */
+
+function openMock(mockNumber){
+
+  if(isFreeDemo)return;
+
+
+  /*
+   * If locked:
+   * open SAME ₹99 payment flow.
+   */
+
+  if(
+    isAdmin !== true &&
+    hasAccess !== true
+  ){
+
+    startPayment();
+
+    return;
+  }
+
+
+  quizMockNumber =
+    mockNumber;
+
+
+  quizTotalQuestions =
+    getMockQuestionCount(
+      mockNumber
+    );
+
+
+  if(
+    quizTotalQuestions <= 0
+  ){
+
+    showMessage(
+      "⚠️ इस Mock का verified data उपलब्ध नहीं है।"
+    );
+
+    return;
+  }
+
+
+  quizCurrentQuestion = 0;
+
+  quizAnswers = {};
+  quizReview = {};
+  quizVisited = {};
+  quizQuestions = [];
+
+
+  const loaded =
+    prepareQuestionBank();
+
+
+  if(
+    !loaded ||
+    !Array.isArray(quizQuestions) ||
+    quizQuestions.length === 0
+  ){
+
+    showMessage(
+      "⚠️ इस Mock का question bank load नहीं हुआ।"
+    );
+
+    return;
+  }
+
+
+  if(
+    quizQuestions.length <
+    quizTotalQuestions
+  ){
+
+    quizTotalQuestions =
+      quizQuestions.length;
+  }
+
+
+  document.getElementById(
+    "mockPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.add("active");
+
+
+  document.getElementById(
+    "quizSettings"
+  ).style.display = "block";
+
+
+  document.getElementById(
+    "quizArea"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "quizTotalQuestions"
+  ).value =
+    quizTotalQuestions;
+
+
+  document.getElementById(
+    "sidebarTotal"
+  ).textContent =
+    quizTotalQuestions;
+
+
+  document.getElementById(
+    "quizPartTitle"
+  ).textContent =
+    selectedExam +
+    " — Mock " +
+    mockNumber;
+
+
+  document.getElementById(
+    "quizReadyMessage"
+  ).textContent =
+    "✓ " +
+    quizTotalQuestions +
+    " verified Questions loaded. Timer और Language चुनें।";
+
+
+  document.getElementById(
+    "quizTimerInput"
+  ).value = 120;
+
+
+  document.getElementById(
+    "quizLanguage"
+  ).value = "both";
+
+
+  document.getElementById(
+    "quizLanguageTop"
+  ).value = "both";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+function startPreviousYearQuiz(){
+
+  const minutes =
+    parseInt(
+      document.getElementById(
+        "quizTimerInput"
+      ).value
+    );
+
+
+  if(
+    !minutes ||
+    minutes < 1
+  ){
+
+    showMessage(
+      "कृपया Timer 1 मिनट या उससे अधिक रखें।"
+    );
+
+    return;
+  }
+
+
+  quizTimerSeconds =
+    minutes * 60;
+
+
+  quizLanguage =
+    document.getElementById(
+      "quizLanguage"
+    ).value;
+
+
+  document.getElementById(
+    "quizLanguageTop"
+  ).value =
+    quizLanguage;
+
+
+  document.getElementById(
+    "quizSettings"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "quizArea"
+  ).style.display =
+    "block";
+
+
+  renderQuestionPalette();
+
+  loadQuestion(0);
+
+  startQuizTimer();
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startQuizTimer(){
+
+  clearInterval(
+    quizTimerInterval
+  );
+
+
+  updateTimer();
+
+
+  quizTimerInterval =
+    setInterval(
+      function(){
+
+        quizTimerSeconds--;
+
+        updateTimer();
+
+
+        if(
+          quizTimerSeconds <= 0
+        ){
+
+          clearInterval(
+            quizTimerInterval
+          );
+
+
+          showMessage(
+            "⏰ समय समाप्त हो गया। Test submit किया जा रहा है..."
+          );
+
+
+          setTimeout(
+            function(){
+
+              submitPreviousYearQuiz();
+
+            },
+            800
+          );
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+function updateTimer(){
+
+  const minutes =
+    Math.floor(
+      quizTimerSeconds / 60
+    );
+
+
+  const seconds =
+    quizTimerSeconds % 60;
+
+
+  document.getElementById(
+    "quizTimer"
+  ).textContent =
+
+    String(minutes)
+      .padStart(2,"0") +
+
+    ":" +
+
+    String(seconds)
+      .padStart(2,"0");
+
+}
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function changeQuizLanguage(
+  language
+){
+
+  quizLanguage =
+    language;
+
+
+  document.getElementById(
+    "quizLanguage"
+  ).value =
+    language;
+
+
+  loadQuestion(
+    quizCurrentQuestion
+  );
+
+}
+
+
+/* =========================================================
+   QUESTION PALETTE
+========================================================= */
+
+function renderQuestionPalette(){
+
+  const palette =
+    document.getElementById(
+      "questionPalette"
+    );
+
+
+  palette.innerHTML = "";
+
+
+  for(
+    let i = 0;
+    i < quizTotalQuestions;
+    i++
+  ){
+
+    const btn =
+      document.createElement(
+        "button"
+      );
+
+
+    btn.type = "button";
+
+    btn.className =
+      "palette-btn";
+
+    btn.textContent =
+      i + 1;
+
+
+    btn.onclick =
+      function(){
+
+        loadQuestion(i);
+
+      };
+
+
+    palette.appendChild(btn);
+
+  }
+
+
+  updatePalette();
+
+}
+
+
+function updatePalette(){
+
+  const buttons =
+    document.querySelectorAll(
+      ".palette-btn"
+    );
+
+
+  buttons.forEach(
+    function(btn,index){
+
+      btn.className =
+        "palette-btn";
+
+
+      if(
+        quizAnswers[index] !==
+        undefined
+      ){
+
+        btn.classList.add(
+          "answered"
+        );
+
+      }
+
+
+      if(
+        quizReview[index]
+      ){
+
+        btn.classList.remove(
+          "answered"
+        );
+
+        btn.classList.add(
+          "review"
+        );
+
+      }
+
+
+      if(
+        index ===
+        quizCurrentQuestion
+      ){
+
+        btn.classList.add(
+          "current"
+        );
+
+      }
+
+    }
+  );
+
+
+  updateStatusCounts();
+
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
+function loadQuestion(index){
+
+  if(
+    index < 0 ||
+    index >= quizTotalQuestions
+  ){
+
+    return;
+  }
+
+
+  quizCurrentQuestion =
+    index;
+
+
+  quizVisited[index] =
+    true;
+
+
+  const q =
+    quizQuestions[index];
+
+
+  if(!q)return;
+
+
+  document.getElementById(
+    "questionNumber"
+  ).textContent =
+    "Question No. " +
+    (index + 1);
+
+
+  renderQuestionText(q);
+
+  renderOptions(q);
+
+  updateAnswerFeedback(q);
+
+
+  document.getElementById(
+    "quizProgressBar"
+  ).style.width =
+
+    (
+      ((index + 1) /
+      quizTotalQuestions) *
+      100
+    ) + "%";
+
+
+  updatePalette();
+
+}
+
+
+/* =========================================================
+   QUESTION TEXT
+========================================================= */
+
+function renderQuestionText(q){
+
+  const box =
+    document.getElementById(
+      "questionText"
+    );
+
+
+  const hindi =
+    q.hindi ||
+    q.questionHindi ||
+    q.question ||
+    "";
+
+
+  const english =
+    q.english ||
+    q.questionEnglish ||
+    q.question_en ||
+    "";
+
+
+  if(
+    quizLanguage === "hi"
+  ){
+
+    box.textContent =
+      hindi;
+
+    return;
+  }
+
+
+  if(
+    quizLanguage === "en"
+  ){
+
+    box.textContent =
+      english ||
+      hindi;
+
+    return;
+  }
+
+
+  box.innerHTML =
+
+    '<span class="bilingual-line">' +
+
+      '<span class="bilingual-label">' +
+      'हिन्दी' +
+      '</span>' +
+
+      escapeHtml(hindi) +
+
+    '</span>' +
+
+    '<span class="bilingual-line">' +
+
+      '<span class="bilingual-label">' +
+      'English' +
+      '</span>' +
+
+      escapeHtml(
+        english || hindi
+      ) +
+
+    '</span>';
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    String(value || "");
+
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+function getOptionText(
+  q,
+  index
+){
+
+  const hindi =
+    Array.isArray(q.optionsHindi)
+      ? q.optionsHindi[index]
+      : null;
+
+
+  const english =
+    Array.isArray(q.optionsEnglish)
+      ? q.optionsEnglish[index]
+      : null;
+
+
+  const normal =
+    Array.isArray(q.options)
+      ? q.options[index]
+      : null;
+
+
+  if(
+    quizLanguage === "hi"
+  ){
+
+    return (
+      hindi ||
+      normal ||
+      english ||
+      ""
+    );
+
+  }
+
+
+  if(
+    quizLanguage === "en"
+  ){
+
+    return (
+      english ||
+      normal ||
+      hindi ||
+      ""
+    );
+
+  }
+
+
+  if(
+    hindi &&
+    english
+  ){
+
+    return (
+      hindi +
+      " / " +
+      english
+    );
+
+  }
+
+
+  return (
+    normal ||
+    hindi ||
+    english ||
+    ""
+  );
+
+}
+
+
+function renderOptions(q){
+
+  const grid =
+    document.getElementById(
+      "optionsGrid"
+    );
+
+
+  grid.innerHTML = "";
+
+
+  const labels =
+    ["A","B","C","D"];
+
+
+  for(
+    let i = 0;
+    i < 4;
+    i++
+  ){
+
+    const option =
+      document.createElement(
+        "div"
+      );
+
+
+    option.className =
+      "option";
+
+
+    option.textContent =
+      labels[i] +
+      ". " +
+      getOptionText(
+        q,
+        i
+      );
+
+
+    if(
+      quizAnswers[
+        quizCurrentQuestion
+      ] === i
+    ){
+
+      option.classList.add(
+        "selected"
+      );
+
+    }
+
+
+    if(
+      quizAnswers[
+        quizCurrentQuestion
+      ] !== undefined &&
+
+      q.answer !== null &&
+      q.answer !== undefined
+    ){
+
+      const correctIndex =
+        getCorrectAnswerIndex(q);
+
+
+      if(
+        correctIndex === i
+      ){
+
+        option.classList.add(
+          "correct"
+        );
+
+      }
+
+
+      if(
+        quizAnswers[
+          quizCurrentQuestion
+        ] === i &&
+
+        i !== correctIndex
+      ){
+
+        option.classList.add(
+          "wrong"
+        );
+
+      }
+
+    }
+
+
+    option.onclick =
+      function(){
+
+        selectOption(i);
+
+      };
+
+
+    grid.appendChild(
+      option
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ANSWER INDEX
+========================================================= */
+
+function getCorrectAnswerIndex(q){
+
+  if(
+    q.answer === null ||
+    q.answer === undefined
+  ){
+
+    return null;
+  }
+
+
+  if(
+    typeof q.answer ===
+    "number"
+  ){
+
+    if(
+      q.answer >= 0 &&
+      q.answer <= 3
+    ){
+
+      return q.answer;
+
+    }
+
+
+    if(
+      q.answer >= 1 &&
+      q.answer <= 4
+    ){
+
+      return q.answer - 1;
+
+    }
+
+  }
+
+
+  const value =
+    String(
+      q.answer
+    )
+    .trim()
+    .toUpperCase();
+
+
+  const map = {
+
+    "A":0,
+    "B":1,
+    "C":2,
+    "D":3,
+
+    "1":0,
+    "2":1,
+    "3":2,
+    "4":3,
+
+    "0":0,
+
+    "1ST":0,
+    "2ND":1,
+    "3RD":2,
+    "4TH":3
+
+  };
+
+
+  return Object.prototype.hasOwnProperty.call(
+    map,
+    value
+  )
+    ? map[value]
+    : null;
+
+}
+
+
+/* =========================================================
+   SELECT OPTION
+========================================================= */
+
+function selectOption(
+  optionIndex
+){
+
+  quizAnswers[
+    quizCurrentQuestion
+  ] = optionIndex;
+
+
+  const q =
+    quizQuestions[
+      quizCurrentQuestion
+    ];
+
+
+  renderOptions(q);
+
+  updateAnswerFeedback(q);
+
+  updatePalette();
+
+}
+
+
+/* =========================================================
+   ANSWER FEEDBACK
+========================================================= */
+
+function updateAnswerFeedback(q){
+
+  const feedback =
+    document.getElementById(
+      "answerFeedback"
+    );
+
+
+  feedback.className =
+    "answer-feedback";
+
+
+  feedback.textContent =
+    "";
+
+
+  if(
+    !q ||
+    q.answer === null ||
+    q.answer === undefined ||
+    quizAnswers[
+      quizCurrentQuestion
+    ] === undefined
+  ){
+
+    return;
+  }
+
+
+  const correctIndex =
+    getCorrectAnswerIndex(q);
+
+
+  if(
+    correctIndex === null
+  ){
+
+    return;
+  }
+
+
+  const selected =
+    quizAnswers[
+      quizCurrentQuestion
+    ];
+
+
+  if(
+    selected ===
+    correctIndex
+  ){
+
+    feedback.classList.add(
+      "correct-feedback"
+    );
+
+
+    feedback.textContent =
+      "✓ Correct Answer";
+
+  }else{
+
+    feedback.classList.add(
+      "wrong-feedback"
+    );
+
+
+    feedback.textContent =
+      "✕ Wrong Answer • Correct option: " +
+      String.fromCharCode(
+        65 + correctIndex
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function saveAndNext(){
+
+  if(
+    quizCurrentQuestion <
+    quizTotalQuestions - 1
+  ){
+
+    loadQuestion(
+      quizCurrentQuestion + 1
+    );
+
+  }else{
+
+    showMessage(
+      "यह अंतिम Question है।"
+    );
+
+  }
+
+}
+
+
+function nextQuestion(){
+
+  if(
+    quizCurrentQuestion <
+    quizTotalQuestions - 1
+  ){
+
+    loadQuestion(
+      quizCurrentQuestion + 1
+    );
+
+  }else{
+
+    showMessage(
+      "यह अंतिम Question है।"
+    );
+
+  }
+
+}
+
+
+function previousQuestion(){
+
+  if(
+    quizCurrentQuestion > 0
+  ){
+
+    loadQuestion(
+      quizCurrentQuestion - 1
+    );
+
+  }else{
+
+    showMessage(
+      "यह पहला Question है।"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+function markForReview(){
+
+  quizReview[
+    quizCurrentQuestion
+  ] =
+    !quizReview[
+      quizCurrentQuestion
+    ];
+
+
+  updatePalette();
+
+
+  if(
+    quizCurrentQuestion <
+    quizTotalQuestions - 1
+  ){
+
+    loadQuestion(
+      quizCurrentQuestion + 1
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   STATUS COUNTS
+========================================================= */
+
+function updateStatusCounts(){
+
+  let answered = 0;
+  let review = 0;
+  let notVisited = 0;
+
+
+  for(
+    let i = 0;
+    i < quizTotalQuestions;
+    i++
+  ){
+
+    if(
+      quizAnswers[i] !==
+      undefined
+    ){
+
+      answered++;
+
+    }
+
+
+    if(
+      quizReview[i]
+    ){
+
+      review++;
+
+    }
+
+
+    if(
+      !quizVisited[i]
+    ){
+
+      notVisited++;
+
+    }
+
+  }
+
+
+  document.getElementById(
+    "answeredCount"
+  ).textContent =
+    answered;
+
+
+  document.getElementById(
+    "reviewCount"
+  ).textContent =
+    review;
+
+
+  document.getElementById(
+    "notVisitedCount"
+  ).textContent =
+    notVisited;
+
+}
+
+
+/* =========================================================
+   SUBMIT QUIZ
+========================================================= */
+
+function submitPreviousYearQuiz(){
+
+  if(
+    quizTotalQuestions <= 0
+  ){
+
+    return;
+  }
+
+
+  clearInterval(
+    quizTimerInterval
+  );
+
+
+  let attempted = 0;
+  let correct = 0;
+  let hasAnswerKey = false;
+
+
+  for(
+    let i = 0;
+    i < quizTotalQuestions;
+    i++
+  ){
+
+    const q =
+      quizQuestions[i];
+
+
+    if(
+      q &&
+      q.answer !== null &&
+      q.answer !== undefined
+    ){
+
+      hasAnswerKey = true;
+
+    }
+
+
+    if(
+      quizAnswers[i] !== undefined
+    ){
+
+      attempted++;
+
+
+      if(
+        q &&
+        q.answer !== null &&
+        q.answer !== undefined
+      ){
+
+        const correctIndex =
+          getCorrectAnswerIndex(q);
+
+
+        if(
+          quizAnswers[i] ===
+          correctIndex
+        ){
+
+          correct++;
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  const wrong =
+    hasAnswerKey
+      ? attempted - correct
+      : "—";
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.add("active");
+
+
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+
+    (
+      isFreeDemo
+        ? "FREE DEMO — "
+        : ""
+    ) +
+
+    selectedExam +
+    " — Mock " +
+    quizMockNumber;
+
+
+  document.getElementById(
+    "resultScore"
+  ).textContent =
+
+    hasAnswerKey
+
+      ? correct +
+        " / " +
+        quizTotalQuestions
+
+      : attempted +
+        " / " +
+        quizTotalQuestions;
+
+
+  document.getElementById(
+    "resultTotal"
+  ).textContent =
+    quizTotalQuestions;
+
+
+  document.getElementById(
+    "resultAttempted"
+  ).textContent =
+    attempted;
+
+
+  document.getElementById(
+    "resultCorrect"
+  ).textContent =
+    hasAnswerKey
+      ? correct
+      : "—";
+
+
+  document.getElementById(
+    "resultWrong"
+  ).textContent =
+    wrong;
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   CLOSE QUIZ
+========================================================= */
+
+function closeQuiz(){
+
+  clearInterval(
+    quizTimerInterval
+  );
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizArea"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "quizSettings"
+  ).style.display =
+    "block";
+
+
+  if(isFreeDemo){
+
+    isFreeDemo = false;
+
+
+    document.getElementById(
+      "examPage"
+    ).style.display =
+      "block";
+
+  }else{
+
+    document.getElementById(
+      "mockPage"
+    ).classList.add("active");
+
+  }
+
+}
+
+
+/* =========================================================
+   CLOSE RESULT
+========================================================= */
+
+function closeResult(){
+
+  clearInterval(
+    quizTimerInterval
+  );
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.remove("active");
+
+
+  if(isFreeDemo){
+
+    isFreeDemo = false;
+
+
+    document.getElementById(
+      "examPage"
+    ).style.display =
+      "block";
+
+  }else{
+
+    document.getElementById(
+      "mockPage"
+    ).classList.add("active");
+
+  }
+
+}
+
+
+/* =========================================================
+   BACK TO EXAMS
+========================================================= */
+
+function backToExams(){
+
+  clearInterval(
+    quizTimerInterval
+  );
+
+
+  document.getElementById(
+    "mockPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "quizResultPage"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "examPage"
+  ).style.display =
+    "block";
+
+
+  selectedExam = "";
+  selectedQuestions = 0;
+  selectedIcon = "";
+
+  isAdmin = false;
+  hasAccess = false;
+  currentUser = null;
+
+  isFreeDemo = false;
+
+  paymentInProgress = false;
+
+  quizMockNumber = 0;
+  quizTotalQuestions = 0;
+  quizCurrentQuestion = 0;
+
+  quizAnswers = {};
+  quizReview = {};
+  quizVisited = {};
+  quizQuestions = [];
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(text){
+
+  const box =
+    document.getElementById(
+      "message"
+    );
+
+
+  box.textContent =
+    text;
+
+
+  box.classList.add(
+    "show"
+  );
+
+
+  setTimeout(
+    function(){
+
+      box.classList.remove(
+        "show"
+      );
+
+    },
+    3000
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderFreeDemoCards();
+
+</script>
+
+</body>
+</html>
