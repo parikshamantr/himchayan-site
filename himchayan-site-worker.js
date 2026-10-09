@@ -24,6 +24,38 @@ export default {
             const adminGate = "if(adminResponse?.ok && adminResult.is_admin === true){";
             const adminGateFixed = 'if((adminResponse?.ok && adminResult.is_admin === true) || String(email || "").trim().toLowerCase() === "rajpootbawan@gmail.com"){';
             if (html.includes(adminGate)) html = html.replace(adminGate, adminGateFixed);
+            const adminDrawerFallback = `<script>
+(function(){
+  const allowedAdminEmail = "rajpootbawan@gmail.com";
+  function revealAdminDrawerOptions(){
+    const loginSub = document.getElementById("drawerLoginSub");
+    const currentEmail = String(loginSub?.textContent || "").trim().toLowerCase();
+    if (currentEmail !== allowedAdminEmail) return false;
+    const controlPanel = document.getElementById("drawerAdminBtn");
+    const masterAdmin = document.getElementById("learningEngineAdminBtn");
+    const adminTools = document.getElementById("adminTools");
+    if (controlPanel) controlPanel.style.display = "flex";
+    if (masterAdmin) masterAdmin.style.display = "flex";
+    if (adminTools) adminTools.style.display = "block";
+    if (typeof window.himChayanShowLearningEngineAdmin === "function") window.himChayanShowLearningEngineAdmin();
+    if (typeof window.himChayanShowAdminTools === "function") window.himChayanShowAdminTools();
+    return true;
+  }
+  function start(){
+    if (revealAdminDrawerOptions()) return;
+    const observer = new MutationObserver(function(){
+      if (revealAdminDrawerOptions()) observer.disconnect();
+    });
+    if (document.body) observer.observe(document.body, {childList:true, subtree:true, characterData:true});
+    setTimeout(function(){ observer.disconnect(); }, 20000);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, {once:true});
+  else start();
+})();
+</script>`;
+            if (!html.includes("allowedAdminEmail = \"rajpootbawan@gmail.com\"")) {
+              html = html.includes("</body>") ? html.replace("</body>", adminDrawerFallback + "</body>") : html + adminDrawerFallback;
+            }
             const headers = new Headers(assetResponse.headers);
             headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
             headers.set("Pragma", "no-cache");
