@@ -798,11 +798,15 @@ button{font:inherit}
   window.__pmCurrentView=renderHome;
   const initialParams=new URLSearchParams(window.location.search);
   const initialExam=initialParams.get('exam_group');
+  const initialSubject=initialParams.get('subject');
   const initialType=initialParams.get('content_type');
-  if(initialExam && ['PDF','NOTES'].includes(String(initialType||'').toUpperCase())){
+  if(['PDF','NOTES'].includes(String(initialType||'').toUpperCase()) && (initialExam || initialSubject)){
     const safeType=String(initialType).toUpperCase();
     const displayType=safeType==='NOTES'?'Notes':'PDF';
-    showResources({exam_group:initialExam,content_type:safeType},initialExam+' → '+displayType,'CBT Mode → '+initialExam+' → '+displayType,'All Exam Resources');
+    const filters={content_type:safeType};
+    if(initialExam) filters.exam_group=initialExam;
+    if(initialSubject) filters.subject=initialSubject;
+    showResources(filters,(initialExam?initialExam+' → ':'All Exams → ')+(initialSubject?initialSubject+' → ':'')+displayType,'Study Notes → '+(initialExam||'All Exams')+' → '+(initialSubject?initialSubject+' → ':'')+displayType,'Study Notes');
   }else{
     renderHome();
   }
