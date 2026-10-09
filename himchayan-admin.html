@@ -339,6 +339,109 @@ function hcSyncExamControls(){
 }
 document.addEventListener("DOMContentLoaded",hcSyncExamControls);
 
+/* Save metadata through the existing Learning API. Actual binary uploads are deliberately deferred until R2 is configured. */
+function hcGetField(section,label,selector){
+ const fields=Array.from(document.querySelectorAll(section+" .field"));
+ const f=fields.find(x=>x.querySelector("label")?.textContent.trim().replace(/\\s+/g," ")===label);
+ return f?.querySelector(selector||"input,select,textarea")||null;
+}
+function hcGetValue(section,label,selector){
+ const el=hcGetField(section,label,selector);
+ return el ? String(el.value||"").trim() : "";
+}
+function hcGetCheck(section,label){
+ const f=Array.from(document.querySelectorAll(section+" .checks label")).find(x=>x.textContent.trim().startsWith(label));
+ return !!f?.querySelector("input")?.checked;
+}
+function hcShowFormStatus(section,message,ok){
+ let n=document.querySelector(section+" .hc-save-status");
+ if(!n){n=document.createElement("div");n.className="notice hc-save-status";n.setAttribute("role","status");document.querySelector(section+" .panel")?.prepend(n);}
+ n.textContent=message;n.style.borderLeft="4px solid "+(ok?"#13834d":"#c42e38");
+}
+async function hcSaveMetadata(path,section,payload,label){
+ try{
+  if(!hcToken()) throw new Error("Admin session नहीं मिली। दोबारा login करके प्रयास करें।");
+  const result=await hcApi(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  if(result?.ok===false) throw new Error(result.error||"API ने save स्वीकार नहीं किया।");
+  hcShowFormStatus(section,label+" — save सफल।",true);
+  await hcLoadDashboard();
+  if(section==="#resources") await hcLoadResources();
+  if(section==="#notes") await hcLoadNotes();
+  if(section==="#mocks") await hcLoadMocks();
+  if(section==="#questions") await hcLoadQuestions();
+ }catch(e){hcShowFormStatus(section,"Save नहीं हुआ: "+(e?.message||"Unknown API error"),false);}
+}
+function hcBindSaveButtons(){
+ const resourceBtn=document.querySelector("#resources .panel .row .btn:not(.gray)");
+ resourceBtn?.addEventListener("click",()=>{
+  const f=hcGetField("#resources","PDF / Image Upload","input[type=file]");
+  if(f?.files?.length){hcShowFormStatus("#resources","File चुनी गई है, लेकिन अभी upload नहीं हुई। R2 configure होने के बाद upload चालू होगा।",false);return;}
+  const title=hcGetValue("#resources","Title");
+  if(!title){hcShowFormStatus("#resources","Save करने से पहले Title भरें।",false);return;}
+  hcSaveMetadata("/api/admin/content","#resources",{
+   exam_name:hcGetValue("#resources","Exam Name")||hcGetValue("#resources","Exam Group")||null,
+   category_id:null,subject_id:hcGetValue("#resources","Subject")||null,
+   content_type:hcGetValue("#resources","Content Type")||"PYQ",title,
+   file_type:hcGetValue("#resources","File Type")||"PDF",
+   external_url:hcGetValue("#resources","External URL")||null,
+   description:hcGetValue("#resources","Description")||null,
+   access_type:hcGetValue("#resources","Access")||"FREE",
+   price:Number(hcGetValue("#resources","Price ₹")||0),
+   display_order:Number(hcGetValue("#resources","Display Order")||0),
+   allow_view:hcGetCheck("#resources","View ON"),allow_download:hcGetCheck("#resources","Download ON"),
+   published:hcGetCheck("#resources","Published ON"),active:hcGetCheck("#resources","Active")
+  },"Resource details");
+ });
+ const notesBtn=document.querySelector("#notes .panel .row .btn:not(.gray)");
+ notesBtn?.addEventListener("click",()=>{
+  const f=hcGetField("#notes","Choose File (PDF/Notes — upload setup later)","input[type=file]");
+  if(f?.files?.length){hcShowFormStatus("#notes","File चुनी गई है, लेकिन अभी upload नहीं हुई। R2 configure होने के बाद upload चालू होगा।",false);return;}
+  const title=hcGetValue("#notes","Title");
+  if(!title){hcShowFormStatus("#notes","Save करने से पहले Title भरें।",false);return;}
+  const type=hcGetValue("#notes","Content")||"PDF";
+  hcSaveMetadata("/api/admin/content","#notes",{
+   exam_name:hcGetValue("#notes","Exam")||null,category_id:null,subject_id:hcGetValue("#notes","Subject")||null,
+   content_type:type.toUpperCase(),file_type:type.toUpperCase(),title,
+   description:hcGetValue("#notes","Description")||null,access_type:hcGetValue("#notes","Access")||"FREE",
+   price:Number(hcGetValue("#notes","Price ₹")||0),display_order:Number(hcGetValue("#notes","Display Order")||0),
+   allow_view:hcGetCheck("#notes","View"),allow_download:hcGetCheck("#notes","Download"),
+   published:hcGetCheck("#notes","Published"),active:hcGetCheck("#notes","Active")
+  },"Study Note details");
+ });
+ const mockBtn=document.querySelector("#mocks .panel:nth-of-type(2) .row .btn:not(.gray)");
+ mockBtn?.addEventListener("click",()=>{
+  const f=hcGetField("#mocks","Choose Question Paper (PDF — upload setup later)","input[type=file]");
+  if(f?.files?.length){hcShowFormStatus("#mocks","Question paper चुना गया है, लेकिन अभी upload नहीं हुआ। R2 configure होने के बाद upload चालू होगा।",false);return;}
+  const title=hcGetValue("#mocks","Mock Name");
+  if(!title){hcShowFormStatus("#mocks","Save करने से पहले Mock Name भरें।",false);return;}
+  const checks=Array.from(document.querySelectorAll("#mocks .panel:nth-of-type(2) .checks label"));
+  const checked=i=>!!checks[i]?.querySelector("input")?.checked;
+  const template=hcGetValue("#mocks","Template");
+  hcSaveMetadata("/api/admin/mocks","#mocks",{
+   title,mock_type:hcGetValue("#mocks","Mock Category")==="Subject Mock"?"SUBJECT":"COMPETITIVE",
+   exam_name:hcGetValue("#mocks","Exam Category")||null,subject_id:hcGetValue("#mocks","Subject / Section")||null,
+   template_id:null,access_type:hcGetValue("#mocks","Access")||"FREE",
+   price:Number(hcGetValue("#mocks","Price ₹")||0),total_questions:Number(hcGetValue("#mocks","Total Questions")||120),
+   timer_minutes:Number(hcGetValue("#mocks","Timer Minutes")||120),negative_marking:Number(hcGetValue("#mocks","Negative Marking")||0),
+   language_mode:hcGetValue("#mocks","Language")||"Hindi",attempt_limit:Number(hcGetValue("#mocks","Attempt Limit")||1),
+   shuffle_questions:checked(0),result_enabled:checked(1),answer_key_enabled:checked(2),review_enabled:checked(3),
+   published:checked(4),active:checked(5),privacy_protection:true,description:"Template: "+template
+  },"Mock details");
+ });
+ const questionBtn=document.querySelector("#questions .panel .row .btn:not(.gray)");
+ questionBtn?.addEventListener("click",()=>{
+  const v=label=>hcGetValue("#questions",label);
+  if(!v("Question Hindi")&&!v("Question English")){hcShowFormStatus("#questions","Question Hindi या English में भरें।",false);return;}
+  hcSaveMetadata("/api/admin/questions","#questions",{
+   question_type:"MCQ",question_hi:v("Question Hindi")||null,question_en:v("Question English")||null,
+   correct_option_key:v("Correct Option")||"A",explanation_hi:v("Explanation")||null,source_type:"MANUAL",active:true,
+   options:[{key:"A",hi:v("Option A")},{key:"B",hi:v("Option B")},{key:"C",hi:v("Option C")},{key:"D",hi:v("Option D")}]
+  },"Question");
+ });
+}
+document.addEventListener("DOMContentLoaded",hcBindSaveButtons);
+
+
 </script>
 
 <script>
