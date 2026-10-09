@@ -2184,7 +2184,7 @@ if(!currentUser || !accessToken){
   renderCategories();
   return;
 }
-const adminResponse=accessToken?await fetch((window.HIMCHAYAN_PAYMENT_API || "https://himchayan-payment.pmindia.workers.dev"),
+const adminResponse=accessToken?await fetch((window.HIMCHAYAN_PAYMENT_API || "https://himchayan-payment.pmindia.workers.dev"),{
  method:"POST",
  headers:{"Content-Type":"application/json","Authorization":"Bearer "+accessToken},
  body:JSON.stringify({action:"is_admin"}),
