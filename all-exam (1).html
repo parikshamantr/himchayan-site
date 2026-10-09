@@ -796,7 +796,16 @@ button{font:inherit}
   document.querySelectorAll('a[href="#all-exam-portfolio"]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();openPortfolio();}));
   currentView=renderHome;
   window.__pmCurrentView=renderHome;
-  renderHome();
+  const initialParams=new URLSearchParams(window.location.search);
+  const initialExam=initialParams.get('exam_group');
+  const initialType=initialParams.get('content_type');
+  if(initialExam && ['PDF','NOTES'].includes(String(initialType||'').toUpperCase())){
+    const safeType=String(initialType).toUpperCase();
+    const displayType=safeType==='NOTES'?'Notes':'PDF';
+    showResources({exam_group:initialExam,content_type:safeType},initialExam+' → '+displayType,'CBT Mode → '+initialExam+' → '+displayType,'All Exam Resources');
+  }else{
+    renderHome();
+  }
 })();
 
 </script>
