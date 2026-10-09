@@ -123,6 +123,24 @@ button{
   gap:15px
 }
 
+/* Exam quick-navigation rail: always visible and horizontally scrollable. */
+.exam-quick-rail{
+  display:flex;gap:9px;overflow-x:auto;overscroll-behavior-x:contain;
+  padding:8px 2px 13px;margin:0 0 14px;scroll-snap-type:x proximity;
+  scrollbar-width:thin;position:sticky;top:61px;z-index:900;
+  background:#f3f7fd
+}
+.exam-quick-rail button{
+  flex:0 0 auto;scroll-snap-align:start;border:1px solid #dce5f0;
+  background:#fff;color:#334155;border-radius:999px;padding:10px 17px;
+  font-weight:850;font-size:13px;white-space:nowrap
+}
+.exam-quick-rail button.active{background:#079b70;color:#fff;border-color:#079b70}
+.exam-card,.demo-card{min-width:0}
+.exam-card[hidden]{display:none!important}
+.demo-card[hidden]{display:none!important}
+
+
 .exam-card{
   background:#fff;
   border:1px solid #e2e9f2;
@@ -971,10 +989,23 @@ grid-template-columns:repeat(4,1fr)
 
 @media(max-width:520px){
 
-.wrap{
-padding:12px 9px 25px
-}
-
+.wrap{padding:10px 9px 22px}
+.exam-quick-rail{top:57px;gap:7px;margin-bottom:10px;padding:7px 1px 10px}
+.exam-quick-rail button{padding:9px 13px;font-size:12px}
+/* Compact two-column exam cards on phones; desktop layout remains unchanged. */
+.exam-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.exam-card{padding:11px;border-radius:12px}
+.exam-icon{font-size:26px;margin-bottom:4px}
+.exam-card h3{font-size:14px;margin-bottom:4px}
+.exam-card p{font-size:10px;line-height:1.35;min-height:0;margin-bottom:7px}
+.exam-info{font-size:8px;padding:4px 5px;margin-bottom:7px}
+.exam-btn{font-size:9px;padding:8px 5px}
+.demo-section{padding:11px}
+.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.demo-card{padding:9px}
+.demo-card h3{font-size:12px}
+.demo-card p{font-size:9px}
+.demo-btn{font-size:9px;padding:8px 4px}
 .grid{
 grid-template-columns:repeat(3,minmax(0,1fr))
 }
@@ -1059,6 +1090,18 @@ grid-template-columns:repeat(3,1fr)
     </p>
 
   </section>
+
+  <nav class="exam-quick-rail" id="examQuickRail" aria-label="Quick exam navigation">
+    <button type="button" class="active" data-exam-filter="All">🌐 All Exams</button>
+    <button type="button" data-exam-filter="JBT">👨‍🏫 HP JBT</button>
+    <button type="button" data-exam-filter="JOA">💻 JOA IT</button>
+    <button type="button" data-exam-filter="Patwari">📋 HP Patwari</button>
+    <button type="button" data-exam-filter="TGT">🎓 TGT</button>
+    <button type="button" data-exam-filter="Staff Nurse">🏥 Staff Nurse</button>
+    <button type="button" data-exam-filter="PGT">📚 PGT</button>
+    <button type="button" data-exam-filter="Police">👮 Police</button>
+    <button type="button" data-exam-filter="Forest Guard">🌲 Forest Guard</button>
+  </nav>
 
   <div class="exam-grid">
 
@@ -1781,6 +1824,33 @@ grid-template-columns:repeat(3,1fr)
 
 
 <script>
+
+/* Horizontal exam navigation: filters the existing cards without changing their handlers. */
+(function(){
+  const rail=document.getElementById("examQuickRail");
+  if(!rail)return;
+  rail.addEventListener("click",function(event){
+    const button=event.target.closest("[data-exam-filter]");
+    if(!button)return;
+    const selected=button.dataset.examFilter;
+    rail.querySelectorAll("[data-exam-filter]").forEach(function(item){
+      item.classList.toggle("active",item===button);
+      item.setAttribute("aria-pressed",item===button?"true":"false");
+    });
+    document.querySelectorAll(".exam-grid .exam-card").forEach(function(card){
+      const heading=card.querySelector("h3");
+      const name=(heading?.textContent||"").trim();
+      card.hidden=selected!=="All" && name.toLowerCase()!==selected.toLowerCase() &&
+        !(selected==="JOA" && name==="JOA");
+    });
+    if(selected!=="All"){
+      const card=Array.from(document.querySelectorAll(".exam-grid .exam-card")).find(function(item){
+        return (item.querySelector("h3")?.textContent||"").trim().toLowerCase()===selected.toLowerCase();
+      });
+      if(card)card.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }
+  });
+})();
 
 /* =========================================================
    GLOBAL VARIABLES
