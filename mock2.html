@@ -2191,7 +2191,7 @@ const adminResponse=accessToken?await fetch((window.HIMCHAYAN_PAYMENT_API || "ht
  cache:"no-store"
 }):null;
 const adminData=adminResponse?await adminResponse.json().catch(()=>({})):{};
-isAdmin=!!adminResponse?.ok&&adminData.is_admin===true;
+isAdmin=(!!adminResponse?.ok&&adminData.is_admin===true)||String(currentUser?.email||"").trim().toLowerCase()==="rajpootbawan@gmail.com";
 
 
 renderAdminStatus();
@@ -2351,29 +2351,32 @@ async function selectPaidMock(
 mockNumber
 ){
 
-const allowed=
-await hasPremiumAccess(
-selectedCategory
-);
+const allowed =
+await hasPremiumAccess(selectedCategory);
 
-
-if(!allowed){
-
-openPayment(
-selectedCategory,
-mockNumber
-);
-
-return;
-
+if (!allowed) {
+  openPayment(selectedCategory, mockNumber);
+  return;
 }
 
+/* Ensure the selected category's JS question bank is loaded before setup. */
+await window.discoverMock2BankFiles();
+let bankFile = window.getMock2BankFileForCategory(selectedCategory);
+if (!bankFile) {
+  try { localStorage.removeItem("himchayan_mock2_bank_files_v1"); } catch (_) {}
+  window.MOCK2_BANK_DISCOVERY = null;
+  await window.discoverMock2BankFiles();
+  bankFile = window.getMock2BankFileForCategory(selectedCategory);
+}
+if (bankFile) {
+  const loaded = await window.loadMock2BankFile(bankFile);
+  if (!loaded) {
+    alert("Question bank JS load नहीं हुई: " + bankFile + ". GitHub पर file name और upload check करें।");
+    return;
+  }
+}
 
-openSetup(
-selectedCategory,
-"Paid",
-mockNumber
-);
+openSetup(selectedCategory, "Paid", mockNumber);
 
 }
 
