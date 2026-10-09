@@ -1,0 +1,10 @@
+name = "himchayan-payment"
+main = "worker.js"
+compatibility_date = "2026-10-07"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "himchayan-core-migration"
+database_id = "d74b6f76-c74f-4ff9-bd7c-13f224f510f3"
+
+# Configure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET as Worker secrets.
