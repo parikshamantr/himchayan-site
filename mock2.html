@@ -1342,7 +1342,7 @@ class="privacy-badge hidden"
 <!-- Question banks used by Mock Test 2. Keep new exam banks in MOCK2_BANK_FILES. -->
 <script>
 window.MOCK2_BANK_LOADS = Object.create(null);
-window.MOCK2_BANK_FILES = [
+window.MOCK2_STATIC_BANK_FILES = [
   "./patwari-data.js",
   "./police-data.js",
   "./joa-it-data.js",
@@ -1350,6 +1350,55 @@ window.MOCK2_BANK_FILES = [
   "./tgt-data.js",
   "./mock2-demo-data.js"
 ];
+window.MOCK2_BANK_FILES = window.MOCK2_STATIC_BANK_FILES.slice();
+window.MOCK2_BANK_DISCOVERY = null;
+window.discoverMock2BankFiles = function(){
+  if (window.MOCK2_BANK_DISCOVERY) return window.MOCK2_BANK_DISCOVERY;
+  var cacheKey = "himchayan_mock2_bank_files_v1";
+  var maxAge = 10 * 60 * 1000;
+  var acceptedNames = function(names){
+    var discovered = (Array.isArray(names) ? names : []).filter(function(name){
+      return typeof name === "string" &&
+        /^[a-z0-9]+(?:-[a-z0-9]+)*-data\.js$/i.test(name) &&
+        name !== "free-previous-year-one-mock-demo-data.js";
+    }).map(function(name){ return "./" + name; });
+    return Array.from(new Set(window.MOCK2_STATIC_BANK_FILES.concat(discovered)));
+  };
+  try {
+    var cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+    if (cached && Array.isArray(cached.files) && Date.now() - cached.savedAt < maxAge) {
+      window.MOCK2_BANK_FILES = acceptedNames(cached.files);
+      return Promise.resolve(window.MOCK2_BANK_FILES);
+    }
+  } catch (_) {}
+  window.MOCK2_BANK_DISCOVERY = fetch("https://api.github.com/repos/parikshamantr/himchayan-site/contents?ref=main", {
+    headers: { "Accept": "application/vnd.github+json" },
+    cache: "no-store"
+  }).then(function(response){
+    if (!response.ok) throw new Error("GitHub file discovery HTTP " + response.status);
+    return response.json();
+  }).then(function(entries){
+    var names = (Array.isArray(entries) ? entries : []).filter(function(item){
+      return item && item.type === "file" && typeof item.name === "string";
+    }).map(function(item){ return item.name; });
+    window.MOCK2_BANK_FILES = acceptedNames(names);
+    try { localStorage.setItem(cacheKey, JSON.stringify({savedAt:Date.now(),files:names})); } catch (_) {}
+    return window.MOCK2_BANK_FILES;
+  }).catch(function(error){
+    console.warn("Mock2 auto-discovery unavailable; using registered banks.", error);
+    window.MOCK2_BANK_FILES = window.MOCK2_STATIC_BANK_FILES.slice();
+    return window.MOCK2_BANK_FILES;
+  });
+  return window.MOCK2_BANK_DISCOVERY;
+};
+window.getMock2BankFileForCategory = function(category){
+  var aliases = {"JOA IT":"joa-it","SSC GD":"ssc-gd","High Court":"high-court","Staff Nurse":"staff-nurse","Forest Guard":"forest-guard"};
+  var slug = aliases[category] || String(category || "").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  var expected = "./" + slug + "-data.js";
+  return (window.MOCK2_BANK_FILES || []).find(function(src){
+    try { return new URL(src, location.href).pathname === new URL(expected, location.href).pathname; } catch (_) { return false; }
+  }) || null;
+};
 window.loadMock2BankFile = function(src){
   if (window.MOCK2_BANK_LOADS[src]) return window.MOCK2_BANK_LOADS[src];
   window.MOCK2_BANK_LOADS[src] = new Promise(function(resolve){
@@ -1378,13 +1427,13 @@ window.loadMock2BankFile = function(src){
   return window.MOCK2_BANK_LOADS[src];
 };
 window.loadAllMock2Banks = function(){
-  return window.MOCK2_BANK_FILES.reduce(function(chain, src){
-    return chain.then(function(){ return window.loadMock2BankFile(src); });
-  }, Promise.resolve());
+  return window.discoverMock2BankFiles().then(function(){
+    return window.MOCK2_BANK_FILES.reduce(function(chain, src){
+      return chain.then(function(){ return window.loadMock2BankFile(src); });
+    }, Promise.resolve());
+  });
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./backend-config.js"></script>
 <script>
 window.addEventListener("error", function(e){
   if (e.target && e.target.tagName === "SCRIPT" && e.target.dataset && e.target.dataset.mock2Bank) {
@@ -2061,17 +2110,17 @@ normalizeQuestion
    Additional data schemas should be registered here after verification.
 ========================================================= */
 function getRegisteredMockBank(category, mockNumber){
-  var fileByCategory = {
-    "JBT": "./jbt-data.js",
-    "TGT": "./tgt-data.js"
-  };
-  var file = fileByCategory[category];
+  var file = window.getMock2BankFileForCategory(category);
   if (!file) return null;
-
-  var candidates = {
-    "JBT": ["jbtData", "jbtPaidMocks", "jbtMockData", "jbtMocks", "JBT_DATA"],
-    "TGT": ["tgtData", "tgtPaidMocks", "tgtMockData", "tgtMocks", "TGT_DATA"]
-  }[category] || [];
+  var slug = String(category || "").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  var words = slug.split("-");
+  var camel = words[0] + words.slice(1).map(function(word){ return word.charAt(0).toUpperCase() + word.slice(1); }).join("");
+  var upper = words.join("_").toUpperCase();
+  var candidates = Array.from(new Set([
+    camel + "PaidMocks", camel + "Mocks", camel + "MockData", camel + "Data",
+    camel + "QuestionBank", camel + "QuestionBanks",
+    upper + "_PAID_MOCKS", upper + "_MOCKS", upper + "_DATA"
+  ]));
   var source = null;
 
   for (var i = 0; i < candidates.length && !source; i++) {
@@ -2081,10 +2130,15 @@ function getRegisteredMockBank(category, mockNumber){
     }
   }
   if (!source) {
-    alert(category + " bank file loaded, but its data object name is not registered in mock2.html.");
+    alert(category + " data file loaded (" + file + "), but its global data name does not match the supported *PaidMocks / *Mocks / *Data convention.");
     return [];
   }
-  var raw = Array.isArray(source) ? source[mockNumber - 1] : (source[mockNumber] || source[String(mockNumber)]);
+  var raw;
+  if (Array.isArray(source)) {
+    raw = Array.isArray(source[mockNumber - 1]) ? source[mockNumber - 1] : source;
+  } else {
+    raw = source[mockNumber] || source[String(mockNumber)];
+  }
   if (!Array.isArray(raw)) {
     alert(category + " Mock " + mockNumber + " question bank was not found in " + file + ".");
     return [];
@@ -3102,7 +3156,7 @@ getPoliceBank(
 selectedMock
 );
 
-if (selectedCategory === "JBT" || selectedCategory === "TGT") {
+if (!bank.length && window.getMock2BankFileForCategory(selectedCategory)) {
   bank = getRegisteredMockBank(selectedCategory, selectedMock);
 }
 
@@ -3239,16 +3293,9 @@ return questions.length===total;
 ========================================================= */
 
 async function startQuiz(){
-const bankFilesByCategory = {
-  "Patwari":"./patwari-data.js",
-  "Police":"./police-data.js",
-  "JOA IT":"./joa-it-data.js",
-  "JBT":"./jbt-data.js",
-  "TGT":"./tgt-data.js"
-};
 const requiredBankSource = selectedType === "Demo"
   ? "./mock2-demo-data.js"
-  : bankFilesByCategory[selectedCategory];
+  : window.getMock2BankFileForCategory(selectedCategory);
 if (requiredBankSource) {
   const bankLoaded = await window.loadMock2BankFile(requiredBankSource);
   if (!bankLoaded) {
