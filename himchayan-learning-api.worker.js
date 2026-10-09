@@ -83,6 +83,39 @@ async function handle(request, env) {
     }});
   }
 
+
+  // Public homepage Daily Updates ticker (uses existing content table; no schema/R2 changes).
+  if (path === "/api/daily-updates" && request.method === "GET") {
+    const rows = await query(env, "SELECT id,title,external_url,display_order,created_at FROM hc_content_items WHERE content_type='DAILY_UPDATE' AND active=1 AND published=1 ORDER BY display_order,created_at DESC LIMIT 30");
+    return json({ok:true,data:rows.results});
+  }
+  if (path === "/api/admin/daily-updates" && request.method === "GET") {
+    const denied = await requireAdmin(request, env); if (denied) return denied;
+    const rows = await query(env, "SELECT id,title,external_url,display_order,published,active FROM hc_content_items WHERE content_type='DAILY_UPDATE' ORDER BY display_order,title");
+    return json({ok:true,data:rows.results});
+  }
+  if (path === "/api/admin/daily-updates" && request.method === "POST") {
+    const denied = await requireAdmin(request, env); if (denied) return denied;
+    const b = await bodyOf(request); const title = String(b.title || "").trim();
+    if (b.action === "delete") {
+      if (!b.id) return json({ok:false,error:"Update id required"},400);
+      await env.DB.prepare("UPDATE hc_content_items SET active=0,published=0 WHERE id=? AND content_type='DAILY_UPDATE'").bind(String(b.id)).run();
+      return json({ok:true,deleted:true});
+    }
+    if (!title) return json({ok:false,error:"Headline required"},400);
+    const externalUrl = String(b.external_url || "").trim() || null;
+    const order = Number.isFinite(Number(b.display_order)) ? Number(b.display_order) : 0;
+    if (b.id) {
+      await env.DB.prepare("UPDATE hc_content_items SET title=?,external_url=?,display_order=?,published=?,active=? WHERE id=? AND content_type='DAILY_UPDATE'")
+        .bind(title,externalUrl,order,b.published===false?0:1,b.active===false?0:1,String(b.id)).run();
+      return json({ok:true,id:String(b.id),updated:true});
+    }
+    const idv=id("daily");
+    await env.DB.prepare("INSERT INTO hc_content_items (id,exam_name,content_type,title,external_url,access_type,allow_view,allow_download,published,active,display_order) VALUES(?,NULL,'DAILY_UPDATE',?,?, 'FREE',1,0,?,?,?)")
+      .bind(idv,title,externalUrl,b.published===false?0:1,b.active===false?0:1,order).run();
+    return json({ok:true,id:idv},201);
+  }
+
   if (path === "/api/admin/categories" && request.method === "GET") {
     const denied = await requireAdmin(request, env); if (denied) return denied;
     return json({ ok:true, data:(await query(env,"SELECT * FROM hc_exam_categories ORDER BY display_order,name")).results });
