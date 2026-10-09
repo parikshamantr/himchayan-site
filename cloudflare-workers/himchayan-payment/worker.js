@@ -1,0 +1,65 @@
+ec46007a339ac1f86c5f760e970ba9b4889b8db1ae533ed8f168df47d67
+Content-Disposition: form-data; name="worker.js"; filename="worker.js"
+Content-Type: application/javascript+module
+
+export default {async fetch(req,env){const C={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization,content-type","Access-Control-Allow-Methods":"GET,POST,OPTIONS"};const j=(d,s=200)=>new Response(JSON.stringify(d),{status:s,headers:{...C,"Content-Type":"application/json"}});if(req.method==="OPTIONS")return new Response("ok",{headers:C});try{const t=(req.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"");if(!t)return j({error:"Login required"},401);let u=null;const ar=await fetch("https://himchayan-auth-bridge-test.pmindia.workers.dev/auth/user",{headers:{Authorization:"Bearer "+t}});if(ar.ok){u=(await ar.json()).user;}else{const sr=await fetch("https://ugfimbafjqajpogatvld.supabase.co/auth/v1/user",{headers:{apikey:"sb_publishable_aIb1saXm-6vbXcFi2E__w_6eDrGn4r",Authorization:"Bearer "+t}});if(sr.ok){const su=await sr.json();if(su&&su.id)u={id:su.id,email:su.email||"",user_metadata:su.user_metadata||{},role:su.role||"authenticated"};}}if(!u||!u.id)return j({error:"Login required"},401);const b=await req.json().catch(()=>({}));const a=String(b.action||"");const rp=async(path,m="GET",body)=>{const q=btoa(env.RAZORPAY_KEY_ID+":"+env.RAZORPAY_KEY_SECRET);const r=await fetch("https://api.razorpay.com/v1/"+path,{method:m,headers:{Authorization:"Basic "+q,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d?.error?.description||"Razorpay API failed");return d};if(a==="is_admin"){const x=await env.DB.prepare("SELECT user_id FROM admin_users WHERE user_id=? LIMIT 1").bind(u.id).first();return j({is_admin:!!x||String(u.email||"").toLowerCase()==="rajpootbawan@gmail.com"})}if(a==="premium_status"){let q="SELECT is_active,package_type,expires_at FROM premium_access WHERE user_id=? AND category=? AND is_active=1";let z=[u.id,String(b.category||"")];if(b.package_type){q+=" AND package_type=?";z.push(String(b.package_type))}q+=" ORDER BY created_at DESC LIMIT 1";const x=await env.DB.prepare(q).bind(...z).first();return j({is_active:!!x,package_type:x?.package_type||null,expires_at:x?.expires_at||null})}const pk={mock1:{t:"mock1",a:100},mock2:{t:"mock2",a:299},previous_year:{t:"previous_year",a:99}};if(a==="create_order"){const p=pk[String(b.type||"")];const c=String(b.category||"").trim();if(!p||!c)return j({error:"Invalid package"},400);const x=await env.DB.prepare("SELECT is_active FROM premium_access WHERE user_id=? AND category=? AND package_type=? AND is_active=1 LIMIT 1").bind(u.id,c,p.t).first();if(x)return j({error:"Premium access already active",already_active:true},409);const pend=await env.DB.prepare("SELECT transaction_id,amount FROM payments WHERE user_id=? AND category=? AND package_type=? AND status='pending' ORDER BY created_at DESC LIMIT 1").bind(u.id,c,p.t).first();if(pend){const o=await rp("orders/"+pend.transaction_id);return j({success:true,pending:true,resume_order:true,order_id:o.id,key_id:env.RAZORPAY_KEY_ID,amount:o.amount,currency:o.currency})}const o=await rp("orders","POST",{amount:p.a*100,currency:"INR",receipt:"pm_"+u.id.slice(0,8)+"_"+Date.now(),notes:{user_id:u.id,category:c,type:p.t}});await env.DB.prepare("INSERT INTO payments (id,user_id,name,email,amount,transaction_id,status,created_at,category,package_type) VALUES (?,?,?,?,?,?,?,?,?,?)").bind(crypto.randomUUID(),u.id,u.user_metadata?.full_name||u.user_metadata?.name||"User",u.email||"",p.a,o.id,"pending",new Date().toISOString(),c,p.t).run();return j({success:true,key_id:env.RAZORPAY_KEY_ID,order_id:o.id,amount:o.amount,currency:o.currency})}if(a==="verify_payment"){const oid=String(b.order_id||b.razorpay_order_id||""),pid=String(b.payment_id||b.razorpay_payment_id||""),sig=String(b.signature||b.razorpay_signature||"");const row=await env.DB.prepare("SELECT id,amount,category,package_type FROM payments WHERE transaction_id=? AND user_id=? LIMIT 1").bind(oid,u.id).first();if(!row)return j({error:"Payment order not found for this account"},404);const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(env.RAZORPAY_KEY_SECRET),{name:"HMAC",hash:"SHA-256"},false,["sign"]);const raw=await crypto.subtle.sign("HMAC",k,new TextEncoder().encode(oid+"|"+pid));const exp=[...new Uint8Array(raw)].map(x=>x.toString(16).padStart(2,"0")).join("");if(exp!==sig)return j({error:"Payment signature verification failed"},400);const p=await rp("payments/"+pid);if(p.order_id!==oid||p.status!=="captured"||Number(p.amount)!==Number(row.amount)*100)return j({error:"Payment verification failed"},400);await env.DB.prepare("UPDATE payments SET status='pending',verified_at=? WHERE id=? AND user_id=?").bind(new Date().toISOString(),row.id,u.id).run();return j({success:true,ok:true,status:"pending",approval:"pending",category:row.category,package_type:row.package_type,payment_id:pid})}if(a==="recover_payment"){const oid=String(b.order_id||"");const row=await env.DB.prepare("SELECT id,amount,category,package_type,status FROM payments WHERE transaction_id=? AND user_id=? LIMIT 1").bind(oid,u.id).first();if(!row)return j({error:"Payment order not found for this account"},404);const ps=await rp("orders/"+oid+"/payments");const cap=(ps.items||[]).find(x=>Number(x.amount)===Number(row.amount)*100&&x.status==="captured");if(!cap)return j({success:false,recovered:false,error:"Captured payment not found for this order"},404);await env.DB.prepare("UPDATE payments SET status='pending',verified_at=? WHERE id=? AND user_id=?").bind(new Date().toISOString(),row.id,u.id).run();return j({success:true,recovered:true,status:"pending",approval:"pending",payment_id:cap.id,category:row.category,package_type:row.package_type})}
+if(a==="resource_create_order"){
+ const resourceId=String(b.resource_id||"");
+ if(!resourceId)return j({error:"Resource ID required"},400);
+ const resource=await env.DB.prepare("SELECT id,title,access_type,price,is_active,is_published,allow_view FROM exam_resources WHERE id=? LIMIT 1").bind(resourceId).first();
+ if(!resource||!resource.is_active||!resource.is_published)return j({error:"Resource not found"},404);
+ if(!resource.allow_view)return j({error:"Viewing is disabled"},403);
+ if(String(resource.access_type).toUpperCase()!=="PAID"||Number(resource.price)<=0)return j({error:"This resource is not purchasable"},400);
+ const adminRow=await env.DB.prepare("SELECT user_id FROM admin_users WHERE user_id=? LIMIT 1").bind(u.id).first();
+ const admin=!!adminRow||String(u.email||"").toLowerCase()==="rajpootbawan@gmail.com";
+ if(admin)return j({admin_free:true,resource_id:resourceId,title:resource.title});
+ const owned=await env.DB.prepare("SELECT id,expires_at FROM resource_access WHERE user_id=? AND resource_id=? AND is_active=1 LIMIT 1").bind(u.id,resourceId).first();
+ if(owned&&(!owned.expires_at||new Date(owned.expires_at)>new Date()))return j({already_owned:true,resource_id:resourceId,title:resource.title});
+ const pending=await env.DB.prepare("SELECT id,amount,razorpay_order_id FROM resource_orders WHERE user_id=? AND resource_id=? AND status='pending' ORDER BY created_at DESC LIMIT 1").bind(u.id,resourceId).first();
+ if(pending&&pending.razorpay_order_id){
+  try{
+   const old=await rp("orders/"+pending.razorpay_order_id);
+   if(old.status==="created"||old.status==="attempted")return j({success:true,pending:true,resume_order:true,order_id:old.id,local_order_id:pending.id,key_id:env.RAZORPAY_KEY_ID,amount:old.amount,currency:old.currency,title:resource.title});
+  }catch{}
+ }
+ const amountRupees=Number(resource.price);
+ if(!Number.isFinite(amountRupees)||amountRupees<=0||amountRupees>1000000)return j({error:"Invalid resource price"},400);
+ const now=new Date().toISOString(),localId=crypto.randomUUID(),amount=Math.round(amountRupees*100);
+ await env.DB.prepare("INSERT INTO resource_orders(id,user_id,resource_id,amount,currency,status,created_at) VALUES(?,?,?,?,?,'pending',?)").bind(localId,u.id,resourceId,amountRupees,"INR",now).run();
+ let order;
+ try{
+  order=await rp("orders","POST",{amount,currency:"INR",receipt:("hc_"+localId).slice(0,40),notes:{resource_id:resourceId,user_id:u.id,local_order_id:localId}});
+ }catch(e){
+  await env.DB.prepare("UPDATE resource_orders SET status='failed' WHERE id=?").bind(localId).run();
+  throw e;
+ }
+ await env.DB.prepare("UPDATE resource_orders SET razorpay_order_id=? WHERE id=?").bind(order.id,localId).run();
+ await env.DB.prepare("INSERT INTO payment_transactions(id,user_id,resource_order_id,gateway,gateway_order_id,amount,status,created_at,updated_at) VALUES(?,?,?,'razorpay',?,?, 'created',?,?)").bind(crypto.randomUUID(),u.id,localId,order.id,amountRupees,now,now).run();
+ return j({success:true,key_id:env.RAZORPAY_KEY_ID,order_id:order.id,local_order_id:localId,amount:order.amount,currency:order.currency,title:resource.title});
+}
+if(a==="resource_verify_payment"){
+ const localId=String(b.local_order_id||""),oid=String(b.razorpay_order_id||b.order_id||""),pid=String(b.razorpay_payment_id||b.payment_id||""),sig=String(b.razorpay_signature||b.signature||"");
+ if(!localId||!oid||!pid||!sig)return j({error:"Missing payment verification data"},400);
+ const order=await env.DB.prepare("SELECT id,user_id,resource_id,amount,currency,status,razorpay_order_id,razorpay_payment_id FROM resource_orders WHERE id=? AND user_id=? LIMIT 1").bind(localId,u.id).first();
+ if(!order)return j({error:"Resource order not found for this account"},404);
+ if(order.razorpay_order_id!==oid)return j({error:"Order mismatch"},400);
+ if(order.status==="paid"&&order.razorpay_payment_id===pid)return j({success:true,already_paid:true,resource_id:order.resource_id});
+ const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(env.RAZORPAY_KEY_SECRET),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
+ const raw=await crypto.subtle.sign("HMAC",key,new TextEncoder().encode(oid+"|"+pid));
+ const expected=[...new Uint8Array(raw)].map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(expected.length!==sig.length||![...expected].every((ch,i)=>ch===sig[i]))return j({error:"Payment signature verification failed"},400);
+ const pay=await rp("payments/"+encodeURIComponent(pid));
+ if(pay.order_id!==oid||pay.status!=="captured"||Number(pay.amount)!==Math.round(Number(order.amount)*100))return j({error:"Payment verification failed"},400);
+ const now=new Date().toISOString();
+ await env.DB.prepare("UPDATE resource_orders SET status='paid',razorpay_payment_id=?,paid_at=? WHERE id=? AND user_id=?").bind(pid,now,localId,u.id).run();
+ const tx=await env.DB.prepare("SELECT id FROM payment_transactions WHERE resource_order_id=? LIMIT 1").bind(localId).first();
+ if(tx)await env.DB.prepare("UPDATE payment_transactions SET gateway_payment_id=?,gateway_signature=?,status='captured',updated_at=? WHERE id=?").bind(pid,sig,now,tx.id).run();
+ else await env.DB.prepare("INSERT INTO payment_transactions(id,user_id,resource_order_id,gateway,gateway_order_id,gateway_payment_id,gateway_signature,amount,status,created_at,updated_at) VALUES(?,?,?,'razorpay',?,?,?,?, 'captured',?,?)").bind(crypto.randomUUID(),u.id,localId,oid,pid,sig,Number(order.amount),now,now).run();
+ const existing=await env.DB.prepare("SELECT id FROM resource_access WHERE user_id=? AND resource_id=? LIMIT 1").bind(u.id,order.resource_id).first();
+ if(existing)await env.DB.prepare("UPDATE resource_access SET source_order_id=?,granted_at=?,expires_at=NULL,is_active=1 WHERE id=?").bind(localId,now,existing.id).run();
+ else await env.DB.prepare("INSERT INTO resource_access(id,user_id,resource_id,source_order_id,granted_at,expires_at,is_active) VALUES(?,?,?,?,?,NULL,1)").bind(crypto.randomUUID(),u.id,order.resource_id,localId,now).run();
+ return j({success:true,resource_id:order.resource_id});
+}
+
+return j({error:"Invalid action"},400)}catch(e){return j({error:String(e?.message||e)},500)}}};
+--2ec46007a339ac1f86c5f760e970ba9b4889b8db1ae533ed8f168df47d67--
