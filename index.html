@@ -234,7 +234,8 @@ nav.show a{padding:8px}
 }
 .latest-icon{font-size:19px;min-width:24px;text-align:center}
 .latest-title{font-size:13px;font-weight:950;min-width:100px}
-.latest-text{font-size:8px;line-height:1.2;flex:1;color:#dce8f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.latest-text{font-size:8px;line-height:1.2;flex:0 0 auto;width:max-content;max-width:none;color:#dce8f7;white-space:nowrap;overflow:visible;text-overflow:clip;will-change:transform}
+.latest-link{overflow:hidden}
 @keyframes dailyTicker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 .latest-arrow{font-size:17px}
 
@@ -1467,7 +1468,7 @@ if(drawerLogoutBtn){
     const link=document.querySelector(".latest-link");if(!latestText)return;
     latestText.textContent="Loading daily updates…";
     const data=await api("/api/daily-updates");const items=Array.isArray(data?.data)?data.data:[];
-    if(items.length){latestText.textContent=items.map(x=>x.title||"Update").join("   •   ");latestText.style.animation="dailyTicker 28s linear infinite";latestText.style.display="inline-block";latestText.style.textOverflow="clip";if(link)link.href=items[0].external_url||"study-notes.html";}
+    if(items.length){latestText.textContent=items.map(x=>x.title||"Update").join("   •   ");latestText.style.animation="dailyTicker 28s linear infinite";latestText.style.display="inline-block";latestText.style.width="max-content";latestText.style.flex="0 0 auto";latestText.style.textOverflow="clip";if(link)link.href=items[0].external_url||"study-notes.html";}
     else{latestText.textContent="Daily Updates will appear here";if(link)link.href="study-notes.html";}
   }
 
