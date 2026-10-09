@@ -2401,7 +2401,7 @@ function renderExamTabs(targetId){
     return '<button type="button" class="exam-tab ' +
       (name === active ? 'active' : '') +
       '" aria-pressed="' + (name === active ? 'true' : 'false') +
-      '" onclick="selectExamFilter(' + JSON.stringify(name).replace(/</g,"\\u003c") + ')">' +
+      '" onclick="selectExamFilter(' + JSON.stringify(name).replace(/"/g,"&quot;").replace(/</g,"\\u003c") + ')">' +
       t.icon + ' ' + name + '</button>';
   }).join("");
 }
@@ -2426,7 +2426,7 @@ function renderCategories(){
           '<div class="card-desc">' + c[1] + ' Free Demo Mock</div>' +
           '<span class="free-tag">🎯 FREE DEMO · 1 MOCK</span>' +
           '<div class="subject-count">Total free mocks: 1</div>' +
-          '<button class="btn free-btn" onclick="openDemoMock(' + JSON.stringify(c[1]) + ')">🚀 Start Free Demo →</button>' +
+          '<button class="btn free-btn" onclick="openDemoMock(' + JSON.stringify(c[1]).replace(/"/g,"&quot;") + ')">🚀 Start Free Demo →</button>' +
         '</article>');
     }
 
@@ -2437,7 +2437,7 @@ function renderCategories(){
           '<div class="card-desc">Premium ' + c[1] + ' Mock Tests</div>' +
           '<span class="paid-tag">🔒 PREMIUM · 10 MOCKS · ₹299</span>' +
           '<div class="subject-count">Total premium mocks: 10</div>' +
-          '<button class="btn paid-btn" onclick="openPaidCategory(' + JSON.stringify(c[1]) + ')">' +
+          '<button class="btn paid-btn" onclick="openPaidCategory(' + JSON.stringify(c[1]).replace(/"/g,"&quot;") + ')">' +
             (isAdmin ? "👑 Admin — Open 10 Mocks" : "🔒 ₹299 — Unlock 10 Mocks") +
           '</button>' +
         '</article>');
@@ -2446,15 +2446,21 @@ function renderCategories(){
 
   const health = document.getElementById("mock2BankStatus");
   if (health) {
-    const failed = (window.MOCK2_BANK_FILES || []).filter(function(src){
+    const states = (window.MOCK2_BANK_FILES || []).map(function(src){
       const p = new URL(src, location.href).pathname;
       const s = Array.from(document.scripts).find(function(el){
         try { return el.src && new URL(el.src, location.href).pathname === p; } catch (_) { return false; }
       });
-      return !!s && s.dataset.mock2Failed === "true";
+      return {src:src, loaded:!!s && s.dataset.mock2Loaded === "true", failed:!!s && s.dataset.mock2Failed === "true"};
     });
-    health.className = "bank-health " + (failed.length ? "bad" : "good");
-    health.textContent = failed.length ? "Question bank file failed: " + failed.map(x => x.split("/").pop()).join(", ") : "Question-bank scripts are connected; access/payment checks remain separate.";
+    const failed = states.filter(x => x.failed).map(x => x.src);
+    const pending = states.filter(x => !x.loaded && !x.failed).map(x => x.src);
+    health.className = "bank-health " + (failed.length ? "bad" : pending.length ? "" : "good");
+    health.textContent = failed.length
+      ? "Question bank file failed: " + failed.map(x => x.split("/").pop()).join(", ")
+      : pending.length
+        ? "Connecting question banks…"
+        : "Question-bank scripts connected; access/payment checks remain separate.";
   }
 }
 
@@ -3232,7 +3238,24 @@ return questions.length===total;
    QUIZ ENGINE
 ========================================================= */
 
-function startQuiz(){
+async function startQuiz(){
+const bankFilesByCategory = {
+  "Patwari":"./patwari-data.js",
+  "Police":"./police-data.js",
+  "JOA IT":"./joa-it-data.js",
+  "JBT":"./jbt-data.js",
+  "TGT":"./tgt-data.js"
+};
+const requiredBankSource = selectedType === "Demo"
+  ? "./mock2-demo-data.js"
+  : bankFilesByCategory[selectedCategory];
+if (requiredBankSource) {
+  const bankLoaded = await window.loadMock2BankFile(requiredBankSource);
+  if (!bankLoaded) {
+    alert("Question bank file load नहीं हुई: " + requiredBankSource);
+    return;
+  }
+}
 
 minutes=
 Math.max(
@@ -4079,9 +4102,9 @@ shuffleQuestions
 ========================================================= */
 
 renderCategories();
+checkAdminAndAccess();
 window.loadAllMock2Banks().then(function(){
   renderCategories();
-  checkAdminAndAccess();
 });
 
 </script>
