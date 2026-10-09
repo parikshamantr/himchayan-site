@@ -163,7 +163,7 @@ button{font:inherit}
   const getAccessToken = async () => {
     const {data,error} = await supabaseClient.auth.getSession();
     if (error) throw error;
-    return data?.session?.access_token || "";
+    return data?.session?.access_token || localStorage.getItem("himchayan_auth_access_token") || "";
   };
   const getSavedUser = async () => {
     const {data,error} = await supabaseClient.auth.getUser();
