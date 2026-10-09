@@ -297,6 +297,48 @@ async function hcLoadAll(){
 }
 
 document.addEventListener("DOMContentLoaded",hcLoadAll);
+
+/* Admin usability fixes: keep exam chips/selects in sync and make file-picker limits explicit. */
+function hcSyncExamControls(){
+ const select=document.getElementById("mockExamSelect");
+ const chips=Array.from(document.querySelectorAll("#mockExamChips .examchip"));
+ chips.forEach(btn=>btn.addEventListener("click",()=>{
+   chips.forEach(x=>x.classList.toggle("active",x===btn));
+   const label=document.getElementById("mockExamSelection");
+   if(label) label.textContent="Selected: "+btn.dataset.exam;
+   if(select && btn.dataset.exam!=="All Exams") select.value=btn.dataset.exam;
+ }));
+ if(select) select.addEventListener("change",()=>{
+   const val=select.value||"All Exams";
+   chips.forEach(x=>x.classList.toggle("active",x.dataset.exam===val));
+   const label=document.getElementById("mockExamSelection");
+   if(label) label.textContent="Selected: "+val;
+ });
+ document.querySelectorAll('#resources input[type="file"],#notes input[type="file"],#mocks input[type="file"],#questions input[type="file"]').forEach(input=>{
+   input.addEventListener("change",()=>{
+     let note=input.parentElement.querySelector(".hc-file-note");
+     if(!note){note=document.createElement("small");note.className="muted hc-file-note";input.insertAdjacentElement("afterend",note);}
+     note.textContent=input.files?.length
+       ? "Selected: "+input.files[0].name+" — अभी केवल selection है; R2 upload configured नहीं है."
+       : "कोई file select नहीं है.";
+   });
+ });
+ document.querySelectorAll(".navbtn").forEach(btn=>btn.addEventListener("click",()=>{
+   const old=document.getElementById("hcAdminBack");
+   if(old) old.remove();
+   const page=document.querySelector(".page.active");
+   if(page && page.id!=="dashboard"){
+     const back=document.createElement("button");
+     back.id="hcAdminBack";back.type="button";back.className="btn gray";
+     back.textContent="← Back to Dashboard";
+     back.style.marginBottom="12px";
+     back.addEventListener("click",()=>go("dashboard"));
+     page.prepend(back);
+   }
+ }));
+}
+document.addEventListener("DOMContentLoaded",hcSyncExamControls);
+
 </script>
 
 <script>
