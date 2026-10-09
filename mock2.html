@@ -3293,6 +3293,7 @@ return questions.length===total;
 ========================================================= */
 
 async function startQuiz(){
+await window.discoverMock2BankFiles();
 const requiredBankSource = selectedType === "Demo"
   ? "./mock2-demo-data.js"
   : window.getMock2BankFileForCategory(selectedCategory);
