@@ -1,7 +1,3 @@
-582a861221d413a0e837de456ca65a4c1ffd7a01b821e60a32189baa3d2
-Content-Disposition: form-data; name="worker.js"; filename="worker.js"
-Content-Type: application/javascript+module
-
 const AUTH_API = "https://himchayan-auth-bridge-test.pmindia.workers.dev";
 const PAYMENT_API = "https://himchayan-payment.pmindia.workers.dev";
 const CORS = {
@@ -133,5 +129,4 @@ export default {
       return json({error:"Resource request failed"},500);
     }
   }
-};
---2582a861221d413a0e837de456ca65a4c1ffd7a01b821e60a32189baa3d2--
+};
