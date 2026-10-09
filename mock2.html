@@ -2040,35 +2040,35 @@ normalizeQuestion
    SECURE ACCESS CHECK
 ========================================================= */
 
+async function getCloudflareAccessToken(){
+  let token = "";
+  if(typeof supabaseClient !== "undefined"){
+    try{
+      const {data,error} = await supabaseClient.auth.getSession();
+      if(!error) token = data?.session?.access_token || "";
+    }catch{}
+  }
+  return token || localStorage.getItem("himchayan_auth_access_token") || "";
+}
+
+function getCloudflareStoredUser(){
+  try{return JSON.parse(localStorage.getItem("himchayan_auth_user") || "null");}
+  catch{return null;}
+}
+
 async function checkAdminAndAccess(){
 
-if(
-typeof supabaseClient==="undefined"
-)
-
-return;
-
-
 try{
-
-const {data,error}=
-await supabaseClient.auth.getUser();
-
-
-if(
-error ||
-!data?.user
-)
-
-return;
-
-
-currentUser=
-data.user;
-
-
-const {data:sessionData}=await supabaseClient.auth.getSession();
-const accessToken=sessionData?.session?.access_token||"";
+let authUser=null;
+if(typeof supabaseClient!=="undefined"){
+  try{
+    const {data,error}=await supabaseClient.auth.getUser();
+    if(!error) authUser=data?.user||null;
+  }catch{}
+}
+currentUser=authUser||getCloudflareStoredUser();
+const accessToken=await getCloudflareAccessToken();
+if(!currentUser||!accessToken)return;
 const adminResponse=accessToken?await fetch("https://himchayan-payment.pmindia.workers.dev",{
  method:"POST",
  headers:{"Content-Type":"application/json","Authorization":"Bearer "+accessToken},
@@ -2159,8 +2159,7 @@ return accessCache[key];
 
 try{
 
-const {data:sessionData}=await supabaseClient.auth.getSession();
-const accessToken=sessionData?.session?.access_token||"";
+const accessToken=await getCloudflareAccessToken();
 if(!accessToken){accessCache[key]=false;return false;}
 const response=await fetch("https://himchayan-payment.pmindia.workers.dev",{
  method:"POST",
