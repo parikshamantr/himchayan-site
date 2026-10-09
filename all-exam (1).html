@@ -111,7 +111,6 @@ button{font:inherit}
 }
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
@@ -145,6 +144,8 @@ button{font:inherit}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./backend-config.js"></script>
 <script>
 /* ================= ALL EXAM PORTFOLIO DEMO NAVIGATION ================= */
 (function(){
@@ -154,10 +155,33 @@ button{font:inherit}
   const crumb=document.getElementById('pmPortfolioCrumb');
   if(!portfolio||!body||!title||!crumb)return;
 
-  const SUPABASE_URL="https://ugfimbafjqajpogatvld.supabase.co";
-  const SUPABASE_KEY="sb_publishable_aIb1saXmG-6vbXcFi2E__w_6eDrGn4r";
-  const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  const RESOURCE_FN=SUPABASE_URL+"/functions/v1/resource-gateway";
+  /* Cloudflare Resource Gateway. Supabase remains only for identity/session/email. */
+  const RESOURCE_API = "https://himchayan-resource-gateway.pmindia.workers.dev";
+  const SUPABASE_URL = "https://ugfimbafjqajpogatvld.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_aIb1saXmG-6vbXcFi2E__w_6eDrGn4r";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const getAccessToken = async () => {
+    const {data,error} = await supabaseClient.auth.getSession();
+    if (error) throw error;
+    return data?.session?.access_token || localStorage.getItem("himchayan_auth_access_token") || "";
+  };
+  const getSavedUser = async () => {
+    const {data,error} = await supabaseClient.auth.getUser();
+    return error ? null : (data?.user || null);
+  };
+  const gatewayRequest = async (payload) => {
+    const token = await getAccessToken();
+    if (!token) throw new Error("Please login first");
+    const response = await fetch(RESOURCE_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify(payload),
+      cache: "no-store"
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "Resource request failed");
+    return data;
+  };
   const groups=[
     ['JBT','fa-school'],['TGT Arts','fa-book-open'],['TGT Medical','fa-heart-pulse'],['TGT Non-Medical','fa-flask'],
     ['TGT Special Educator','fa-person-chalkboard'],['LT','fa-graduation-cap'],['CTET','fa-certificate'],['HP TET','fa-award'],
@@ -234,18 +258,8 @@ button{font:inherit}
         status.textContent='';
         return;
       }
-      const pattern=`%${safe}%`;
-      const {data,error}=await supabaseClient.from('exam_resources')
-        .select('*')
-        .eq('is_published',true)
-        .eq('is_active',true)
-        .neq('access_type','HIDDEN')
-        .or(`title.ilike.${pattern},description.ilike.${pattern},exam_group.ilike.${pattern},content_type.ilike.${pattern},subject.ilike.${pattern},file_type.ilike.${pattern}`)
-        .order('display_order',{ascending:true})
-        .order('created_at',{ascending:false});
-      if(error)throw error;
-
-      const rows=data||[];
+      const response=await gatewayRequest({action:"search",q:safe});
+      const rows=Array.isArray(response.data)?response.data:[];
       resourceMeta.clear();
       status.textContent=`${rows.length} resource${rows.length===1?'':'s'} found`;
       content.innerHTML=rows.length
@@ -270,25 +284,12 @@ button{font:inherit}
   }
 
   async function invokeGateway(payload){
-    const {data:{session}}=await supabaseClient.auth.getSession();
-    if(!session) throw new Error("Please login first");
-    const res=await fetch(RESOURCE_FN,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok) throw new Error(data.error||"Request failed");
-    return data;
+    return gatewayRequest(payload);
   }
 
   async function loadResources(filters){
-    let q=supabaseClient.from("exam_resources").select("*").eq("is_published",true).eq("is_active",true).neq("access_type","HIDDEN").order("display_order",{ascending:true}).order("created_at",{ascending:false});
-    Object.entries(filters||{}).forEach(([k,v])=>{
-      if(v!==undefined&&v!==null&&v!==""){
-        if(Array.isArray(v)) q=q.in(k,v);
-        else q=q.eq(k,v);
-      }
-    });
-    const {data,error}=await q;
-    if(error) throw error;
-    return data||[];
+    const response=await gatewayRequest({action:"list",...(filters||{})});
+    return Array.isArray(response.data)?response.data:[];
   }
 
   const resourceMeta=new Map();

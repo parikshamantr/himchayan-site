@@ -1243,14 +1243,22 @@ if(drawerLogoutBtn){
 
 /* ================= SUPABASE SESSION / GOOGLE NAME / ADMIN ================= */
 (async function(){
-  if(typeof supabaseClient === "undefined") return;
+  const hasSupabaseAuth = typeof supabaseClient !== "undefined";
+  let session = null;
+  let user = null;
+  let accessToken = localStorage.getItem("himchayan_auth_access_token") || "";
 
   try{
-    const {data,error} = await supabaseClient.auth.getSession();
-    if(error) throw error;
-
-    const session = data?.session;
-    const user = session?.user;
+    if(hasSupabaseAuth){
+      const {data,error} = await supabaseClient.auth.getSession();
+      if(error) throw error;
+      session = data?.session || null;
+      user = session?.user || null;
+      accessToken = session?.access_token || accessToken;
+    }
+    if(!user){
+      try{ user = JSON.parse(localStorage.getItem("himchayan_auth_user") || "null"); }catch{}
+    }
 
     if(user){
       const meta = user.user_metadata || {};
@@ -1284,10 +1292,19 @@ if(drawerLogoutBtn){
 
       /* Existing server-side/RPC admin check — no new admin system created. */
       try{
-        const {data:isAdmin,error:adminError} =
-          await supabaseClient.rpc("is_admin");
-
-        if(!adminError && isAdmin === true){
+        let sessionData = null;
+        if(typeof supabaseClient !== "undefined"){
+          try{ sessionData = (await supabaseClient.auth.getSession()).data || null; }catch{}
+        }
+        const accessToken = sessionData?.session?.access_token || localStorage.getItem("himchayan_auth_access_token") || "";
+        const adminResponse = accessToken ? await fetch("https://himchayan-payment.pmindia.workers.dev", {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":"Bearer "+accessToken},
+          body:JSON.stringify({action:"is_admin"}),
+          cache:"no-store"
+        }) : null;
+        const adminResult = adminResponse ? await adminResponse.json().catch(()=>({})) : {};
+        if(adminResponse?.ok && adminResult.is_admin === true){
           if(drawerAdminBtn) drawerAdminBtn.style.display="flex";
           if(typeof window.himChayanShowLearningEngineAdmin==="function") window.himChayanShowLearningEngineAdmin();
           if(typeof window.himChayanShowAdminTools==="function") window.himChayanShowAdminTools();
