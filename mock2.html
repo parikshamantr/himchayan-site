@@ -1371,16 +1371,16 @@ window.discoverMock2BankFiles = function(){
       return Promise.resolve(window.MOCK2_BANK_FILES);
     }
   } catch (_) {}
-  window.MOCK2_BANK_DISCOVERY = fetch("https://api.github.com/repos/parikshamantr/himchayan-site/contents?ref=main", {
+  window.MOCK2_BANK_DISCOVERY = fetch("https://api.github.com/repos/parikshamantr/himchayan-site/git/trees/main?recursive=1", {
     headers: { "Accept": "application/vnd.github+json" },
     cache: "no-store"
   }).then(function(response){
     if (!response.ok) throw new Error("GitHub file discovery HTTP " + response.status);
     return response.json();
-  }).then(function(entries){
-    var names = (Array.isArray(entries) ? entries : []).filter(function(item){
-      return item && item.type === "file" && typeof item.name === "string";
-    }).map(function(item){ return item.name; });
+  }).then(function(result){
+    var names = (Array.isArray(result && result.tree) ? result.tree : []).filter(function(item){
+      return item && item.type === "blob" && typeof item.path === "string" && item.path.indexOf("/") === -1;
+    }).map(function(item){ return item.path; });
     window.MOCK2_BANK_FILES = acceptedNames(names);
     try { localStorage.setItem(cacheKey, JSON.stringify({savedAt:Date.now(),files:names})); } catch (_) {}
     return window.MOCK2_BANK_FILES;
@@ -2525,6 +2525,7 @@ function renderCategories(){
 
 function showFreeSubjects(){
 
+selectedExamFilter = "All Exams";
 hideAllPages();
 
 document
@@ -2571,6 +2572,7 @@ category,
 
 function showPremiumSubjects(){
 
+selectedExamFilter = "All Exams";
 hideAllPages();
 
 document
