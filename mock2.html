@@ -2576,6 +2576,7 @@ document
 .classList.remove("hidden");
 
 renderAdminStatus();
+renderCategories();
 
 window.scrollTo(0,0);
 
@@ -3292,9 +3293,20 @@ return questions.length===total;
 
 async function startQuiz(){
 await window.discoverMock2BankFiles();
-const requiredBankSource = selectedType === "Demo"
+let requiredBankSource = selectedType === "Demo"
   ? "./mock2-demo-data.js"
   : window.getMock2BankFileForCategory(selectedCategory);
+if (selectedType !== "Demo" && selectedType !== "Free" && !requiredBankSource) {
+  try { localStorage.removeItem("himchayan_mock2_bank_files_v1"); } catch (_) {}
+  window.MOCK2_BANK_DISCOVERY = null;
+  await window.discoverMock2BankFiles();
+  requiredBankSource = window.getMock2BankFileForCategory(selectedCategory);
+  if (!requiredBankSource) {
+    var expectedSlug = String(selectedCategory || "").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    alert("Paid data file not found for " + selectedCategory + ". Expected " + expectedSlug + "-data.js in the production repo root.");
+    return;
+  }
+}
 if (requiredBankSource) {
   const bankLoaded = await window.loadMock2BankFile(requiredBankSource);
   if (!bankLoaded) {
