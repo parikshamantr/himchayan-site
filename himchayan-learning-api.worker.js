@@ -4,7 +4,12 @@
    Existing production Admin Panels are untouched.
 */
 
-const JSON_HEADERS = { "content-type": "application/json; charset=UTF-8" };
+const JSON_HEADERS = {
+  "content-type": "application/json; charset=UTF-8",
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-headers": "Content-Type, Authorization"
+};
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: JSON_HEADERS });
@@ -53,6 +58,9 @@ async function query(env, sql, params = []) {
 }
 
 async function handle(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: JSON_HEADERS });
+  }
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/+$/, "") || "/";
 
