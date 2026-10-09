@@ -1297,7 +1297,7 @@ if(drawerLogoutBtn){
           try{ sessionData = (await supabaseClient.auth.getSession()).data || null; }catch{}
         }
         const accessToken = sessionData?.session?.access_token || localStorage.getItem("himchayan_auth_access_token") || "";
-        const adminResponse = accessToken ? await fetch("https://himchayan-payment.pmindia.workers.dev", {
+        const adminResponse = accessToken ? await fetch((window.HIMCHAYAN_PAYMENT_API || "https://himchayan-payment.pmindia.workers.dev"), {
           method:"POST",
           headers:{"Content-Type":"application/json","Authorization":"Bearer "+accessToken},
           body:JSON.stringify({action:"is_admin"}),
