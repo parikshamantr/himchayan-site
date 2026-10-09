@@ -2500,21 +2500,17 @@ function renderCategories(){
 
   const health = document.getElementById("mock2BankStatus");
   if (health) {
-    const states = (window.MOCK2_BANK_FILES || []).map(function(src){
+    const failed = (window.MOCK2_BANK_FILES || []).filter(function(src){
       const p = new URL(src, location.href).pathname;
       const s = Array.from(document.scripts).find(function(el){
         try { return el.src && new URL(el.src, location.href).pathname === p; } catch (_) { return false; }
       });
-      return {src:src, loaded:!!s && s.dataset.mock2Loaded === "true", failed:!!s && s.dataset.mock2Failed === "true"};
+      return !!s && s.dataset.mock2Failed === "true";
     });
-    const failed = states.filter(x => x.failed).map(x => x.src);
-    const pending = states.filter(x => !x.loaded && !x.failed).map(x => x.src);
-    health.className = "bank-health " + (failed.length ? "bad" : pending.length ? "" : "good");
+    health.className = "bank-health " + (failed.length ? "bad" : "good");
     health.textContent = failed.length
       ? "Question bank file failed: " + failed.map(x => x.split("/").pop()).join(", ")
-      : pending.length
-        ? "Connecting question banks…"
-        : "Question-bank scripts connected; access/payment checks remain separate.";
+      : "Exam data files are checked automatically; the selected bank loads when you start a mock.";
   }
 }
 
@@ -4153,7 +4149,7 @@ shuffleQuestions
 
 renderCategories();
 checkAdminAndAccess();
-window.loadAllMock2Banks().then(function(){
+window.discoverMock2BankFiles().then(function(){
   renderCategories();
 });
 
