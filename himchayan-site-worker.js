@@ -13,7 +13,6 @@ export default {
       request.method === "GET" &&
       env?.ASSETS &&
       !url.pathname.startsWith("/api/") &&
-      url.pathname !== "/backend-config.js" &&
       url.pathname !== "/sitemap.xml"
     ) {
       const assetResponse = await env.ASSETS.fetch(request);
