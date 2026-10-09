@@ -29,7 +29,7 @@ async function isAdmin(request, env) {
   const token = auth.slice(7).trim();
   if (!token) return false;
 
-  // Staged auth bridge: the existing auth worker remains the identity source.
+  // Use the same native-auth identity source as the production login bridge.
   const authApi = env.AUTH_API || "https://himchayan-auth-bridge-test.pmindia.workers.dev";
   try {
     const r = await fetch(`${authApi}/auth/user`, {
@@ -39,10 +39,12 @@ async function isAdmin(request, env) {
     const u = await r.json();
     const userId = u?.user?.id || u?.id || u?.data?.user?.id;
     if (!userId) return false;
+
+    // Production schema: admin_users(user_id, created_at); auth_users(id, role, disabled).
     const row = await env.DB.prepare(
-      "SELECT id, role, is_active FROM admin_users WHERE id = ? LIMIT 1"
+      "SELECT au.id FROM auth_users au INNER JOIN admin_users ad ON ad.user_id = au.id WHERE au.id = ? AND COALESCE(au.disabled,0) = 0 LIMIT 1"
     ).bind(userId).first();
-    return !!row && Number(row.is_active ?? 1) === 1;
+    return !!row;
   } catch {
     return false;
   }
@@ -62,7 +64,7 @@ async function handle(request, env) {
     return new Response(null, { status: 204, headers: JSON_HEADERS });
   }
   const url = new URL(request.url);
-  const path = url.pathname.replace(/\/+$/, "") || "/";
+  const path = url.pathname.replace(/\\/+$/, "") || "/";
 
   if (request.method === "GET" && path === "/health") {
     const r = await env.DB.prepare("SELECT 1 AS ok").first();
@@ -91,33 +93,39 @@ async function handle(request, env) {
     }});
   }
 
-
   // Public homepage Daily Updates ticker (uses existing content table; no schema/R2 changes).
   if (path === "/api/daily-updates" && request.method === "GET") {
     const rows = await query(env, "SELECT id,title,external_url,display_order,created_at FROM hc_content_items WHERE content_type='DAILY_UPDATE' AND active=1 AND published=1 ORDER BY display_order,created_at DESC LIMIT 30");
     return json({ok:true,data:rows.results});
   }
+
   if (path === "/api/admin/daily-updates" && request.method === "GET") {
     const denied = await requireAdmin(request, env); if (denied) return denied;
     const rows = await query(env, "SELECT id,title,external_url,display_order,published,active FROM hc_content_items WHERE content_type='DAILY_UPDATE' ORDER BY display_order,title");
     return json({ok:true,data:rows.results});
   }
+
   if (path === "/api/admin/daily-updates" && request.method === "POST") {
     const denied = await requireAdmin(request, env); if (denied) return denied;
-    const b = await bodyOf(request); const title = String(b.title || "").trim();
+    const b = await bodyOf(request);
+    const title = String(b.title || "").trim();
+
     if (b.action === "delete") {
       if (!b.id) return json({ok:false,error:"Update id required"},400);
       await env.DB.prepare("UPDATE hc_content_items SET active=0,published=0 WHERE id=? AND content_type='DAILY_UPDATE'").bind(String(b.id)).run();
       return json({ok:true,deleted:true});
     }
+
     if (!title) return json({ok:false,error:"Headline required"},400);
     const externalUrl = String(b.external_url || "").trim() || null;
     const order = Number.isFinite(Number(b.display_order)) ? Number(b.display_order) : 0;
+
     if (b.id) {
-      await env.DB.prepare("UPDATE hc_content_items SET title=?,external_url=?,display_order=?,published=?,active=? WHERE id=? AND content_type='DAILY_UPDATE'")
+      await env.DB.prepare("UPDATE hc_content_items SET title=?,external_url=?,display_order=?,published=?,active=?,updated_at=CURRENT_TIMESTAMP WHERE id=? AND content_type='DAILY_UPDATE'")
         .bind(title,externalUrl,order,b.published===false?0:1,b.active===false?0:1,String(b.id)).run();
       return json({ok:true,id:String(b.id),updated:true});
     }
+
     const idv=id("daily");
     await env.DB.prepare("INSERT INTO hc_content_items (id,exam_name,content_type,title,external_url,access_type,allow_view,allow_download,published,active,display_order) VALUES(?,NULL,'DAILY_UPDATE',?,?, 'FREE',1,0,?,?,?)")
       .bind(idv,title,externalUrl,b.published===false?0:1,b.active===false?0:1,order).run();
