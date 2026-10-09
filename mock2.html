@@ -1385,7 +1385,6 @@ window.loadAllMock2Banks = function(){
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./backend-config.js"></script>
-<script src="./mock2-demo-data.js"></script>
 <script>
 window.addEventListener("error", function(e){
   if (e.target && e.target.tagName === "SCRIPT" && e.target.dataset && e.target.dataset.mock2Bank) {
@@ -1393,7 +1392,6 @@ window.addEventListener("error", function(e){
     console.error("Question bank script failed:", e.target.src);
   }
 }, true);
-window.loadAllMock2Banks();
 </script>
 
 
