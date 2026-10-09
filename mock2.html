@@ -47,7 +47,20 @@ border:0
 .section-head h2{font-size:20px;margin-bottom:4px}
 .section-head p{color:#687385;font-size:13px}
 
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.exam-tab-rail{display:flex;gap:8px;overflow-x:auto;padding:5px 2px 12px;margin:10px 0 14px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.exam-tab-rail::-webkit-scrollbar{height:4px}.exam-tab-rail::-webkit-scrollbar-thumb{background:#cbd7e6;border-radius:8px}
+.exam-tab{flex:0 0 auto;min-width:104px;border:1px solid #dbe4ee;background:#fff;color:#334155;border-radius:999px;padding:10px 15px;font-size:13px;font-weight:800;white-space:nowrap;scroll-snap-align:start}
+.exam-tab.active{background:#069b6a;color:#fff;border-color:#069b6a;box-shadow:0 3px 10px rgba(6,155,106,.17)}
+.subject-mock-card{min-height:188px;display:flex;flex-direction:column;gap:8px}
+.subject-mock-card .card-title{font-size:15px;line-height:1.3}
+.subject-mock-card .card-desc{min-height:32px;margin-bottom:0}
+.subject-count{display:inline-flex;align-self:flex-start;padding:5px 8px;border-radius:7px;background:#edf5ff;color:#14539b;font-size:11px;font-weight:800}
+.subject-mock-card .btn{margin-top:auto;min-height:38px}
+.subject-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 8px}
+.subject-row h2{font-size:17px}.subject-row p{font-size:11px;color:#6b7788}
+.bank-health{font-size:11px;color:#657184;margin:0 0 12px}
+.bank-health.good{color:#16864b}.bank-health.bad{color:#b42318}
 
 .choice-grid{
 display:grid;
@@ -74,6 +87,11 @@ box-shadow:0 5px 18px rgba(30,60,100,.08)
 .choice-card .btn{max-width:260px;margin:0 auto}
 
 @media(max-width:520px){
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.subject-mock-card{padding:11px;min-height:188px}
+.exam-tab{min-width:93px;padding:9px 12px;font-size:12px}
+.subject-mock-card .card-title{font-size:13px}
+.subject-mock-card .card-desc{font-size:11px}
 .choice-grid{grid-template-columns:1fr;gap:12px}
 .choice-card{padding:20px}
 .choice-card h2{font-size:20px}
@@ -867,20 +885,12 @@ Sabhi exams ke liye 1 Free Demo Mock — bina Login aur bina Payment ke.
 
 
 <div class="section-head">
-
 <h2>📚 Select Exam</h2>
-
-<p>
-Apne exam ka 1 Free Demo Mock start karein.
-</p>
-
+<p>Upar exam select karein; neeche uske available free mock demos dekhein.</p>
 </div>
-
-
-<section
-class="grid"
-id="freeSubjectGrid"
-></section>
+<nav class="exam-tab-rail" id="freeExamTabs" aria-label="Free mock exam subjects"></nav>
+<div class="subject-row"><h2>🎯 Free Demo Mocks</h2><p>1 mock per exam</p></div>
+<section class="grid" id="freeSubjectGrid"></section>
 
 </main>
 
@@ -913,23 +923,16 @@ Advanced subject-wise premium practice — 10 mocks per subject.
 
 
 <div id="adminStatus"></div>
+<div id="mock2BankStatus" class="bank-health" role="status">Connecting question banks…</div>
 
 
 <div class="section-head">
-
 <h2>📚 Select Subject</h2>
-
-<p>
-Har subject mein 10 Premium Mocks • ₹299 per subject package.
-</p>
-
+<p>Upar exam select karein; neeche uske paid package aur total mocks dekhein.</p>
 </div>
-
-
-<section
-class="grid"
-id="premiumSubjectGrid"
-></section>
+<nav class="exam-tab-rail" id="premiumExamTabs" aria-label="Premium mock exam subjects"></nav>
+<div class="subject-row"><h2>👑 Premium Mock Packages</h2><p>10 mocks · ₹299 per subject</p></div>
+<section class="grid" id="premiumSubjectGrid"></section>
 
 </main>
 
@@ -1336,43 +1339,61 @@ class="privacy-badge hidden"
 <script src="./backend-config.js"></script>
 
 
-<!-- EXISTING PAID QUESTION BANKS -->
-<script src="./patwari-data.js"></script>
-<script src="./police-data.js"></script>
-<script src="./joa-it-data.js"></script>
-
-<!-- ONLY NEW FREE DEMO DATA -->
-<script src="./mock2-demo-data.js"></script>
-
-
+<!-- Question banks used by Mock Test 2. Keep new exam banks in MOCK2_BANK_FILES. -->
 <script>
-
-window.addEventListener(
-"error",
-function(e){
-
-if(
-e.target &&
-e.target.tagName === "SCRIPT" &&
-(
-e.target.src.includes("patwari-data.js") ||
-e.target.src.includes("police-data.js") ||
-e.target.src.includes("joa-it-data.js") ||
-e.target.src.includes("mock2-demo-data.js")
-)
-){
-
-console.error(
-"Question bank script failed:",
-e.target.src
-);
-
-}
-
-},
-true
-);
-
+window.MOCK2_BANK_LOADS = Object.create(null);
+window.MOCK2_BANK_FILES = [
+  "./patwari-data.js",
+  "./police-data.js",
+  "./joa-it-data.js",
+  "./jbt-data.js",
+  "./tgt-data.js",
+  "./mock2-demo-data.js"
+];
+window.loadMock2BankFile = function(src){
+  if (window.MOCK2_BANK_LOADS[src]) return window.MOCK2_BANK_LOADS[src];
+  window.MOCK2_BANK_LOADS[src] = new Promise(function(resolve){
+    var path = new URL(src, location.href).pathname;
+    var existing = Array.from(document.scripts).find(function(s){
+      try { return s.src && new URL(s.src, location.href).pathname === path; } catch (_) { return false; }
+    });
+    if (existing && existing.dataset.mock2Loaded === "true") return resolve(true);
+    var script = existing || document.createElement("script");
+    script.async = false;
+    script.src = src;
+    script.dataset.mock2Bank = "true";
+    script.onload = function(){ script.dataset.mock2Loaded = "true"; resolve(true); };
+    script.onerror = function(){
+      script.dataset.mock2Failed = "true";
+      console.error("Mock Test 2 bank script failed:", src);
+      resolve(false);
+    };
+    if (!existing) document.head.appendChild(script);
+    else {
+      script.addEventListener("load", function(){ script.dataset.mock2Loaded = "true"; resolve(true); }, {once:true});
+      script.addEventListener("error", function(){ script.dataset.mock2Failed = "true"; resolve(false); }, {once:true});
+      if (existing.readyState === "complete") resolve(true);
+    }
+  });
+  return window.MOCK2_BANK_LOADS[src];
+};
+window.loadAllMock2Banks = function(){
+  return window.MOCK2_BANK_FILES.reduce(function(chain, src){
+    return chain.then(function(){ return window.loadMock2BankFile(src); });
+  }, Promise.resolve());
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./backend-config.js"></script>
+<script src="./mock2-demo-data.js"></script>
+<script>
+window.addEventListener("error", function(e){
+  if (e.target && e.target.tagName === "SCRIPT" && e.target.dataset && e.target.dataset.mock2Bank) {
+    e.target.dataset.mock2Failed = "true";
+    console.error("Question bank script failed:", e.target.src);
+  }
+}, true);
+window.loadAllMock2Banks();
 </script>
 
 
@@ -1453,6 +1474,7 @@ currentLanguage="Hindi";
 let currentUser=null,
 isAdmin=false,
 accessCache={};
+let selectedExamFilter = "All Exams";
 
 
 /* =========================================================
@@ -2037,6 +2059,42 @@ normalizeQuestion
 
 
 /* =========================================================
+   ADDITIONAL PAID BANKS
+   Additional data schemas should be registered here after verification.
+========================================================= */
+function getRegisteredMockBank(category, mockNumber){
+  var fileByCategory = {
+    "JBT": "./jbt-data.js",
+    "TGT": "./tgt-data.js"
+  };
+  var file = fileByCategory[category];
+  if (!file) return null;
+
+  var candidates = {
+    "JBT": ["jbtData", "jbtPaidMocks", "jbtMockData", "jbtMocks", "JBT_DATA"],
+    "TGT": ["tgtData", "tgtPaidMocks", "tgtMockData", "tgtMocks", "TGT_DATA"]
+  }[category] || [];
+  var source = null;
+
+  for (var i = 0; i < candidates.length && !source; i++) {
+    try { if (typeof window[candidates[i]] !== "undefined") source = window[candidates[i]]; } catch (_) {}
+    if (!source) {
+      try { source = (0, eval)("typeof " + candidates[i] + " !== 'undefined' ? " + candidates[i] + " : null"); } catch (_) {}
+    }
+  }
+  if (!source) {
+    alert(category + " bank file loaded, but its data object name is not registered in mock2.html.");
+    return [];
+  }
+  var raw = Array.isArray(source) ? source[mockNumber - 1] : (source[mockNumber] || source[String(mockNumber)]);
+  if (!Array.isArray(raw)) {
+    alert(category + " Mock " + mockNumber + " question bank was not found in " + file + ".");
+    return [];
+  }
+  return raw.map(normalizeQuestion);
+}
+
+/* =========================================================
    SECURE ACCESS CHECK
 ========================================================= */
 
@@ -2068,8 +2126,13 @@ if(typeof supabaseClient!=="undefined"){
 }
 currentUser=authUser||getCloudflareStoredUser();
 const accessToken=await getCloudflareAccessToken();
-if(!currentUser||!accessToken)return;
-const adminResponse=accessToken?await fetch((window.HIMCHAYAN_PAYMENT_API || "https://himchayan-payment.pmindia.workers.dev"),{
+if(!currentUser || !accessToken){
+  isAdmin=false;
+  renderAdminStatus();
+  renderCategories();
+  return;
+}
+const adminResponse=accessToken?await fetch((window.HIMCHAYAN_PAYMENT_API || "https://himchayan-payment.pmindia.workers.dev"),
  method:"POST",
  headers:{"Content-Type":"application/json","Authorization":"Bearer "+accessToken},
  body:JSON.stringify({action:"is_admin"}),
@@ -2328,127 +2391,73 @@ window.scrollTo(0,0);
    RENDER CATEGORIES
 ========================================================= */
 
+function renderExamTabs(targetId){
+  const target = document.getElementById(targetId);
+  if (!target) return;
+  const active = selectedExamFilter || "All Exams";
+  const tabRows = [{icon:"🌐",name:"All Exams"}].concat(categories.map(function(c){
+    return {icon:c[0], name:c[1]};
+  }));
+  target.innerHTML = tabRows.map(function(t){
+    const name = t.name;
+    return '<button type="button" class="exam-tab ' +
+      (name === active ? 'active' : '') +
+      '" aria-pressed="' + (name === active ? 'true' : 'false') +
+      '" onclick="selectExamFilter(' + JSON.stringify(name).replace(/</g,"\\u003c") + ')">' +
+      t.icon + ' ' + name + '</button>';
+  }).join("");
+}
+function selectExamFilter(name){
+  selectedExamFilter = name || "All Exams";
+  renderCategories();
+}
 function renderCategories(){
+  const free = document.getElementById("freeSubjectGrid");
+  const premium = document.getElementById("premiumSubjectGrid");
+  const matches = function(c){ return selectedExamFilter === "All Exams" || c[1] === selectedExamFilter; };
+  if (free) free.innerHTML = "";
+  if (premium) premium.innerHTML = "";
+  renderExamTabs("freeExamTabs");
+  renderExamTabs("premiumExamTabs");
 
-const free=
-document.getElementById(
-"freeSubjectGrid"
-);
+  categories.filter(matches).forEach(function(c){
+    if (free) {
+      free.insertAdjacentHTML("beforeend",
+        '<article class="card subject-mock-card">' +
+          '<div class="card-title">' + c[0] + ' ' + c[1] + '</div>' +
+          '<div class="card-desc">' + c[1] + ' Free Demo Mock</div>' +
+          '<span class="free-tag">🎯 FREE DEMO · 1 MOCK</span>' +
+          '<div class="subject-count">Total free mocks: 1</div>' +
+          '<button class="btn free-btn" onclick="openDemoMock(' + JSON.stringify(c[1]) + ')">🚀 Start Free Demo →</button>' +
+        '</article>');
+    }
 
-const premium=
-document.getElementById(
-"premiumSubjectGrid"
-);
+    if (premium) {
+      premium.insertAdjacentHTML("beforeend",
+        '<article class="card subject-mock-card">' +
+          '<div class="card-title">' + c[0] + ' ' + c[1] + '</div>' +
+          '<div class="card-desc">Premium ' + c[1] + ' Mock Tests</div>' +
+          '<span class="paid-tag">🔒 PREMIUM · 10 MOCKS · ₹299</span>' +
+          '<div class="subject-count">Total premium mocks: 10</div>' +
+          '<button class="btn paid-btn" onclick="openPaidCategory(' + JSON.stringify(c[1]) + ')">' +
+            (isAdmin ? "👑 Admin — Open 10 Mocks" : "🔒 ₹299 — Unlock 10 Mocks") +
+          '</button>' +
+        '</article>');
+    }
+  });
 
-
-if(free)
-free.innerHTML="";
-
-
-if(premium)
-premium.innerHTML="";
-
-
-categories.forEach(
-c=>{
-
-
-/* =====================================================
-   ONE FREE MOCK DEMO
-   DATA WILL COME ONLY FROM mock2-demo-data.js
-===================================================== */
-
-if(free){
-
-free.insertAdjacentHTML(
-
-"beforeend",
-
-`<div class="card">
-
-<div class="card-title">
-${c[0]} ${c[1]}
-</div>
-
-<div class="card-desc">
-${c[1]} Free Demo Mock
-</div>
-
-<span class="free-tag">
-🎯 FREE DEMO • 1 MOCK
-</span>
-
-<div style="font-size:12px;color:#687385;margin-bottom:9px">
-1 Free Demo Mock
-</div>
-
-<button
-class="btn free-btn"
-onclick="openDemoMock('${c[1]}')"
->
-🚀 Start Free Demo →
-</button>
-
-</div>`
-
-);
-
-}
-
-
-/* =====================================================
-   EXISTING PREMIUM
-===================================================== */
-
-if(premium){
-
-premium.insertAdjacentHTML(
-
-"beforeend",
-
-`<div class="card">
-
-<div class="card-title">
-${c[0]} ${c[1]}
-</div>
-
-<div class="card-desc">
-Premium ${c[1]} Mock Tests
-</div>
-
-<span class="paid-tag">
-🔒 PREMIUM • 10 MOCKS • ₹299
-</span>
-
-<div
-style="font-size:12px;font-weight:800;color:#14539b;margin-bottom:9px"
->
-💰 Premium Package — ₹299
-</div>
-
-<button
-class="btn paid-btn"
-onclick="openPaidCategory('${c[1]}')"
->
-
-${
-isAdmin
-?
-"👑 Admin — Open 10 Mocks"
-:
-"🔒 ₹299 — Unlock 10 Mocks"
-}
-
-</button>
-
-</div>`
-
-);
-
-}
-
-});
-
+  const health = document.getElementById("mock2BankStatus");
+  if (health) {
+    const failed = (window.MOCK2_BANK_FILES || []).filter(function(src){
+      const p = new URL(src, location.href).pathname;
+      const s = Array.from(document.scripts).find(function(el){
+        try { return el.src && new URL(el.src, location.href).pathname === p; } catch (_) { return false; }
+      });
+      return !!s && s.dataset.mock2Failed === "true";
+    });
+    health.className = "bank-health " + (failed.length ? "bad" : "good");
+    health.textContent = failed.length ? "Question bank file failed: " + failed.map(x => x.split("/").pop()).join(", ") : "Question-bank scripts are connected; access/payment checks remain separate.";
+  }
 }
 
 
@@ -3089,10 +3098,14 @@ getPoliceBank(
 selectedMock
 );
 
+if (selectedCategory === "JBT" || selectedCategory === "TGT") {
+  bank = getRegisteredMockBank(selectedCategory, selectedMock);
+}
+
 }
 
 
-if(!bank.length)
+if(!bank || !bank.length)
 return false;
 
 
@@ -4068,8 +4081,10 @@ shuffleQuestions
 ========================================================= */
 
 renderCategories();
-
-checkAdminAndAccess();
+window.loadAllMock2Banks().then(function(){
+  renderCategories();
+  checkAdminAndAccess();
+});
 
 </script>
 
