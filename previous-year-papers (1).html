@@ -1100,6 +1100,7 @@ grid-template-columns:repeat(3,1fr)
     <button type="button" class="active" data-exam-filter="All">🌐 All Exams</button>
     <button type="button" data-exam-filter="JBT">👨‍🏫 HP JBT</button>
     <button type="button" data-exam-filter="JOA">💻 JOA IT</button>
+    <button type="button" data-exam-filter="JOA Clerk">🗂️ JOA Clerk</button>
     <button type="button" data-exam-filter="Patwari">📋 HP Patwari</button>
     <button type="button" data-exam-filter="TGT">🎓 TGT</button>
     <button type="button" data-exam-filter="Staff Nurse">🏥 Staff Nurse</button>
@@ -1174,6 +1175,23 @@ grid-template-columns:repeat(3,1fr)
         class="exam-btn"
         onclick="openExam('JOA',120,'💻')">
         📚 View JOA Papers →
+      </button>
+    </div>
+
+
+    <div class="exam-card">
+      <div class="exam-icon">🗂️</div>
+      <h3>JOA Clerk</h3>
+      <p>JOA Clerk Previous Year Mock Test Practice</p>
+
+      <span class="exam-info">
+        20 MOCK OPTIONS • REAL QUESTIONS LOAD FROM JS DATA FILE
+      </span>
+
+      <button
+        class="exam-btn"
+        onclick="openExam('JOA Clerk',200,'🗂️')">
+        📚 View 20 Mocks →
       </button>
     </div>
 
@@ -2603,6 +2621,7 @@ function renderMocks(){
     "JBT": "jbtdatajspyq.js",
     "TGT": "tgtdatajspyq.js",
     "JOA": "joadatajspyq.js",
+    "JOA Clerk": "joaclerkdatajspyq.js",
     "Patwari": "patwaridatajspyq.js",
     "Police": "policedatajspyq.js",
     "Forest Guard": "forestguarddatajspyq.js",
@@ -2614,7 +2633,9 @@ function renderMocks(){
 
   // Keep JBT/TGT data-backed as-is. Other paid exams show 20 options,
   // with a clear missing-JS status for any mock that has no real bank.
-  const mockNumbers = (selectedExam === "JBT" || selectedExam === "TGT")
+  // JBT retains its existing data-backed list. TGT always shows 20 slots;
+  // missing banks remain clearly disabled until real question data is uploaded.
+  const mockNumbers = selectedExam === "JBT"
     ? Object.keys(banks)
         .filter(function(key){
           return /^\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
