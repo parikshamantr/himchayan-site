@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Payment - HimChayan</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#f3f7fc;
+    color:#172033;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+}
+
+button{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.top{
+    background:#fff;
+    border-bottom:1px solid #e5eaf1;
+}
+
+.nav{
+    max-width:900px;
+    margin:auto;
+    min-height:55px;
+    padding:10px 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    color:#14539b;
+    font-size:20px;
+    font-weight:800;
+}
+
+.home{
+    text-decoration:none;
+    background:#1787e8;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:7px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.wrap{
+    max-width:700px;
+    margin:auto;
+    padding:25px 15px 40px;
+}
+
+.back{
+    display:inline-block;
+    text-decoration:none;
+    color:#174b8f;
+    background:#e9f0f8;
+    padding:8px 13px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #e1e7ef;
+    border-radius:15px;
+    padding:22px;
+    box-shadow:0 4px 15px rgba(30,60,100,.07);
+    text-align:center;
+}
+
+.hero{
+    background:linear-gradient(135deg,#1169bd,#168ee8);
+    color:#fff;
+    border-radius:13px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.hero p{
+    font-size:13px;
+}
+
+.mock-info{
+    background:#f5f8fc;
+    border-radius:9px;
+    padding:12px;
+    margin-bottom:18px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.price{
+    font-size:30px;
+    font-weight:900;
+    color:#14539b;
+    margin:14px 0 18px;
+}
+
+.user-box{
+    text-align:left;
+    background:#f7f9fc;
+    border:1px solid #e1e7ef;
+    border-radius:9px;
+    padding:12px;
+    margin-top:15px;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.login-warning{
+    background:#fff0f0;
+    border-left:4px solid #dc3545;
+    color:#9d2029;
+    border-radius:7px;
+    padding:12px;
+    margin-top:15px;
+    font-size:12px;
+    line-height:1.6;
+    text-align:left;
+}
+
+.pay-box{
+    margin-top:20px;
+    background:#f7fbff;
+    border:1px solid #dce8f4;
+    border-radius:12px;
+    padding:18px;
+}
+
+.pay-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.pay-help{
+    color:#687385;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.pay-btn{
+    width:100%;
+    border:0;
+    border-radius:9px;
+    padding:13px;
+    background:#168fe0;
+    color:#fff;
+    font-size:14px;
+    font-weight:800;
+}
+
+.pay-btn:hover{
+    background:#0d72cb;
+}
+
+.pay-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.steps{
+    text-align:left;
+    background:#eff8ff;
+    border-left:4px solid #168fe0;
+    border-radius:7px;
+    padding:12px;
+    margin-top:15px;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:13px;
+    border-radius:8px;
+    font-size:12px;
+    line-height:1.7;
+    text-align:left;
+    word-break:break-word;
+}
+
+.message.show{
+    display:block;
+}
+
+.success{
+    background:#e9f9ef;
+    border-left:4px solid #20a35a;
+    color:#176b3c;
+}
+
+.error{
+    background:#fff0f0;
+    border-left:4px solid #dc3545;
+    color:#9d2029;
+}
+
+.loading{
+    background:#eef5ff;
+    border-left:4px solid #168fe0;
+    color:#14539b;
+}
+
+.access-box{
+    display:none;
+    background:#e9f9ef;
+    border:1px solid #bce8ce;
+    border-radius:12px;
+    padding:20px;
+    margin-top:15px;
+    color:#176b3c;
+}
+
+.access-box h2{
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.access-box p{
+    font-size:13px;
+    line-height:1.7;
+}
+
+.access-btn{
+    display:inline-block;
+    margin-top:15px;
+    text-decoration:none;
+    background:#168b4b;
+    color:#fff;
+    padding:11px 18px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:800;
+}
+
+.footer{
+    text-align:center;
+    color:#778191;
+    font-size:11px;
+    margin-top:20px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="top">
+
+<div class="nav">
+
+<div class="brand">
+HimChayan
+</div>
+
+<a
+href="index.html"
+class="home">
+🏠 Home
+</a>
+
+</div>
+
+</header>
+
+
+
+<main class="wrap">
+
+
+<a
+id="backBtn"
+href="mock1.html"
+class="back">
+
+← Back to Mock Tests
+
+</a>
+
+
+
+<section class="hero">
+
+<h1>
+💳 Premium Mock Payment
+</h1>
+
+<p id="heroText">
+Premium Mock Test unlock करने के लिए payment करें।
+</p>
+
+</section>
+
+
+
+<div class="card">
+
+
+
+<div class="mock-info">
+
+<strong id="mockInfo">
+Premium Mock Test
+</strong>
+
+<br>
+
+<span id="categoryInfo">
+-
+</span>
+
+</div>
+
+
+
+<div
+id="accessBox"
+class="access-box">
+
+<h2 id="accessHeading">
+✅ Premium Access Active
+</h2>
+
+<p id="accessText">
+आपके account में Premium Access पहले से active है।
+</p>
+
+<a
+id="accessBtn"
+href="#"
+class="access-btn">
+
+📚 Premium Mock खोलें
+
+</a>
+
+</div>
+
+
+
+<div id="paymentArea">
+
+
+
+<div
+id="loginWarning"
+class="login-warning hidden">
+
+⚠️ Payment करने के लिए पहले Login करना जरूरी है।
+
+</div>
+
+
+
+<div
+id="userBox"
+class="user-box hidden">
+
+<strong>Logged in user:</strong>
+
+<br>
+
+<span id="userName">
+-
+</span>
+
+<br>
+
+<span id="userEmail">
+-
+</span>
+
+</div>
+
+
+
+<div
+class="price"
+id="price">
+
+₹100
+
+</div>
+
+
+
+<div class="pay-box">
+
+<div class="pay-title">
+💳 Secure Razorpay Payment
+</div>
+
+<div class="pay-help">
+
+नीचे दिए गए button पर click करके Razorpay Checkout खोलें।
+आप UPI, Card, Net Banking आदि available payment methods से payment कर सकते हैं।
+
+</div>
+
+
+<button
+id="payBtn"
+class="pay-btn"
+onclick="startPayment()"
+disabled>
+
+🔐 Pay Now
+
+</button>
+
+</div>
+
+
+
+<div class="steps">
+
+<strong>Payment Process:</strong>
+
+<br>
+
+1. Login करें।
+<br>
+
+2. <strong>Pay Now</strong> पर click करें।
+<br>
+
+3. Razorpay Checkout में payment complete करें।
+<br>
+
+4. Payment successful होने पर payment verify होगा।
+<br>
+
+5. Verification के बाद request Admin Approval के लिए जाएगी।
+<br>
+
+6. Admin approval के बाद Premium Mock unlock होगा।
+
+</div>
+
+
+
+</div>
+
+
+
+<div
+id="message"
+class="message">
+
+</div>
+
+
+
+<div class="footer">
+
+© 2026 HimChayan — Secure Payment
+
+</div>
+
+
+</div>
+
+</main>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+<script src="backend-config.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js">
+</script>
+
+
+
+<script>
+
+/* =========================================
+   URL PARAMETERS
+========================================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const category =
+    params.get("category");
+
+const type =
+    params.get("type");
+
+const mock =
+    params.get("mock");
+
+
+/* =========================================
+   PACKAGE TYPE
+========================================= */
+
+/*
+   Mock 1 = ₹100
+   Mock 2 = ₹299
+   Previous Year = ₹99
+
+   Important:
+   type=mock1 / 1
+   type=mock2 / 2
+   type=previous_year
+*/
+
+let packageType = "mock1";
+
+
+if(
+    type === "mock2" ||
+    type === "2"
+){
+
+    packageType = "mock2";
+
+}
+
+
+if(
+    type === "previous_year"
+){
+
+    packageType = "previous_year";
+
+}
+
+
+/*
+   Safety fallback:
+   अगर mock=2 आया है तो भी Mock 2
+*/
+
+if(
+    mock === "2"
+){
+
+    packageType = "mock2";
+
+}
+
+
+/* =========================================
+   PAYMENT AMOUNT
+========================================= */
+
+const paymentAmount =
+    packageType === "mock2"
+        ? 299
+        : packageType === "previous_year"
+            ? 99
+            : 100;
+
+
+
+/* =========================================
+   PAGE INFORMATION
+========================================= */
+
+if(category){
+
+    document
+        .getElementById("categoryInfo")
+        .textContent =
+        "Category: " + category;
+
+}
+
+
+function getPackageName(){
+
+    if(
+        packageType === "mock2"
+    ){
+
+        return "Mock Test 2";
+
+    }
+
+
+    if(
+        packageType === "previous_year"
+    ){
+
+        return "Previous Year Question Papers";
+
+    }
+
+
+    return "Mock Test 1";
+
+}
+
+
+const packageName =
+    getPackageName();
+
+
+document
+    .getElementById("mockInfo")
+    .textContent =
+    category
+        ? `${category} — ${packageName}`
+        : packageName;
+
+
+document
+    .getElementById("price")
+    .textContent =
+    `₹${paymentAmount}`;
+
+
+document
+    .getElementById("heroText")
+    .textContent =
+    packageType === "previous_year"
+        ? `${category || "Previous Year"} के 20 Previous Year Mock Tests unlock करने के लिए ₹99 payment करें।`
+        : `Premium ${packageName} unlock करने के लिए ₹${paymentAmount} payment करें।`;
+
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+document
+    .getElementById("backBtn")
+    .href =
+    packageType === "mock2"
+        ? "mock2.html"
+        : packageType === "previous_year"
+            ? "previous-year-papers.html"
+            : "mock1.html";
+
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+let currentUser = null;
+
+let paymentProcessing = false;
+
+let isAdmin = false;
+
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+    text,
+    type = "loading"
+){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+    box.className =
+        "message show " + type;
+
+    box.innerHTML =
+        text;
+
+}
+
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+async function checkAdmin(){
+
+    if(
+        typeof supabaseClient ===
+        "undefined"
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        !currentUser
+    ){
+
+        return false;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await window.himchayanPaymentRequest("is_admin");
+
+
+        if(
+            error
+        ){
+
+            console.error(
+                "Admin check error:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        isAdmin =
+            data?.is_admin === true;
+
+
+        return isAdmin;
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Admin check exception:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+
+/* =========================================
+   ADMIN FREE ACCESS
+========================================= */
+
+function showAdminAccess(){
+
+    const accessBox =
+        document.getElementById(
+            "accessBox"
+        );
+
+    const paymentArea =
+        document.getElementById(
+            "paymentArea"
+        );
+
+    const accessText =
+        document.getElementById(
+            "accessText"
+        );
+
+    const accessBtn =
+        document.getElementById(
+            "accessBtn"
+        );
+
+    const accessHeading =
+        document.getElementById(
+            "accessHeading"
+        );
+
+
+    accessBox.style.display =
+        "block";
+
+
+    paymentArea.style.display =
+        "none";
+
+
+    accessHeading.textContent =
+        "👑 Admin Access — FREE";
+
+
+    accessText.innerHTML =
+        packageType === "previous_year"
+
+            ? `Admin account detected। <strong>Previous Year Question Papers</strong> के सभी 20 Mock Tests आपके लिए बिना payment के available हैं।`
+
+            : `Admin account detected। <strong>${escapeHtml(packageName)}</strong> आपके लिए बिना payment के available है।`;
+
+
+    if(
+        packageType === "previous_year"
+    ){
+
+        accessBtn.textContent =
+            "📚 Previous Year Papers खोलें";
+
+        accessBtn.href =
+            category
+                ? "previous-year-papers.html?category=" +
+                    encodeURIComponent(category)
+                : "previous-year-papers.html";
+
+        return;
+
+    }
+
+
+    let target =
+        packageType === "mock2"
+            ? "mock2.html"
+            : "mock1.html";
+
+
+    if(category){
+
+        target +=
+            "?category=" +
+            encodeURIComponent(
+                category
+            );
+
+    }
+
+
+    accessBtn.href =
+        target;
+
+
+    accessBtn.textContent =
+        "📚 Premium Mock खोलें";
+
+}
+
+
+
+/* =========================================
+   LOGIN CHECK
+========================================= */
+
+async function checkLogin(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error){
+
+            console.error(
+                "Login check error:",
+                error
+            );
+
+            showLoginRequired();
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.user || null;
+
+
+        if(!currentUser){
+
+            showLoginRequired();
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("userBox")
+            .classList
+            .remove("hidden");
+
+
+        document
+            .getElementById("userName")
+            .textContent =
+
+            currentUser.user_metadata?.full_name ||
+            currentUser.user_metadata?.name ||
+            "User";
+
+
+        document
+            .getElementById("userEmail")
+            .textContent =
+
+            currentUser.email ||
+            "-";
+
+
+        document
+            .getElementById("loginWarning")
+            .classList
+            .add("hidden");
+
+
+        /*
+           सबसे पहले Admin check
+        */
+
+        await checkAdmin();
+
+
+        /*
+           Previous Year में Admin को
+           payment की जरूरत नहीं।
+        */
+
+        if(
+            isAdmin &&
+            packageType === "previous_year"
+        ){
+
+            showAdminAccess();
+
+            return;
+
+        }
+
+
+        /*
+           Existing Mock 1 / Mock 2 access
+           और Previous Year paid access
+           check होगा।
+        */
+
+        await checkPremiumAccess();
+
+
+        /*
+           अगर access active नहीं है
+           तभी payment button enable होगा
+        */
+
+        if(
+            document
+                .getElementById("paymentArea")
+                .style.display !== "none"
+        ){
+
+            document
+                .getElementById("payBtn")
+                .disabled = false;
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Login check exception:",
+            error
+        );
+
+        showLoginRequired();
+
+    }
+
+}
+
+
+
+/* =========================================
+   LOGIN REQUIRED
+========================================= */
+
+function showLoginRequired(){
+
+    document
+        .getElementById("loginWarning")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("payBtn")
+        .disabled = true;
+
+}
+
+
+
+/* =========================================
+   CHECK PACKAGE ACCESS
+========================================= */
+
+async function checkPremiumAccess(){
+
+    if(
+        !currentUser ||
+        !category
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+
+        await window.himchayanPaymentRequest("premium_status", { category, package_type: packageType });
+
+
+        if(error){
+
+            console.error(
+                "Premium access check error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        if(data?.is_active){
+
+            showPremiumAccess();
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Premium access exception:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+   SHOW PREMIUM ACCESS
+========================================= */
+
+function showPremiumAccess(){
+
+    const accessBox =
+        document.getElementById(
+            "accessBox"
+        );
+
+    const paymentArea =
+        document.getElementById(
+            "paymentArea"
+        );
+
+    const accessText =
+        document.getElementById(
+            "accessText"
+        );
+
+    const accessBtn =
+        document.getElementById(
+            "accessBtn"
+        );
+
+    const accessHeading =
+        document.getElementById(
+            "accessHeading"
+        );
+
+
+    accessBox.style.display =
+        "block";
+
+
+    paymentArea.style.display =
+        "none";
+
+
+    accessHeading.textContent =
+        "✅ Premium Access Active";
+
+
+    accessText.innerHTML =
+
+        `आपके account में <strong>${escapeHtml(category || "")}</strong> category का <strong>${escapeHtml(packageName)}</strong> Premium Access active है।<br><br>` +
+
+        "आपको इस package के लिए दोबारा payment करने की जरूरत नहीं है।";
+
+
+    let target;
+
+
+    if(
+        packageType === "previous_year"
+    ){
+
+        target =
+            "previous-year-papers.html";
+
+        if(category){
+
+            target +=
+                "?category=" +
+                encodeURIComponent(
+                    category
+                );
+
+        }
+
+
+        accessBtn.href =
+            target;
+
+        accessBtn.textContent =
+            "📚 Previous Year Papers खोलें";
+
+        return;
+
+    }
+
+
+    target =
+        packageType === "mock2"
+            ? "mock2.html"
+            : "mock1.html";
+
+
+    if(category){
+
+        target +=
+            "?category=" +
+            encodeURIComponent(
+                category
+            );
+
+    }
+
+
+    accessBtn.href =
+        target;
+
+}
+
+
+
+/* =========================================
+   START PAYMENT
+========================================= */
+
+async function startPayment(){
+
+    if(paymentProcessing){
+
+        return;
+
+    }
+
+
+    if(!currentUser){
+
+        alert(
+            "कृपया पहले Login करें।"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Admin के लिए Previous Year FREE
+    */
+
+    if(
+        isAdmin &&
+        packageType === "previous_year"
+    ){
+
+        showAdminAccess();
+
+        return;
+
+    }
+
+
+    if(!category){
+
+        alert(
+            "Payment category नहीं मिली।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        packageType !== "mock1" &&
+        packageType !== "mock2" &&
+        packageType !== "previous_year"
+    ){
+
+        alert(
+            "Invalid Premium Package."
+        );
+
+        return;
+
+    }
+
+
+    paymentProcessing = true;
+
+
+    const payBtn =
+        document.getElementById(
+            "payBtn"
+        );
+
+
+    payBtn.disabled = true;
+
+    payBtn.textContent =
+        "⏳ Payment शुरू हो रहा है...";
+
+
+    try{
+
+        /*
+           Secure backend order creation
+
+           mock1       = ₹100
+           mock2       = ₹299
+           previous_year = ₹99
+        */
+
+        const {
+            data,
+            error
+        } =
+
+        await window.himchayanPaymentRequest("create_order", {
+            type: packageType,
+            category,
+            mock: packageType === "mock2" ? "2" : packageType === "previous_year" ? "previous_year" : "1"
+        })
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(
+            !data ||
+            !data.order_id ||
+            !data.key_id
+        ){
+
+            throw new Error(
+                data?.error ||
+                "Payment order create नहीं हुआ।"
+            );
+
+        }
+
+
+        /*
+           Razorpay Checkout
+        */
+
+        const options = {
+
+            key:
+                data.key_id,
+
+            amount:
+                data.amount,
+
+            currency:
+                data.currency || "INR",
+
+            name:
+                "HimChayan",
+
+            description:
+                packageType === "previous_year"
+
+                    ? `${category} - Previous Year Question Papers - 20 Mock Tests`
+
+                    : `${category} - ${packageName}`,
+
+            order_id:
+                data.order_id,
+
+            prefill:{
+                name:
+                    currentUser.user_metadata?.full_name ||
+                    currentUser.user_metadata?.name ||
+                    "",
+
+                email:
+                    currentUser.email || ""
+            },
+
+            theme:{
+                color:"#168fe0"
+            },
+
+
+            handler:
+                async function(response){
+
+                    await verifyPayment(
+                        response
+                    );
+
+                },
+
+
+            modal:{
+
+                ondismiss:
+                    function(){
+
+                        paymentProcessing =
+                            false;
+
+                        payBtn.disabled =
+                            false;
+
+                        payBtn.textContent =
+                            "🔐 Pay Now";
+
+                    }
+
+            }
+
+        };
+
+
+        const razorpay =
+            new Razorpay(
+                options
+            );
+
+
+        razorpay.on(
+            "payment.failed",
+            function(response){
+
+                console.error(
+                    "Razorpay failed:",
+                    response
+                );
+
+                showMessage(
+                    "❌ Payment failed या cancel हो गया। कृपया दोबारा प्रयास करें।",
+                    "error"
+                );
+
+                paymentProcessing =
+                    false;
+
+                payBtn.disabled =
+                    false;
+
+                payBtn.textContent =
+                    "🔐 Pay Now";
+
+            }
+        );
+
+
+        razorpay.open();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Payment start error:",
+            error
+        );
+
+
+        showMessage(
+            "❌ Payment शुरू नहीं हो पाया: " +
+            (
+                error.message ||
+                "Unknown error"
+            ),
+            "error"
+        );
+
+
+        paymentProcessing =
+            false;
+
+        payBtn.disabled =
+            false;
+
+        payBtn.textContent =
+            "🔐 Pay Now";
+
+    }
+
+}
+
+
+
+/* =========================================
+   VERIFY PAYMENT
+========================================= */
+
+async function verifyPayment(
+    response
+){
+
+    showMessage(
+        "⏳ Payment verify किया जा रहा है...",
+        "loading"
+    );
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+
+        await window.himchayanPaymentRequest("verify_payment", {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature
+        })
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(
+            !data ||
+            !data.success
+        ){
+
+            throw new Error(
+                data?.error ||
+                "Payment verification failed."
+            );
+
+        }
+
+
+        showMessage(
+            "✅ Payment successfully verified।<br><br>" +
+
+            "आपका payment Admin Approval के लिए भेज दिया गया है।<br>" +
+
+            "Admin approval के बाद आपका Premium Mock unlock होगा।",
+
+            "success"
+        );
+
+
+        paymentProcessing =
+            false;
+
+
+        /*
+           Payment verified होने के बाद
+           button disabled रहेगा।
+        */
+
+        document
+            .getElementById("payBtn")
+            .disabled = true;
+
+
+        document
+            .getElementById("payBtn")
+            .textContent =
+            "✅ Payment Submitted";
+
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Payment verification error:",
+            error
+        );
+
+
+        showMessage(
+            "❌ Payment verification में समस्या आई: " +
+            (
+                error.message ||
+                "Unknown error"
+            ),
+            "error"
+        );
+
+
+        paymentProcessing =
+            false;
+
+
+        document
+            .getElementById("payBtn")
+            .disabled = false;
+
+
+        document
+            .getElementById("payBtn")
+            .textContent =
+            "🔐 Pay Now";
+
+    }
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+    value
+){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
+
+if(
+    typeof supabaseClient !==
+    "undefined"
+){
+
+    supabaseClient
+        .auth
+        .onAuthStateChange(
+            function(
+                event,
+                session
+            ){
+
+                currentUser =
+                    session?.user ||
+                    null;
+
+                if(currentUser){
+
+                    checkLogin();
+
+                }
+                else{
+
+                    showLoginRequired();
+
+                }
+
+            }
+        );
+
+}
+
+
+
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+checkLogin();
+
+</script>
+
+
+</body>
+
+</html>
