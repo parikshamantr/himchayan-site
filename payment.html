@@ -884,99 +884,142 @@ function showAdminAccess(){
 
 /* =========================================
    LOGIN CHECK
-   Cloudflare Auth Bridge is the active login source.
-   Keep Supabase session support as a compatibility fallback.
 ========================================= */
 
-const HC_ACCESS_TOKEN_KEY = "himchayan_auth_access_token";
-const HC_AUTH_USER_ENDPOINT = "https://himchayan-auth-bridge-test.pmindia.workers.dev/auth/user";
-
-async function getCloudflareAuthUser(){
-    let token = "";
-    try {
-        token = localStorage.getItem(HC_ACCESS_TOKEN_KEY) || "";
-    } catch (_) {}
-    if(!token) return null;
-
-    const response = await fetch(HC_AUTH_USER_ENDPOINT, {
-        method: "GET",
-        headers: { "Authorization": "Bearer " + token, "Accept": "application/json" },
-        cache: "no-store"
-    });
-    const body = await response.json().catch(() => ({}));
-    if(!response.ok || !body?.user?.id) return null;
-
-    const user = body.user;
-    return {
-        id: user.id,
-        email: user.email || "",
-        user_metadata: {
-            full_name: user.full_name || user.user_metadata?.full_name || "",
-            name: user.full_name || user.user_metadata?.name || ""
-        },
-        app_metadata: user.app_metadata || {},
-        role: user.role || "authenticated",
-        is_admin: user.is_admin === true
-    };
-}
-
 async function checkLogin(){
+
     try{
-        let user = null;
 
-        // First validate the same Cloudflare Auth Bridge session used by login.html.
-        try{
-            user = await getCloudflareAuthUser();
-        }catch(error){
-            console.warn("Cloudflare Auth Bridge check failed:", error);
-        }
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .auth
+            .getUser();
 
-        // Preserve the previous Supabase session path for legacy sessions.
-        if(!user && typeof supabaseClient !== "undefined" && supabaseClient?.auth?.getUser){
-            try{
-                const { data, error } = await supabaseClient.auth.getUser();
-                if(!error) user = data?.user || null;
-                else console.warn("Supabase fallback auth check failed:", error);
-            }catch(error){
-                console.warn("Supabase fallback auth exception:", error);
-            }
-        }
 
-        if(!user){
-            currentUser = null;
+        if(error){
+
+            console.error(
+                "Login check error:",
+                error
+            );
+
             showLoginRequired();
+
             return;
+
         }
 
-        currentUser = user;
-        document.getElementById("userBox").classList.remove("hidden");
-        document.getElementById("userName").textContent =
+
+        currentUser =
+            data.user || null;
+
+
+        if(!currentUser){
+
+            showLoginRequired();
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("userBox")
+            .classList
+            .remove("hidden");
+
+
+        document
+            .getElementById("userName")
+            .textContent =
+
             currentUser.user_metadata?.full_name ||
             currentUser.user_metadata?.name ||
-            currentUser.full_name ||
             "User";
-        document.getElementById("userEmail").textContent = currentUser.email || "-";
-        document.getElementById("loginWarning").classList.add("hidden");
 
-        // Backend remains authoritative for admin-free access.
+
+        document
+            .getElementById("userEmail")
+            .textContent =
+
+            currentUser.email ||
+            "-";
+
+
+        document
+            .getElementById("loginWarning")
+            .classList
+            .add("hidden");
+
+
+        /*
+           सबसे पहले Admin check
+        */
+
         await checkAdmin();
 
-        if(isAdmin && packageType === "previous_year"){
+
+        /*
+           Previous Year में Admin को
+           payment की जरूरत नहीं।
+        */
+
+        if(
+            isAdmin &&
+            packageType === "previous_year"
+        ){
+
             showAdminAccess();
+
             return;
+
         }
+
+
+        /*
+           Existing Mock 1 / Mock 2 access
+           और Previous Year paid access
+           check होगा।
+        */
 
         await checkPremiumAccess();
 
-        if(document.getElementById("paymentArea").style.display !== "none"){
-            document.getElementById("payBtn").disabled = false;
+
+        /*
+           अगर access active नहीं है
+           तभी payment button enable होगा
+        */
+
+        if(
+            document
+                .getElementById("paymentArea")
+                .style.display !== "none"
+        ){
+
+            document
+                .getElementById("payBtn")
+                .disabled = false;
+
         }
-    }catch(error){
-        console.error("Login check exception:", error);
-        currentUser = null;
-        showLoginRequired();
+
     }
+
+    catch(error){
+
+        console.error(
+            "Login check exception:",
+            error
+        );
+
+        showLoginRequired();
+
+    }
+
 }
+
 
 
 /* =========================================
@@ -1589,27 +1632,39 @@ function escapeHtml(
    AUTH STATE
 ========================================= */
 
-// Cloudflare Auth Bridge is the current login source.
-// Supabase's empty session must not erase a valid Cloudflare token.
-if(typeof supabaseClient !== "undefined" && supabaseClient?.auth?.onAuthStateChange){
-    supabaseClient.auth.onAuthStateChange(function(event, session){
-        if(session?.user){
-            currentUser = session.user;
-            checkLogin();
-            return;
-        }
+if(
+    typeof supabaseClient !==
+    "undefined"
+){
 
-        let cloudflareToken = "";
-        try {
-            cloudflareToken = localStorage.getItem(HC_ACCESS_TOKEN_KEY) || "";
-        } catch (_) {}
+    supabaseClient
+        .auth
+        .onAuthStateChange(
+            function(
+                event,
+                session
+            ){
 
-        if(!cloudflareToken){
-            currentUser = null;
-            showLoginRequired();
-        }
-    });
+                currentUser =
+                    session?.user ||
+                    null;
+
+                if(currentUser){
+
+                    checkLogin();
+
+                }
+                else{
+
+                    showLoginRequired();
+
+                }
+
+            }
+        );
+
 }
+
 
 
 /* =========================================
