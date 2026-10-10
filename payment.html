@@ -506,6 +506,32 @@ class="message">
 
 <script src="backend-config.js"></script>
 
+<script>
+/* Keep login/session in Supabase. Route payment order creation and verification
+   through the existing Supabase Razorpay Edge Function; retain the current
+   Worker only for existing admin/access-status actions. */
+(function () {
+  const originalPaymentRequest = window.himchayanPaymentRequest;
+  window.himchayanPaymentRequest = async function (action, payload = {}) {
+    if (action === "create_order" || action === "verify_payment" || action === "recover_payment") {
+      const client = window.supabaseClient;
+      if (!client || !client.functions || typeof client.functions.invoke !== "function") {
+        return { data: null, error: new Error("Supabase session/client unavailable. Please login again.") };
+      }
+      try {
+        const result = await client.functions.invoke("razorpay-payment", {
+          body: { ...payload, action }
+        });
+        return { data: result.data || null, error: result.error || null };
+      } catch (error) {
+        return { data: null, error };
+      }
+    }
+    return originalPaymentRequest(action, payload);
+  };
+})();
+</script>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js">
 </script>
 
