@@ -352,12 +352,9 @@
 
   /* Direct identifiers are needed because top-level const declarations
      are not exposed as window properties in classic browser scripts. */
-  if (typeof patwariPaidMocks !== "undefined" && patwariPaidMocks) {
-    window.previousYearQuestionBanks.Patwari = mapArrayBank("Patwari", patwariPaidMocks);
-  }
-  if (typeof policePaidMocks !== "undefined" && policePaidMocks) {
-    window.previousYearQuestionBanks.Police = mapArrayBank("Police", policePaidMocks);
-  }
+  /* Patwari and Police must only connect through their dedicated
+     PYQ files: patwaridatajspyq.js and policedatajspyq.js.
+     Do not read patwari-data.js / police-data.js mock-test banks here. */
   if (typeof forestGuardPaidMocks !== "undefined" && forestGuardPaidMocks) {
     window.previousYearQuestionBanks["Forest Guard"] = mapArrayBank("Forest Guard", forestGuardPaidMocks);
   }
@@ -374,8 +371,6 @@
     window.previousYearQuestionBanks.PGT = mapArrayBank("PGT", pgtPaidMocks);
   }
 
-  connectOptionalBank("Patwari", ["patwariPaidMocks", "patwariMocks", "patwariMockData"]);
-  connectOptionalBank("Police", ["policePaidMocks", "policeMocks", "policeMockData"]);
   connectOptionalBank("Forest Guard", ["forestGuardPaidMocks", "forestguardPaidMocks", "forestGuardMocks", "forestguardMocks"]);
   connectOptionalBank("Staff Nurse", ["staffNursePaidMocks", "staffnursePaidMocks", "staffNurseMocks", "staffnurseMocks"]);
   connectOptionalBank("PGT", ["pgtPaidMocks", "pgtMocks", "pgtMockData"]);
