@@ -1,6 +1,6 @@
 /* Supabase is retained for legacy Auth/session/email. Business APIs use Cloudflare Workers. */
 const SUPABASE_URL = "https://ugfimbafjqajpogatvld.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_aIb1saXm-6vbXcFi2E__w_6eDrGn4r";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_aIb1saXmG-6vbXcFi2E__w_6eDrGn4r";
 var supabaseClient;
 if (window.supabase && typeof window.supabase.createClient === "function") {
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
