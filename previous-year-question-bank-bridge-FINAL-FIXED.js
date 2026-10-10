@@ -98,17 +98,20 @@
 
         if (q && typeof q === "object") {
           var normal = Array.isArray(q.options) ? q.options.map(optionText) : [];
-          var hiOpts = Array.isArray(q.optionsHindi) ? q.optionsHindi : normal;
-          var enOpts = Array.isArray(q.optionsEnglish) ? q.optionsEnglish : normal;
+          var hiOpts = Array.isArray(q.optionsHindi) ? q.optionsHindi :
+            (Array.isArray(q.optionsHi) ? q.optionsHi : normal);
+          var enOpts = Array.isArray(q.optionsEnglish) ? q.optionsEnglish :
+            (Array.isArray(q.optionsEn) ? q.optionsEn : normal);
 
           return {
             id: q.id || exam + "-" + mockNumber + "-" + (index + 1),
-            hindi: String(q.hindi || q.questionHindi || q.question || ""),
-            english: String(q.english || q.questionEnglish || q.question || q.hindi || ""),
+            hindi: String(q.hindi || q.questionHindi || q.hi || q.question || ""),
+            english: String(q.english || q.questionEnglish || q.en || q.question || q.hindi || q.hi || ""),
             optionsHindi: fourOptions(hiOpts),
             optionsEnglish: fourOptions(enOpts),
             answer: normalizeAnswer(
-              q.answer !== undefined ? q.answer : q.correctAnswer
+              q.answer !== undefined ? q.answer :
+              (q.correctAnswer !== undefined ? q.correctAnswer : q.correct)
             )
           };
         }
@@ -267,6 +270,33 @@
         });
     });
 
+    // Additional JOA papers are auto-numbered as Mock 5 onward when real
+    // question arrays are present in the uploaded joadatajspyq.js source.
+    var knownJOAKeys = joaOrder.map(function(item){ return item[0]; });
+    var nextJOAMock = 5;
+    Object.keys(joadatajspyq).forEach(function(paperKey){
+      if(knownJOAKeys.indexOf(paperKey) !== -1) return;
+      var paper = joadatajspyq[paperKey];
+      if(!paper || !Array.isArray(paper.questions) || !paper.questions.length) return;
+      while(joaMap[String(nextJOAMock)]) nextJOAMock++;
+      joaMap[String(nextJOAMock)] = paper.questions.slice(0,120).map(function(q,index){
+        q = q || {};
+        var options = mergeJOAOptions(q.options, q.raw);
+        var question = q.question || q.questionEnglish || q.english || q.hindi || "";
+        var hindi = q.hindi || q.questionHindi || q.question || "";
+        return {
+          id: "JOA-" + paperKey + "-" + (index + 1),
+          hindi: String(hindi),
+          english: String(question),
+          optionsHindi: options.slice(),
+          optionsEnglish: options.slice(),
+          answer: normalizeAnswer(q.answer !== undefined ? q.answer : q.correctAnswer),
+          sourcePaper: paper.paperName || paperKey
+        };
+      });
+      nextJOAMock++;
+    });
+
     window.previousYearQuestionBanks.JOA = joaMap;
 
     console.log(
@@ -278,6 +308,37 @@
   } else {
     console.error("JOA DATA NOT FOUND: joadatajspyq");
   }
+
+  /* =======================================================
+     OTHER PAID SUBJECT BANKS
+     Supports the existing Patwari/Police data files and
+     subject-specific JS files uploaded later.
+     ======================================================= */
+  function connectPaidBank(examName, source) {
+    if (!source || typeof source !== "object") return;
+    var mapped = mapArrayBank(examName, source);
+    var usable = {};
+    Object.keys(mapped).forEach(function(key) {
+      if (/^\d+$/.test(key) && Array.isArray(mapped[key]) && mapped[key].length) {
+        usable[key] = mapped[key];
+      }
+    });
+    if (Object.keys(usable).length) {
+      window.previousYearQuestionBanks[examName] = usable;
+      console.log("PAID " + examName + " CONNECTED:", Object.keys(usable).map(function(key) {
+        return "Mock " + key + " = " + usable[key].length + " questions";
+      }).join(" | "));
+    }
+  }
+
+  if (typeof patwariPaidMocks !== "undefined") connectPaidBank("Patwari", patwariPaidMocks);
+  if (typeof policePaidMocks !== "undefined") connectPaidBank("Police", policePaidMocks);
+  if (typeof forestGuardPaidMocks !== "undefined") connectPaidBank("Forest Guard", forestGuardPaidMocks);
+  else if (typeof forestPaidMocks !== "undefined") connectPaidBank("Forest Guard", forestPaidMocks);
+  if (typeof staffNursePaidMocks !== "undefined") connectPaidBank("Staff Nurse", staffNursePaidMocks);
+  else if (typeof staffNurseMocks !== "undefined") connectPaidBank("Staff Nurse", staffNurseMocks);
+  if (typeof pgtPaidMocks !== "undefined") connectPaidBank("PGT", pgtPaidMocks);
+  else if (typeof pgtMocks !== "undefined") connectPaidBank("PGT", pgtMocks);
 
   /* =======================================================
      FREE MASTER DATA
