@@ -228,7 +228,12 @@
      Mock 3 = postCode1000 = 200
      Mock 4 = postCode939 = 200
      ======================================================= */
-  if (typeof joadatajspyq !== "undefined" && joadatajspyq) {
+  var joaSource =
+    (typeof joadatajspyq !== "undefined" && joadatajspyq) ? joadatajspyq :
+    ((typeof joaItData !== "undefined" && joaItData) ? joaItData :
+    (window.joadatajspyq || window.joaItData || null));
+
+  if (joaSource && typeof joaSource === "object") {
     var joaMap = {};
     var joaOrder = [
       ["postCode817", 170],
@@ -240,7 +245,7 @@
     joaOrder.forEach(function (item, paperIndex) {
       var paperKey = item[0];
       var expected = item[1];
-      var paper = joadatajspyq[paperKey];
+      var paper = joaSource[paperKey];
 
       if (!paper || !Array.isArray(paper.questions)) {
         console.error("JOA paper missing:", paperKey);
@@ -274,9 +279,9 @@
     // question arrays are present in the uploaded joadatajspyq.js source.
     var knownJOAKeys = joaOrder.map(function(item){ return item[0]; });
     var nextJOAMock = 5;
-    Object.keys(joadatajspyq).forEach(function(paperKey){
+    Object.keys(joaSource).forEach(function(paperKey){
       if(knownJOAKeys.indexOf(paperKey) !== -1) return;
-      var paper = joadatajspyq[paperKey];
+      var paper = joaSource[paperKey];
       if(!paper || !Array.isArray(paper.questions) || !paper.questions.length) return;
       while(joaMap[String(nextJOAMock)]) nextJOAMock++;
       joaMap[String(nextJOAMock)] = paper.questions.slice(0,120).map(function(q,index){
