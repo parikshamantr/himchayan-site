@@ -2610,16 +2610,16 @@ function renderMocks(){
   const expectedFile = expectedFiles[selectedExam] ||
     (selectedExam.toLowerCase().replace(/\s+/g, "") + "datajspyq.js");
 
-  // JOA always displays 20 options. Only real loaded banks are startable;
-  // no questions are generated for missing banks.
-  const mockNumbers = selectedExam === "JOA"
-    ? Array.from({length:20}, function(_, index){ return index + 1; })
-    : Object.keys(banks)
+  // Keep JBT/TGT data-backed as-is. Other paid exams show 20 options,
+  // with a clear missing-JS status for any mock that has no real bank.
+  const mockNumbers = (selectedExam === "JBT" || selectedExam === "TGT")
+    ? Object.keys(banks)
         .filter(function(key){
           return /^\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
         })
         .map(Number)
-        .sort(function(a,b){ return a-b; });
+        .sort(function(a,b){ return a-b; })
+    : Array.from({length:20}, function(_, index){ return index + 1; });
 
   if (!mockNumbers.length) {
     const notice = document.createElement("div");
