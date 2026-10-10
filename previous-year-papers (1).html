@@ -2608,7 +2608,7 @@ function renderMocks(){
     "PGT": "pgtdatajspyq.js"
   };
   const expectedFile = expectedFiles[selectedExam] ||
-    (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+    (selectedExam.toLowerCase().replace(/\s+/g, "") + "datajspyq.js");
 
   // JOA always displays 20 options. Only real loaded banks are startable;
   // no questions are generated for missing banks.
@@ -2681,7 +2681,7 @@ function showMissingQuestionBank(mockNumber){
     "PGT": "pgtdatajspyq.js"
   };
   const expectedFile = expectedFiles[selectedExam] ||
-    (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+    (selectedExam.toLowerCase().replace(/\s+/g, "") + "datajspyq.js");
   showMessage("⚠️ " + selectedExam + " Mock " + mockNumber +
     " का question bank अभी upload नहीं हुआ। अपेक्षित file: " + expectedFile +
     "। Upload के बाद page reload करें; bank अपने-आप connect हो जाएगा।");
