@@ -2616,7 +2616,7 @@ function renderMocks(){
     ? Array.from({length:20}, function(_, index){ return index + 1; })
     : Object.keys(banks)
         .filter(function(key){
-          return /^\\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
+          return /^\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
         })
         .map(Number)
         .sort(function(a,b){ return a-b; });
