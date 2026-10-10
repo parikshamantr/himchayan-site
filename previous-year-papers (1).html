@@ -1304,12 +1304,12 @@ grid-template-columns:repeat(3,1fr)
     </div>
 
     <div class="payment-text">
-      सिर्फ ₹99 में इस examination के पूरे Previous Year Mock Tests
+      सिर्फ ₹50 में इस examination के पूरे Previous Year Mock Tests
       unlock करें।
     </div>
 
     <div class="payment-price">
-      ₹99
+      ₹50
       <span>
         / Complete Mock Package
       </span>
@@ -1320,7 +1320,7 @@ grid-template-columns:repeat(3,1fr)
       class="unlock-btn"
       onclick="startPayment()">
 
-      💳 Pay ₹99 & Unlock All Mocks →
+      💳 Pay ₹50 & Unlock All Mocks →
 
     </button>
 
@@ -1352,15 +1352,7 @@ grid-template-columns:repeat(3,1fr)
   <div id="mockGrid" class="mock-grid"></div>
 
 
-  <div class="note">
-
-    <strong>ℹ️ ध्यान दें:</strong>
-
-    Paid JBT/TGT/JOA verified data और Free Demo data
-    ऊपर के script order में load होकर FINAL bridge से connect होते हैं।
-    JOA में अभी 4 verified PYQ papers उपलब्ध हैं।
-
-  </div>
+  
 
 </section>
 
@@ -2055,7 +2047,7 @@ function startPayment(){
           button.disabled = false;
 
           button.textContent =
-            "💳 Pay ₹99 & Unlock All Mocks →";
+            "💳 Pay ₹50 & Unlock All Mocks →";
         }
 
       },1500);
@@ -2091,7 +2083,7 @@ function startPayment(){
       const result =
         window.openPayment(
           selectedExam,
-          99,
+          50,
           "previous_year"
         );
 
@@ -2105,7 +2097,7 @@ function startPayment(){
           button.disabled = false;
 
           button.textContent =
-            "💳 Pay ₹99 & Unlock All Mocks →";
+            "💳 Pay ₹50 & Unlock All Mocks →";
         }
 
       },1500);
@@ -2142,7 +2134,7 @@ function startPayment(){
       "?category=" +
       encodeURIComponent(selectedExam) +
       "&type=previous_year" +
-      "&amount=99" +
+      "&amount=50" +
       "&package=all" +
       "&mock=all" +
       "&questions=" +
@@ -2171,7 +2163,7 @@ function startPayment(){
       button.disabled = false;
 
       button.textContent =
-        "💳 Pay ₹99 & Unlock All Mocks →";
+        "💳 Pay ₹50 & Unlock All Mocks →";
     }
 
 
@@ -2498,7 +2490,7 @@ async function openExam(
     paymentButton.disabled = false;
 
     paymentButton.textContent =
-      "💳 Pay ₹99 & Unlock All Mocks →";
+      "💳 Pay ₹50 & Unlock All Mocks →";
   }
 
 
@@ -2578,25 +2570,20 @@ function getMockQuestionCount(
   if(selectedExam === "JOA"){
 
     if(mockNumber === 1)return 170;
-
     if(mockNumber === 2)return 170;
-
     if(mockNumber === 3)return 200;
-
     if(mockNumber === 4)return 200;
 
-    return 0;
-  }
+    const bank = window.previousYearQuestionBanks &&
+      window.previousYearQuestionBanks.JOA &&
+      window.previousYearQuestionBanks.JOA[String(mockNumber)];
 
+    return Array.isArray(bank) && bank.length >= 120 ? 120 : 0;
+  }
 
   if(selectedExam === "JBT"){
-
-    return mockNumber <= 9
-      ? 200
-      : 120;
-
+    return mockNumber <= 9 ? 200 : 120;
   }
-
 
   return selectedQuestions;
 }
@@ -2608,122 +2595,50 @@ function getMockQuestionCount(
 
 function renderMocks(){
 
-  const grid =
-    document.getElementById(
-      "mockGrid"
-    );
-
-
+  const grid = document.getElementById("mockGrid");
   grid.innerHTML = "";
 
+  let mockNumbers;
 
-  const mockLimit =
-    selectedExam === "JOA"
-      ? 4
-      : 20;
+  if(selectedExam === "JOA"){
+    const banks = window.previousYearQuestionBanks &&
+      window.previousYearQuestionBanks.JOA || {};
 
+    mockNumbers = Object.keys(banks)
+      .filter(function(key){
+        if(!/^\d+$/.test(key) || !Array.isArray(banks[key]) || !banks[key].length) return false;
+        const number = Number(key);
+        return number <= 4 || banks[key].length >= 120;
+      })
+      .map(Number)
+      .sort(function(a,b){ return a-b; });
+  }else{
+    mockNumbers = Array.from({length:20},function(_,index){ return index+1; });
+  }
 
-  for(
-    let i = 1;
-    i <= mockLimit;
-    i++
-  ){
+  mockNumbers.forEach(function(i){
 
-    const card =
-      document.createElement("div");
+    const card = document.createElement("div");
+    card.className = "mock-card";
 
+    const unlocked = isAdmin || hasAccess;
+    const mockQuestions = getMockQuestionCount(i);
 
-    card.className =
-      "mock-card";
+    if(mockQuestions <= 0) return;
 
-
-    const unlocked =
-      isAdmin ||
-      hasAccess;
-
-
-    const mockQuestions =
-      getMockQuestionCount(i);
-
-
-    /*
-     * UNLOCKED MOCK
-     */
-
-    if(unlocked){
-
-      card.innerHTML =
-
-        '<span class="mock-tag">' +
-        '📚 MOCK ' +
-        i +
-        '</span>' +
-
-        '<h3>' +
-        selectedExam +
-        ' — Mock ' +
-        i +
-        '</h3>' +
-
-        '<p>' +
-        mockQuestions +
-        ' Questions' +
-        '</p>' +
-
-        '<button class="mock-btn unlocked" ' +
-        'onclick="openMock(' +
-        i +
-        ')">' +
-
-        '✅ Start Mock ' +
-        i +
-        ' →' +
-
-        '</button>';
-
-    }
-
-    /*
-     * LOCKED MOCK
-     *
-     * IMPORTANT:
-     * Every mock uses the SAME ₹99 package.
-     */
-
-    else{
-
-      card.innerHTML =
-
-        '<span class="mock-tag">' +
-        '🔐 MOCK ' +
-        i +
-        '</span>' +
-
-        '<h3>' +
-        selectedExam +
-        ' — Mock ' +
-        i +
-        '</h3>' +
-
-        '<p>' +
-        mockQuestions +
-        ' Questions' +
-        '</p>' +
-
-        '<button class="mock-btn locked" ' +
-        'onclick="startPayment()">' +
-
-        '🔒 Unlock Mock ' +
-        i +
-
-        '</button>';
-
-    }
-
+    card.innerHTML =
+      '<span class="mock-tag">' +
+      (unlocked ? '📚 MOCK ' : '🔐 MOCK ') + i +
+      '</span>' +
+      '<h3>' + selectedExam + ' — Mock ' + i + '</h3>' +
+      '<p>' + mockQuestions + ' Questions</p>' +
+      '<button class="mock-btn ' + (unlocked ? 'unlocked' : 'locked') + '" ' +
+      'onclick="' + (unlocked ? 'openMock(' + i + ')' : 'startPayment()') + '">' +
+      (unlocked ? '✅ Start Mock ' + i + ' →' : '🔒 Unlock Mock ' + i) +
+      '</button>';
 
     grid.appendChild(card);
-
-  }
+  });
 
 }
 
@@ -2906,7 +2821,7 @@ function openMock(mockNumber){
 
   /*
    * If locked:
-   * open SAME ₹99 payment flow.
+   * open SAME ₹50 payment flow.
    */
 
   if(
