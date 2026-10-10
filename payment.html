@@ -1589,20 +1589,24 @@ function escapeHtml(
    AUTH STATE
 ========================================= */
 
-// Keep Cloudflare Auth Bridge as the active session source.
-// A Supabase "signed out" event must not erase a valid Cloudflare session.
+// Cloudflare Auth Bridge is the current login source.
+// Supabase's empty session must not erase a valid Cloudflare token.
 if(typeof supabaseClient !== "undefined" && supabaseClient?.auth?.onAuthStateChange){
     supabaseClient.auth.onAuthStateChange(function(event, session){
         if(session?.user){
             currentUser = session.user;
             checkLogin();
-        } else {
-            let cloudflareToken = "";
-            try { cloudflareToken = localStorage.getItem(HC_ACCESS_TOKEN_KEY) || ""; } catch (_) {}
-            if(!cloudflareToken){
-                currentUser = null;
-                showLoginRequired();
-            }
+            return;
+        }
+
+        let cloudflareToken = "";
+        try {
+            cloudflareToken = localStorage.getItem(HC_ACCESS_TOKEN_KEY) || "";
+        } catch (_) {}
+
+        if(!cloudflareToken){
+            currentUser = null;
+            showLoginRequired();
         }
     });
 }
