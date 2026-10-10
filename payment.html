@@ -1589,39 +1589,27 @@ function escapeHtml(
    AUTH STATE
 ========================================= */
 
-if(
-    typeof supabaseClient !==
-    "undefined"
-){
+// Cloudflare Auth Bridge is the current login source.
+// Supabase's empty session must not erase a valid Cloudflare token.
+if(typeof supabaseClient !== "undefined" && supabaseClient?.auth?.onAuthStateChange){
+    supabaseClient.auth.onAuthStateChange(function(event, session){
+        if(session?.user){
+            currentUser = session.user;
+            checkLogin();
+            return;
+        }
 
-    supabaseClient
-        .auth
-        .onAuthStateChange(
-            function(
-                event,
-                session
-            ){
+        let cloudflareToken = "";
+        try {
+            cloudflareToken = localStorage.getItem(HC_ACCESS_TOKEN_KEY) || "";
+        } catch (_) {}
 
-                currentUser =
-                    session?.user ||
-                    null;
-
-                if(currentUser){
-
-                    checkLogin();
-
-                }
-                else{
-
-                    showLoginRequired();
-
-                }
-
-            }
-        );
-
+        if(!cloudflareToken){
+            currentUser = null;
+            showLoginRequired();
+        }
+    });
 }
-
 
 
 /* =========================================
