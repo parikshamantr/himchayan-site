@@ -280,6 +280,77 @@
   }
 
   /* =======================================================
+     JOA ADDITIONAL PAPERS — MOCKS 5–11
+     The combined joadatajspyq.js upload also contains seven
+     bilingual 120-question papers in joaItData. Keep the four
+     verified Post Code papers at mocks 1–4; fill only missing
+     mock slots 5–11 from this second source.
+     ======================================================= */
+  if (typeof joaItData !== "undefined" && Array.isArray(joaItData)) {
+    window.previousYearQuestionBanks.JOA = window.previousYearQuestionBanks.JOA || {};
+    joaItData.slice(0, 7).forEach(function (paper, index) {
+      var mockNumber = index + 5;
+      if (!paper || !Array.isArray(paper.questions)) return;
+      var existing = window.previousYearQuestionBanks.JOA[String(mockNumber)];
+      if (Array.isArray(existing) && existing.length) return;
+
+      window.previousYearQuestionBanks.JOA[String(mockNumber)] = paper.questions.slice(0, 120).map(function (q, questionIndex) {
+        q = q || {};
+        var prompt = q.question || {};
+        var opts = Array.isArray(q.options) ? q.options : [];
+        function localized(option, language) {
+          var value = option && option.text;
+          if (value && typeof value === "object") return String(value[language] || value.en || value.hi || "");
+          return String(value || "");
+        }
+        return {
+          id: q.id || "JOA-extra-" + mockNumber + "-" + (questionIndex + 1),
+          hindi: String(prompt.hi || q.hi || ""),
+          english: String(prompt.en || q.en || prompt.hi || ""),
+          optionsHindi: [0,1,2,3].map(function (i) { return localized(opts[i], "hi"); }),
+          optionsEnglish: [0,1,2,3].map(function (i) { return localized(opts[i], "en"); }),
+          answer: normalizeAnswer(q.answer),
+          sourcePaper: paper.paper || ("JOA IT additional paper " + (index + 1))
+        };
+      });
+      console.log("JOA PAID ADDITIONAL CONNECTED: Mock " + mockNumber + " = " +
+        window.previousYearQuestionBanks.JOA[String(mockNumber)].length + " questions");
+    });
+  }
+
+  /* =======================================================
+     OPTIONAL PAID EXAM BANKS
+     These adapters connect a bank as soon as its already
+     referenced JS file defines one of the known global names.
+     JBT mapping above remains unchanged.
+     ======================================================= */
+  function connectOptionalBank(examName, globalNames) {
+    if (window.previousYearQuestionBanks[examName] &&
+        Object.keys(window.previousYearQuestionBanks[examName]).length) return;
+    for (var i = 0; i < globalNames.length; i++) {
+      var source = window[globalNames[i]];
+      if (source && typeof source === "object") {
+        var mapped = mapArrayBank(examName, source);
+        if (Object.keys(mapped).length) {
+          window.previousYearQuestionBanks[examName] = mapped;
+          console.log(examName + " PAID CONNECTED from " + globalNames[i],
+            Object.keys(mapped).map(function (key) {
+              return "Mock " + key + " = " + mapped[key].length + " questions";
+            }).join(" | "));
+          return;
+        }
+      }
+    }
+  }
+
+  connectOptionalBank("Patwari", ["patwariPaidMocks", "patwariMocks", "patwariMockData"]);
+  connectOptionalBank("Police", ["policePaidMocks", "policeMocks", "policeMockData"]);
+  connectOptionalBank("Forest Guard", ["forestGuardPaidMocks", "forestguardPaidMocks", "forestGuardMocks", "forestguardMocks"]);
+  connectOptionalBank("Staff Nurse", ["staffNursePaidMocks", "staffnursePaidMocks", "staffNurseMocks", "staffnurseMocks"]);
+  connectOptionalBank("PGT", ["pgtPaidMocks", "pgtMocks", "pgtMockData"]);
+  connectOptionalBank("JOA Clerk", ["joaClerkPaidMocks", "joaclerkPaidMocks", "joaClerkMocks", "joaclerkMocks"]);
+
+  /* =======================================================
      FREE MASTER DATA
      ======================================================= */
   var freeData =
