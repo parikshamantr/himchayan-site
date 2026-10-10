@@ -1818,6 +1818,8 @@ grid-template-columns:repeat(3,1fr)
 <!-- Paid PYQ banks: existing files are preserved; optional subject banks auto-connect when uploaded. -->
 <script src="./patwari-data.js?v=20261010"></script>
 <script src="./police-data.js?v=20261010"></script>
+<script src="./patwaridatajspyq.js?v=20261010"></script>
+<script src="./policedatajspyq.js?v=20261010"></script>
 <script src="./forestguarddatajspyq.js?v=20261010"></script>
 <script src="./staffnursedatajspyq.js?v=20261010"></script>
 <script src="./pgtdatajspyq.js?v=20261010"></script>
@@ -2614,7 +2616,7 @@ function renderMocks(){
       "Staff Nurse": "staffnursedatajspyq.js",
       "PGT": "pgtdatajspyq.js"
     };
-    const expectedFile = expectedFiles[selectedExam] || (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+    const expectedFile = expectedFiles[selectedExam] || (selectedExam.toLowerCase().replace(/\s+/g, "") + "datajspyq.js");
     const notice = document.createElement("div");
     notice.className = "note";
     notice.setAttribute("role", "status");
