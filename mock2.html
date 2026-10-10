@@ -931,7 +931,7 @@ Advanced subject-wise premium practice — 10 mocks per subject.
 <p>Upar exam select karein; neeche uske paid package aur total mocks dekhein.</p>
 </div>
 <nav class="exam-tab-rail" id="premiumExamTabs" aria-label="Premium mock exam subjects"></nav>
-<div class="subject-row"><h2>👑 Premium Mock Packages</h2><p>10 mocks · ₹299 per subject</p></div>
+<div class="subject-row"><h2>👑 Premium Mock Packages</h2><p>10 mocks · ₹199 per subject</p></div>
 <section class="grid" id="premiumSubjectGrid"></section>
 
 </main>
@@ -1454,44 +1454,24 @@ window.addEventListener("error", function(e){
 
 const categories=[
 
-["🎓","PGT","PGT ke Free Mock Tests",100],
-
-["👮","Police","Police recruitment practice tests",90],
-
-["🌲","Forest Guard","Forest Guard preparation tests",120],
-
-["📘","SSC","SSC examination practice",120],
-
-["🛡️","SSC GD","SSC GD practice tests",80],
-
-["📊","CGL","SSC CGL mock practice",120],
-
-["⚖️","High Court","High Court examination tests",100],
-
-["🏢","Secretariat","Secretariat exam practice",120],
-
-["🏥","Staff Nurse","Staff Nurse preparation tests",120],
-
-["📚","JBT","JBT preparation mock tests",120],
-
-["👨‍💼","JOA IT","JOA IT examination practice",120],
-
 ["📑","TGT","TGT examination practice",120],
-
+["📚","JBT","JBT preparation mock tests",120],
 ["🎯","Patwari","Patwari preparation practice",120],
+["👨‍💼","JOA IT","JOA IT examination practice",120],
+["👮","Police","Police recruitment practice tests",90],
 ["📋","Panchayat Secretary","Panchayat Secretary examination practice",120],
-["🏛️","Secretariat Clerk","Secretariat Clerk examination practice",120],
-["🌳","Forest","Forest examination practice",120],
-["🧑‍⚕️","HP TET","HP TET teaching eligibility practice",150],
-["🧑‍🏫","CTET","CTET teaching eligibility practice",150],
-["🏔️","HAS","Himachal Administrative Services practice",120],
+["🏢","Secretariat","Secretariat exam practice",120],
+["🏥","Staff Nurse","Staff Nurse preparation tests",120],
+["🌲","Forest Guard","Forest Guard preparation tests",120],
+["⚖️","High Court","High Court examination tests",100],
+["📘","SSC","SSC examination practice",120],
+["🛡️","SSC GD","SSC GD practice tests",80],
+["🎓","PGT","PGT ke Free Mock Tests",100],
+["📊","CGL","SSC CGL mock practice",120],
 ["🚆","Railway","Railway recruitment practice",120],
 ["🏦","Banking","Banking examination practice",120],
-["📚","Allied","Allied services examination practice",120],
-["🏛️","Naib Tehsildar","Naib Tehsildar examination practice",120],
-["🧩","Other Exam","Other competitive examination practice",120],
-["👮","HP Police","HP Police recruitment practice tests",90],
-["🧑‍💻","JOA","JOA examination practice",120]
+["🏛️","Secretariat Clerk","Secretariat Clerk examination practice",120],
+["🧩","Other Exam","Other competitive examination practice",120]
 
 ];
 
@@ -1793,7 +1773,7 @@ window.scrollTo(0,0);
 
 /* IMPORTANT:
    Mock Test 2 MUST send lowercase type=mock2.
-   payment.html uses type=mock2 to select the ₹299 package.
+   payment.html uses type=mock2 to select the ₹199 package.
 */
 
 function openPayment(
@@ -1806,7 +1786,7 @@ const url=
 "payment.html?category="+
 encodeURIComponent(category)+
 
-"&type=mock2&amount=299&mock="+
+"&type=mock2&amount=199&mock="+
 encodeURIComponent(mockNumber);
 
 window.location.href=url;
@@ -2505,10 +2485,10 @@ function renderCategories(){
         '<article class="card subject-mock-card">' +
           '<div class="card-title">' + c[0] + ' ' + c[1] + '</div>' +
           '<div class="card-desc">Premium ' + c[1] + ' Mock Tests</div>' +
-          '<span class="paid-tag">🔒 PREMIUM · 10 MOCKS · ₹299</span>' +
+          '<span class="paid-tag">🔒 PREMIUM · 10 MOCKS · ₹199</span>' +
           '<div class="subject-count">Total premium mocks: 10</div>' +
           '<button class="btn paid-btn" onclick="openPaidCategory(' + JSON.stringify(c[1]).replace(/"/g,"&quot;") + ')">' +
-            (isAdmin ? "👑 Admin — Open 10 Mocks" : "🔒 ₹299 — Unlock 10 Mocks") +
+            (isAdmin ? "👑 Admin — Open 10 Mocks" : "🔒 ₹199 — Unlock 10 Mocks") +
           '</button>' +
         '</article>');
     }
