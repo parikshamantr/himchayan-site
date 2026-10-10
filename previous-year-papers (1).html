@@ -2458,7 +2458,7 @@ async function openExam(
 
     exam === "JOA"
 
-      ? (Object.keys((window.previousYearQuestionBanks && window.previousYearQuestionBanks.JOA) || {}).filter(function(key){ return /^\d+$/.test(key) && Array.isArray(window.previousYearQuestionBanks.JOA[key]) && window.previousYearQuestionBanks.JOA[key].length > 0; }).length + " Available PYQ Mocks • First 4 verified papers: 170 / 170 / 200 / 200 Questions")
+      ? "20 Mock Options • First 4 verified papers: 170 / 170 / 200 / 200 Questions • Remaining mocks: 120 Questions each when data is uploaded"
 
       : exam === "JBT"
 
@@ -2597,31 +2597,36 @@ function renderMocks(){
   const banks = window.previousYearQuestionBanks &&
     window.previousYearQuestionBanks[selectedExam] || {};
 
-  // Show only mock numbers backed by actual data in the matching JS bank.
-  const mockNumbers = Object.keys(banks)
-    .filter(function(key){
-      return /^\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
-    })
-    .map(Number)
-    .sort(function(a,b){ return a-b; });
+  const expectedFiles = {
+    "JBT": "jbtdatajspyq.js",
+    "TGT": "tgtdatajspyq.js",
+    "JOA": "joadatajspyq.js",
+    "Patwari": "patwaridatajspyq.js",
+    "Police": "policedatajspyq.js",
+    "Forest Guard": "forestguarddatajspyq.js",
+    "Staff Nurse": "staffnursedatajspyq.js",
+    "PGT": "pgtdatajspyq.js"
+  };
+  const expectedFile = expectedFiles[selectedExam] ||
+    (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+
+  // JOA always displays 20 options. Only real loaded banks are startable;
+  // no questions are generated for missing banks.
+  const mockNumbers = selectedExam === "JOA"
+    ? Array.from({length:20}, function(_, index){ return index + 1; })
+    : Object.keys(banks)
+        .filter(function(key){
+          return /^\\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
+        })
+        .map(Number)
+        .sort(function(a,b){ return a-b; });
 
   if (!mockNumbers.length) {
-    const expectedFiles = {
-      "JBT": "jbtdatajspyq.js",
-      "TGT": "tgtdatajspyq.js",
-      "JOA": "joadatajspyq.js",
-      "Patwari": "patwaridatajspyq.js",
-      "Police": "policedatajspyq.js",
-      "Forest Guard": "forestguarddatajspyq.js",
-      "Staff Nurse": "staffnursedatajspyq.js",
-      "PGT": "pgtdatajspyq.js"
-    };
-    const expectedFile = expectedFiles[selectedExam] || (selectedExam.toLowerCase().replace(/\s+/g, "") + "datajspyq.js");
     const notice = document.createElement("div");
     notice.className = "note";
     notice.setAttribute("role", "status");
     notice.style.marginTop = "0";
-    notice.textContent = "⚠️ " + selectedExam + " की JS data file अभी upload/connect नहीं हुई है। अपेक्षित file: " + expectedFile + "। File upload होते ही page इसे automatically connect करेगा।";
+    notice.textContent = "⚠️ " + selectedExam + " की JS data file अभी upload/connect नहीं हुई है। अपेक्षित file: " + expectedFile + "। File upload होने पर page reload करते ही यह अपने-आप connect हो जाएगी।";
     grid.appendChild(notice);
     return;
   }
@@ -2632,19 +2637,31 @@ function renderMocks(){
     card.className = "mock-card";
 
     const unlocked = isAdmin || hasAccess;
-    const mockQuestions = getMockQuestionCount(i);
+    const bank = banks[String(i)] || banks[i];
+    const mockQuestions = Array.isArray(bank) ? bank.length : 0;
+    const isMissing = mockQuestions <= 0;
 
-    if(mockQuestions <= 0) return;
+    const questionLabel = isMissing
+      ? "JS data file upload pending"
+      : mockQuestions + " Questions";
+
+    const buttonLabel = isMissing
+      ? "⚠️ JS File Not Uploaded"
+      : (unlocked ? "✅ Start Mock " + i + " →" : "🔒 Unlock Mock " + i);
+
+    const buttonClass = isMissing ? "locked" : (unlocked ? "unlocked" : "locked");
+    const buttonAction = isMissing
+      ? "showMissingQuestionBank(" + i + ")"
+      : (unlocked ? "openMock(" + i + ")" : "startPayment()");
 
     card.innerHTML =
       '<span class="mock-tag">' +
-      (unlocked ? '📚 MOCK ' : '🔐 MOCK ') + i +
+      (isMissing ? '⚠️ MOCK ' : (unlocked ? '📚 MOCK ' : '🔐 MOCK ')) + i +
       '</span>' +
       '<h3>' + selectedExam + ' — Mock ' + i + '</h3>' +
-      '<p>' + mockQuestions + ' Questions</p>' +
-      '<button class="mock-btn ' + (unlocked ? 'unlocked' : 'locked') + '" ' +
-      'onclick="' + (unlocked ? 'openMock(' + i + ')' : 'startPayment()') + '">' +
-      (unlocked ? '✅ Start Mock ' + i + ' →' : '🔒 Unlock Mock ' + i) +
+      '<p>' + questionLabel + '</p>' +
+      '<button class="mock-btn ' + buttonClass + '" onclick="' + buttonAction + '">' +
+      buttonLabel +
       '</button>';
 
     grid.appendChild(card);
@@ -2652,6 +2669,23 @@ function renderMocks(){
 
 }
 
+function showMissingQuestionBank(mockNumber){
+  const expectedFiles = {
+    "JBT": "jbtdatajspyq.js",
+    "TGT": "tgtdatajspyq.js",
+    "JOA": "joadatajspyq.js",
+    "Patwari": "patwaridatajspyq.js",
+    "Police": "policedatajspyq.js",
+    "Forest Guard": "forestguarddatajspyq.js",
+    "Staff Nurse": "staffnursedatajspyq.js",
+    "PGT": "pgtdatajspyq.js"
+  };
+  const expectedFile = expectedFiles[selectedExam] ||
+    (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+  showMessage("⚠️ " + selectedExam + " Mock " + mockNumber +
+    " का question bank अभी upload नहीं हुआ। अपेक्षित file: " + expectedFile +
+    "। Upload के बाद page reload करें; bank अपने-आप connect हो जाएगा।");
+}
 
 /* =========================================================
    FREE DEMO
