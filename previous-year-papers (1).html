@@ -1813,7 +1813,14 @@ grid-template-columns:repeat(3,1fr)
 
 <script src="./tgtdatajspyq.js?v=20261009"></script>
 
-<script src="./joadatajspyq.js?v=20261009"></script>
+<script src="./joadatajspyq.js?v=20261010"></script>
+
+<!-- Paid PYQ banks: existing files are preserved; optional subject banks auto-connect when uploaded. -->
+<script src="./patwari-data.js?v=20261010"></script>
+<script src="./police-data.js?v=20261010"></script>
+<script src="./forestguarddatajspyq.js?v=20261010"></script>
+<script src="./staffnursedatajspyq.js?v=20261010"></script>
+<script src="./pgtdatajspyq.js?v=20261010"></script>
 
 <script src="./free-previous-year-one-mock-demo-data.js?v=20261009"></script>
 
@@ -2449,7 +2456,7 @@ async function openExam(
 
     exam === "JOA"
 
-      ? "4 Verified PYQ Papers • 170 + 170 + 200 + 200 Questions"
+      ? (Object.keys((window.previousYearQuestionBanks && window.previousYearQuestionBanks.JOA) || {}).filter(function(key){ return /^\d+$/.test(key) && Array.isArray(window.previousYearQuestionBanks.JOA[key]) && window.previousYearQuestionBanks.JOA[key].length > 0; }).length + " Available PYQ Mocks • First 4 verified papers: 170 / 170 / 200 / 200 Questions")
 
       : exam === "JBT"
 
@@ -2566,26 +2573,13 @@ async function openExam(
 function getMockQuestionCount(
   mockNumber
 ){
+  const banks = window.previousYearQuestionBanks &&
+    window.previousYearQuestionBanks[selectedExam];
+  const bank = banks && (banks[String(mockNumber)] || banks[mockNumber]);
 
-  if(selectedExam === "JOA"){
-
-    if(mockNumber === 1)return 170;
-    if(mockNumber === 2)return 170;
-    if(mockNumber === 3)return 200;
-    if(mockNumber === 4)return 200;
-
-    const bank = window.previousYearQuestionBanks &&
-      window.previousYearQuestionBanks.JOA &&
-      window.previousYearQuestionBanks.JOA[String(mockNumber)];
-
-    return Array.isArray(bank) && bank.length >= 120 ? 120 : 0;
-  }
-
-  if(selectedExam === "JBT"){
-    return mockNumber <= 9 ? 200 : 120;
-  }
-
-  return selectedQuestions;
+  // A mock is available only when its real JS question bank exists.
+  // Use the source bank's actual count; never fabricate missing questions.
+  return Array.isArray(bank) ? bank.length : 0;
 }
 
 
@@ -2598,23 +2592,16 @@ function renderMocks(){
   const grid = document.getElementById("mockGrid");
   grid.innerHTML = "";
 
-  let mockNumbers;
+  const banks = window.previousYearQuestionBanks &&
+    window.previousYearQuestionBanks[selectedExam] || {};
 
-  if(selectedExam === "JOA"){
-    const banks = window.previousYearQuestionBanks &&
-      window.previousYearQuestionBanks.JOA || {};
-
-    mockNumbers = Object.keys(banks)
-      .filter(function(key){
-        if(!/^\d+$/.test(key) || !Array.isArray(banks[key]) || !banks[key].length) return false;
-        const number = Number(key);
-        return number <= 4 || banks[key].length >= 120;
-      })
-      .map(Number)
-      .sort(function(a,b){ return a-b; });
-  }else{
-    mockNumbers = Array.from({length:20},function(_,index){ return index+1; });
-  }
+  // Show only mock numbers backed by actual data in the matching JS bank.
+  const mockNumbers = Object.keys(banks)
+    .filter(function(key){
+      return /^\d+$/.test(key) && Array.isArray(banks[key]) && banks[key].length > 0;
+    })
+    .map(Number)
+    .sort(function(a,b){ return a-b; });
 
   mockNumbers.forEach(function(i){
 
