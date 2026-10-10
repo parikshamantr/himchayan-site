@@ -1589,6 +1589,25 @@ function escapeHtml(
    AUTH STATE
 ========================================= */
 
+// The active login page uses Cloudflare Auth Bridge sessions.
+// Avoid letting a Supabase "no session" event overwrite a valid
+// Cloudflare-verified user on the payment page.
+if(typeof supabaseClient !== "undefined" && supabaseClient?.auth?.onAuthStateChange){
+    supabaseClient.auth.onAuthStateChange(function(event, session){
+        if(session?.user){
+            // Only refresh from Supabase when it actually has a user session.
+            currentUser = session.user;
+            checkLogin();
+        } else if(!localStorage.getItem(HC_ACCESS_TOKEN_KEY)){
+            currentUser = null;
+            showLoginRequired();
+        }
+    });
+}
+
+
+
+
 if(
     typeof supabaseClient !==
     "undefined"
