@@ -108,7 +108,9 @@
             optionsHindi: fourOptions(hiOpts),
             optionsEnglish: fourOptions(enOpts),
             answer: normalizeAnswer(
-              q.answer !== undefined ? q.answer : q.correctAnswer
+              q.answer !== undefined
+                ? q.answer
+                : (q.correctAnswer !== undefined ? q.correctAnswer : q.correct)
             )
           };
         }
@@ -318,6 +320,11 @@
     });
   }
 
+  /* The JOA IT bundle is the data source requested for the JOA Clerk
+     card as well. Keep the JOA IT card and its 20 slots intact. */
+  window.previousYearQuestionBanks["JOA Clerk"] =
+    window.previousYearQuestionBanks["JOA"] || {};
+
   /* =======================================================
      OPTIONAL PAID EXAM BANKS
      These adapters connect a bank as soon as its already
@@ -341,6 +348,30 @@
         }
       }
     }
+  }
+
+  /* Direct identifiers are needed because top-level const declarations
+     are not exposed as window properties in classic browser scripts. */
+  if (typeof patwariPaidMocks !== "undefined" && patwariPaidMocks) {
+    window.previousYearQuestionBanks.Patwari = mapArrayBank("Patwari", patwariPaidMocks);
+  }
+  if (typeof policePaidMocks !== "undefined" && policePaidMocks) {
+    window.previousYearQuestionBanks.Police = mapArrayBank("Police", policePaidMocks);
+  }
+  if (typeof forestGuardPaidMocks !== "undefined" && forestGuardPaidMocks) {
+    window.previousYearQuestionBanks["Forest Guard"] = mapArrayBank("Forest Guard", forestGuardPaidMocks);
+  }
+  if (typeof forestguardPaidMocks !== "undefined" && forestguardPaidMocks) {
+    window.previousYearQuestionBanks["Forest Guard"] = mapArrayBank("Forest Guard", forestguardPaidMocks);
+  }
+  if (typeof staffNursePaidMocks !== "undefined" && staffNursePaidMocks) {
+    window.previousYearQuestionBanks["Staff Nurse"] = mapArrayBank("Staff Nurse", staffNursePaidMocks);
+  }
+  if (typeof staffnursePaidMocks !== "undefined" && staffnursePaidMocks) {
+    window.previousYearQuestionBanks["Staff Nurse"] = mapArrayBank("Staff Nurse", staffnursePaidMocks);
+  }
+  if (typeof pgtPaidMocks !== "undefined" && pgtPaidMocks) {
+    window.previousYearQuestionBanks.PGT = mapArrayBank("PGT", pgtPaidMocks);
   }
 
   connectOptionalBank("Patwari", ["patwariPaidMocks", "patwariMocks", "patwariMockData"]);
