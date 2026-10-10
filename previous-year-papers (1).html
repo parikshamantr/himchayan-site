@@ -2603,6 +2603,27 @@ function renderMocks(){
     .map(Number)
     .sort(function(a,b){ return a-b; });
 
+  if (!mockNumbers.length) {
+    const expectedFiles = {
+      "JBT": "jbtdatajspyq.js",
+      "TGT": "tgtdatajspyq.js",
+      "JOA": "joadatajspyq.js",
+      "Patwari": "patwari-data.js",
+      "Police": "police-data.js",
+      "Forest Guard": "forestguarddatajspyq.js",
+      "Staff Nurse": "staffnursedatajspyq.js",
+      "PGT": "pgtdatajspyq.js"
+    };
+    const expectedFile = expectedFiles[selectedExam] || (selectedExam.toLowerCase().replace(/\\s+/g, "") + "datajspyq.js");
+    const notice = document.createElement("div");
+    notice.className = "note";
+    notice.setAttribute("role", "status");
+    notice.style.marginTop = "0";
+    notice.textContent = "⚠️ " + selectedExam + " की JS data file अभी upload/connect नहीं हुई है। अपेक्षित file: " + expectedFile + "। File upload होते ही page इसे automatically connect करेगा।";
+    grid.appendChild(notice);
+    return;
+  }
+
   mockNumbers.forEach(function(i){
 
     const card = document.createElement("div");
